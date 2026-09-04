@@ -2,6 +2,8 @@
 @use "mixins" as *;
 @use "spacing" as *;
 @use "component-sizing" as *;
+@use "sizing" as *;
+@use "buttons" as *;
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
@@ -168,4 +170,32 @@ mat-icon {
     "wght" 300,
     "GRAD" 0,
     "opsz" 24;
+}
+
+// ======================================================
+// PAGE
+// ======================================================
+
+.page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100vw;
+
+  h3 {
+    font-size: $page-header;
+    font-weight: $page-header-weight;
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page-text-secondary {
+    font-size: $page-subheader;
+    font-weight: $page-subheader-weight;
+    color: $text-secondary;
+  }
 }

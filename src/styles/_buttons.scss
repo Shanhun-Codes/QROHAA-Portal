@@ -1,44 +1,241 @@
+@use "theme" as *;
+@use "spacing" as *;
+
 // ======================================================
 // BUTTON RESET
 // ======================================================
 
 button {
-  // Reset browser appearance
   appearance: none;
   -webkit-appearance: none;
 
-  // Reset browser styling
   margin: 0;
   padding: 0;
+
   border: 0;
   border-radius: 0;
+
   background: none;
 
-  // Inherit application typography
   color: inherit;
   font: inherit;
   line-height: inherit;
   text-align: inherit;
 
-  // Button behavior
   cursor: pointer;
 
-  // Prevent odd browser text transformations
   text-transform: none;
-
-  // Prevent accidental text selection while clicking
   user-select: none;
-
-  // Remove mobile tap highlight
   -webkit-tap-highlight-color: transparent;
 
   &:disabled {
     cursor: not-allowed;
   }
 
-  // Keep keyboard accessibility
   &:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 2px;
+  }
+}
+
+// ======================================================
+// BUTTON VARIABLES
+// ======================================================
+
+// Sizing
+$button-height-sm: 32px;
+$button-height-md: 40px;
+$button-height-lg: 48px;
+
+$button-padding-sm: 0 0.75rem;
+$button-padding-md: 0 1rem;
+$button-padding-lg: 0 1.25rem;
+
+// Typography
+$button-font-size-sm: 0.75rem;
+$button-font-size-md: 0.875rem;
+$button-font-size-lg: 1rem;
+
+$button-font-weight: 500;
+
+// Shape
+$button-border-width: $border-width;
+$button-border-radius: $radius-md;
+
+// ======================================================
+// PRIMARY BUTTON VARIABLES
+// ======================================================
+
+$button-primary-background: $primary;
+$button-primary-background-hover: $primary-hover;
+$button-primary-background-active: $primary-dark;
+
+$button-primary-text: $text-primary;
+$button-primary-border: $primary;
+
+// ======================================================
+// SECONDARY BUTTON VARIABLES
+// ======================================================
+
+$button-secondary-background: $surface-elevated;
+$button-secondary-background-hover: $surface-active;
+$button-secondary-background-active: $surface;
+
+$button-secondary-text: $text-primary;
+$button-secondary-border: $border-light;
+
+// ======================================================
+// DANGER BUTTON VARIABLES
+// ======================================================
+
+$button-danger-background: $brand-red-metallic;
+
+$button-danger-text: $text-primary;
+$button-danger-border: $brand-red-light;
+
+// ======================================================
+// GHOST BUTTON VARIABLES
+// ======================================================
+
+$button-ghost-background: transparent;
+$button-ghost-background-hover: $surface-active;
+
+$button-ghost-text: $text-secondary;
+$button-ghost-text-hover: $text-primary;
+$button-ghost-border: transparent;
+
+// ======================================================
+// DISABLED BUTTON VARIABLES
+// ======================================================
+
+$button-disabled-background: $surface-elevated;
+$button-disabled-text: $text-muted;
+$button-disabled-border: $border;
+$button-disabled-opacity: 0.6;
+
+// ======================================================
+// BUTTON BASE
+// ======================================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  height: $button-height-md;
+  padding: $button-padding-md;
+
+  border: $button-border-width solid transparent;
+  border-radius: $button-border-radius;
+
+  font-size: $button-font-size-md;
+  font-weight: $button-font-weight;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    filter 0.2s ease,
+    transform 0.1s ease;
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: $button-disabled-background;
+    border-color: $button-disabled-border;
+    color: $button-disabled-text;
+    opacity: $button-disabled-opacity;
+  }
+}
+
+// ======================================================
+// BUTTON SIZES
+// ======================================================
+
+.btn-sm {
+  height: $button-height-sm;
+  padding: $button-padding-sm;
+  font-size: $button-font-size-sm;
+}
+
+.btn-lg {
+  height: $button-height-lg;
+  padding: $button-padding-lg;
+  font-size: $button-font-size-lg;
+}
+
+// ======================================================
+// PRIMARY BUTTON
+// ======================================================
+
+.btn-primary {
+  background: $button-primary-background;
+  border-color: $button-primary-border;
+  color: $button-primary-text;
+
+  &:hover:not(:disabled) {
+    background: $button-primary-background-hover;
+  }
+
+  &:active:not(:disabled) {
+    background: $button-primary-background-active;
+  }
+}
+
+// ======================================================
+// SECONDARY BUTTON
+// ======================================================
+
+.btn-secondary {
+  background: $button-secondary-background;
+  border-color: $button-secondary-border;
+  color: $button-secondary-text;
+
+  &:hover:not(:disabled) {
+    background: $button-secondary-background-hover;
+  }
+
+  &:active:not(:disabled) {
+    background: $button-secondary-background-active;
+  }
+}
+
+// ======================================================
+// DANGER / BRAND BUTTON
+// ======================================================
+
+.btn-danger {
+  background: $button-danger-background;
+  border-color: $button-danger-border;
+  color: $button-danger-text;
+
+  &:hover:not(:disabled) {
+    background: $button-danger-background;
+    filter: brightness(1.15);
+  }
+
+  &:active:not(:disabled) {
+    background: $button-danger-background;
+    filter: brightness(0.9);
+  }
+}
+
+// ======================================================
+// GHOST BUTTON
+// ======================================================
+
+.btn-ghost {
+  background: $button-ghost-background;
+  border-color: $button-ghost-border;
+  color: $button-ghost-text;
+
+  &:hover:not(:disabled) {
+    background: $button-ghost-background-hover;
+    color: $button-ghost-text-hover;
   }
 }
