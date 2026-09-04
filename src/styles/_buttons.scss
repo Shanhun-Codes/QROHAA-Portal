@@ -1,0 +1,44 @@
+// ======================================================
+// BUTTON RESET
+// ======================================================
+
+button {
+  // Reset browser appearance
+  appearance: none;
+  -webkit-appearance: none;
+
+  // Reset browser styling
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+
+  // Inherit application typography
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: inherit;
+
+  // Button behavior
+  cursor: pointer;
+
+  // Prevent odd browser text transformations
+  text-transform: none;
+
+  // Prevent accidental text selection while clicking
+  user-select: none;
+
+  // Remove mobile tap highlight
+  -webkit-tap-highlight-color: transparent;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  // Keep keyboard accessibility
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

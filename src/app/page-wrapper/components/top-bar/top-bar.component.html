@@ -1,0 +1,46 @@
+<div class="aa-header">
+  <div class="aa-logo-container">
+    <img class="aa-logo" src="open-house-domain-transparent.png" alt="logo" />
+    <div class="aa-headings">
+      <h1>{{ title }}</h1>
+      <h2>{{ subtitle }}</h2>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <button class="search-button" type="button" aria-label="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <input
+      type="search"
+      placeholder="Search leads by name, email, or property..."
+    />
+  </div>
+
+  <div class="user-info-settings-container">
+    <button class="settings-button" type="button" aria-label="Settings">
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <img
+      class="user-avatar"
+      [src]="userAvatarUrl"
+      alt="User Avatar"
+      draggable="false"
+    />
+
+    <div class="user-info">
+      <h3>{{ userName }}</h3>
+      <p>{{ userEmail }}</p>
+    </div>
+
+    <button
+      class="user-dropdown-button"
+      type="button"
+      aria-label="Open user menu"
+    >
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+</div>
