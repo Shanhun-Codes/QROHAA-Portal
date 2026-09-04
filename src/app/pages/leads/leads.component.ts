@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { TableComponent } from '../../shared/components/table/table.component';
 
 @Component({
   selector: 'aa-leads',
   standalone: true,
-  imports: [MatIcon, ButtonComponent],
+  imports: [ButtonComponent, TableComponent],
   templateUrl: './leads.component.html',
   styleUrl: './leads.component.scss',
 })

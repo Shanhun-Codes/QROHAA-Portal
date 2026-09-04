@@ -176,26 +176,24 @@ mat-icon {
 // PAGE
 // ======================================================
 
-.page {
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 100vw;
 
   h3 {
     font-size: $page-header;
     font-weight: $page-header-weight;
   }
 
-  .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .page-text-secondary {
     font-size: $page-subheader;
     font-weight: $page-subheader-weight;
     color: $text-secondary;
+    margin-bottom: $spacing-md;
   }
+}
+
+.component {
+  border: 1px solid $border-light;
 }
