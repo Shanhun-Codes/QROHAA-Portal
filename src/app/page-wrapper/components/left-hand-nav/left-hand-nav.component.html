@@ -1,20 +1,50 @@
-<div class="side-bar-container">
-  <ul class="nav-list">
-    @for (item of navConfig; track item.label) {
-      <div class="list-item">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <li [routerLink]="item.route">{{ item.label }}</li>
-      </div>
-    }
-    <div class="line"></div>
-    <div class="list-item">
-      <mat-icon>help</mat-icon>
-      <li>Help | Feedback</li>
-    </div>
-  </ul>
+<div
+  class="side-bar-container"
+  class="side-bar-container"
+  [class.collapsed]="!isSideNavExpanded()"
+>
+  @if (isSideNavExpanded()) {
+    <ul class="nav-list">
+      @for (item of navConfig; track item.label) {
+        <li
+          class="list-item"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.label }}
+        </li>
+      }
+      <div class="line"></div>
+      <li class="list-item">
+        <mat-icon>help</mat-icon>
+        Help | Feedback
+      </li>
+    </ul>
+  } @else {
+    <ul class="nav-list">
+      @for (item of navConfig; track item.label) {
+        <li
+          class="list-item"
+          [routerLink]="item.route"
+          [routerLinkActive]="'true'"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </li>
+      }
+      <div class="line"></div>
+      <li class="list-item">
+        <mat-icon>help</mat-icon>
+      </li>
+    </ul>
+  }
   <div class="collapse-container">
-    <li>
-      <mat-icon>keyboard_double_arrow_left</mat-icon>
+    <li (click)="collapseSideNav()">
+      <mat-icon>{{
+        isSideNavExpanded()
+          ? "keyboard_double_arrow_left"
+          : "keyboard_double_arrow_right"
+      }}</mat-icon>
     </li>
   </div>
 </div>

@@ -1,5 +1,8 @@
 @use "styles/theme" as *;
 @use "styles/mixins" as *;
+@use "styles/spacing" as *;
+@use "styles/spacing" as *;
+@use "styles/component-sizing" as *;
 
 .aa-header {
   width: 100%;
@@ -8,6 +11,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 1.5rem;
+  border-bottom: 1px solid $border-light;
 }
 
 .aa-logo-container {

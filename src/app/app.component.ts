@@ -5,7 +5,7 @@ import { PageWrapperComponent } from './page-wrapper/page-wrapper.component';
 @Component({
   selector: 'aa-root',
   standalone: true,
-  imports: [PageWrapperComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
