@@ -5,9 +5,13 @@
 
       @for (column of tableHeaderConfig(); track column.label) {
         <col
+          [class.name-column]="column.value === 'name'"
+          [class.phone-column]="column.value === 'phone'"
+          [class.email-column]="column.value === 'email'"
+          [class.status-column]="column.value === 'status'"
+          [class.received-column]="column.value === 'createdAt'"
           [class.icon-column]="column.type === 'icon'"
           [class.action-column]="column.type === 'actions'"
-          [class.status-column]="column.value === 'status'"
         />
       }
     </colgroup>
@@ -23,6 +27,7 @@
             [class.icon-cell]="column.type === 'icon'"
             [class.action-cell]="column.type === 'actions'"
             [class.status-cell]="column.value === 'status'"
+            [class.received-column]="column.value === 'createdAt'"
           >
             {{ column.label }}
           </th>
@@ -42,6 +47,7 @@
               [class.icon-cell]="column.type === 'icon'"
               [class.action-cell]="column.type === 'actions'"
               [class.status-cell]="column.value === 'status'"
+              [class.received-column]="column.value === 'createdAt'"
             >
               @switch (column.type) {
                 @case ("icon") {
