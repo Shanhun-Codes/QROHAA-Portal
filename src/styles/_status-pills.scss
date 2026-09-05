@@ -1,0 +1,83 @@
+@use "theme" as *;
+
+// ======================================================
+// STATUS PILL
+// ======================================================
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 26px;
+  padding: 0.25rem 0.75rem;
+
+  border: 1px solid transparent;
+  border-radius: 9999px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+
+  white-space: nowrap;
+
+  // ======================================================
+  // INFO
+  // ======================================================
+
+  &.status-pill-info {
+    background-color: rgba($info, 0.12);
+    border-color: rgba($info, 0.3);
+    color: $info;
+  }
+
+  // ======================================================
+  // SUCCESS
+  // ======================================================
+
+  &.status-pill-success {
+    background-color: rgba($success, 0.12);
+    border-color: rgba($success, 0.3);
+    color: $success;
+  }
+
+  // ======================================================
+  // WARNING
+  // ======================================================
+
+  &.status-pill-warning {
+    background-color: rgba($warning, 0.12);
+    border-color: rgba($warning, 0.3);
+    color: $warning;
+  }
+
+  // ======================================================
+  // DANGER
+  // ======================================================
+
+  &.status-pill-danger {
+    background-color: rgba($danger, 0.12);
+    border-color: rgba($danger, 0.3);
+    color: $danger;
+  }
+
+  // ======================================================
+  // PURPLE
+  // ======================================================
+
+  &.status-pill-purple {
+    background-color: rgba($purple, 0.12);
+    border-color: rgba($purple, 0.3);
+    color: $purple;
+  }
+
+  // ======================================================
+  // NEUTRAL
+  // ======================================================
+
+  &.status-pill-neutral {
+    background-color: rgba($neutral, 0.14);
+    border-color: rgba($neutral, 0.3);
+    color: #94a3b8;
+  }
+}

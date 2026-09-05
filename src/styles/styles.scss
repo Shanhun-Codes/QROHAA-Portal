@@ -4,6 +4,11 @@
 @use "component-sizing" as *;
 @use "sizing" as *;
 @use "buttons" as *;
+@use "tables" as *;
+@use "pages" as *;
+@use "component-sizing" as *;
+@use "inputs" as *;
+@use "status-pills" as *;
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
@@ -139,15 +144,6 @@ ol {
   list-style: none;
 }
 
-// ======================================================
-// TABLES
-// ======================================================
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 html,
 body {
   height: 100%;
@@ -170,30 +166,4 @@ mat-icon {
     "wght" 300,
     "GRAD" 0,
     "opsz" 24;
-}
-
-// ======================================================
-// PAGE
-// ======================================================
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h3 {
-    font-size: $page-header;
-    font-weight: $page-header-weight;
-  }
-
-  .page-text-secondary {
-    font-size: $page-subheader;
-    font-weight: $page-subheader-weight;
-    color: $text-secondary;
-    margin-bottom: $spacing-md;
-  }
-}
-
-.component {
-  border: 1px solid $border-light;
 }

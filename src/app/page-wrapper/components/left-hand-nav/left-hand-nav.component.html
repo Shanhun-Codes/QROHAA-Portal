@@ -26,14 +26,15 @@
       @for (item of navConfig; track item.label) {
         <li
           class="list-item"
+          [title]="item.label"
           [routerLink]="item.route"
-          [routerLinkActive]="'true'"
+          routerLinkActive="active"
         >
           <mat-icon>{{ item.icon }}</mat-icon>
         </li>
       }
       <div class="line"></div>
-      <li class="list-item">
+      <li class="list-item" [title]="'Help | Feedback'">
         <mat-icon>help</mat-icon>
       </li>
     </ul>

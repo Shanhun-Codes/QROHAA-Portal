@@ -1,0 +1,11 @@
+<span
+  class="status-pill"
+  [class.status-pill-info]="config().variant === 'info'"
+  [class.status-pill-success]="config().variant === 'success'"
+  [class.status-pill-warning]="config().variant === 'warning'"
+  [class.status-pill-danger]="config().variant === 'danger'"
+  [class.status-pill-purple]="config().variant === 'purple'"
+  [class.status-pill-neutral]="config().variant === 'neutral'"
+>
+  {{ config().label }}
+</span>

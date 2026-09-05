@@ -1,0 +1,150 @@
+@use "theme" as *;
+
+// ======================================================
+// TABLE
+// ======================================================
+
+table {
+  width: 100%;
+  height: 100%;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  // ======================================================
+  // HEADER
+  // ======================================================
+
+  thead {
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+
+      background-color: $surface-elevated;
+
+      text-align: left;
+      font-weight: 600;
+
+      &::after {
+        content: "";
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: 1px;
+
+        background-color: $border;
+      }
+    }
+  }
+
+  tbody tr:hover {
+    cursor: pointer;
+  }
+
+  // ======================================================
+  // CELLS
+  // ======================================================
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+  }
+
+  // ======================================================
+  // ROWS
+  // ======================================================
+  tbody {
+    overflow: scroll;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: $surface-elevated;
+  }
+
+  // ======================================================
+  // COLUMN WIDTHS
+  // Used by <colgroup>
+  // ======================================================
+
+  .checkbox-column {
+    width: 48px;
+  }
+
+  .status-column {
+    width: 150px;
+  }
+
+  .icon-column {
+    width: 100px;
+  }
+
+  .action-column {
+    width: 100px;
+  }
+
+  // ======================================================
+  // CHECKBOX CELL
+  // ======================================================
+
+  .checkbox-cell {
+    text-align: center;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .table-checkbox {
+    display: block;
+
+    margin: 0 auto;
+
+    cursor: pointer;
+  }
+
+  // ======================================================
+  // STATUS CELL
+  // ======================================================
+
+  .status-cell {
+    text-align: center;
+  }
+
+  .status-column {
+    text-align: center;
+  }
+
+  // ======================================================
+  // ICON CELL
+  // ======================================================
+
+  .icon-cell {
+    text-align: center;
+
+    mat-icon {
+      display: block;
+
+      margin: 0 auto;
+    }
+  }
+
+  // ======================================================
+  // ACTION CELL
+  // ======================================================
+
+  .action-cell {
+    text-align: center;
+    padding-right: 1.5rem;
+
+    mat-icon {
+      display: block;
+
+      margin: 0 auto;
+
+      cursor: pointer;
+    }
+  }
+}

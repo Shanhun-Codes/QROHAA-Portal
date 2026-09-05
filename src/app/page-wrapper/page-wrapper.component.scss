@@ -1,7 +1,15 @@
+@use "styles/theme" as *;
+@use "styles/spacing" as *;
+@use "styles/component-sizing" as *;
+
 .flex-center-page {
   display: flex;
+  height: calc(100vh - $header-height - 2rem);
 }
 
 main {
-  margin: 1.5rem auto auto 2rem;
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: $radius-sm;
+  height: calc(100vh - $header-height - 1rem);
 }
