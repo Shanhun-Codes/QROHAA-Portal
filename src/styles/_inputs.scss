@@ -1,0 +1,64 @@
+@use "theme" as *;
+@use "spacing" as *;
+
+// ======================================================
+// CHECKBOX
+// ======================================================
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 18px;
+  height: 18px;
+
+  border: 1px solid $border-light;
+  border-radius: 4px;
+
+  background-color: $surface;
+  cursor: pointer;
+
+  display: grid;
+  place-content: center;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &::before {
+    content: "";
+
+    width: 8px;
+    height: 4px;
+
+    border-left: 2px solid $text-primary;
+    border-bottom: 2px solid $text-primary;
+
+    transform: rotate(-45deg) scale(0);
+    transition: transform 0.12s ease;
+  }
+
+  &:checked {
+    background-color: $primary;
+    border-color: $primary;
+
+    &::before {
+      transform: rotate(-45deg) scale(1);
+    }
+  }
+
+  &:hover {
+    border-color: $primary;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary, 0.18);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

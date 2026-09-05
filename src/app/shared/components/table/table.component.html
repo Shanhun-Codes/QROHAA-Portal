@@ -1,1 +1,80 @@
-<div class="component table-container"></div>
+<div class="table-container component">
+  <table>
+    <colgroup>
+      <col class="checkbox-column" />
+
+      @for (column of tableHeaderConfig(); track column.label) {
+        <col
+          [class.icon-column]="column.type === 'icon'"
+          [class.action-column]="column.type === 'actions'"
+          [class.status-column]="column.value === 'status'"
+        />
+      }
+    </colgroup>
+
+    <thead>
+      <tr>
+        <th class="checkbox-cell">
+          <input class="table-checkbox" type="checkbox" />
+        </th>
+
+        @for (column of tableHeaderConfig(); track column.label) {
+          <th
+            [class.icon-cell]="column.type === 'icon'"
+            [class.action-cell]="column.type === 'actions'"
+            [class.status-cell]="column.value === 'status'"
+          >
+            {{ column.label }}
+          </th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (data of tableDataConfig(); track data.id) {
+        <tr>
+          <td class="checkbox-cell">
+            <input class="table-checkbox" type="checkbox" />
+          </td>
+
+          @for (column of tableHeaderConfig(); track column.label) {
+            <td
+              [class.icon-cell]="column.type === 'icon'"
+              [class.action-cell]="column.type === 'actions'"
+              [class.status-cell]="column.value === 'status'"
+            >
+              @switch (column.type) {
+                @case ("icon") {
+                  <mat-icon>{{ column.icon }}</mat-icon>
+                }
+
+                @case ("actions") {
+                  <mat-icon>
+                    {{ column.icon ?? "more_vert" }}
+                  </mat-icon>
+                }
+
+                @case ("pill") {
+                  <aa-status-pill
+                    [config]="data[column.value!]"
+                  ></aa-status-pill>
+                }
+                @case ("text") {
+                  @if (column.value === "createdAt") {
+                    {{ data[column.value!] | timeAgo }}
+                  } @else {
+                    {{ data[column.value!] }}
+                  }
+                }
+
+                @default {
+                  {{ data[column.value!] }}
+                }
+              }
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
