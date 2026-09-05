@@ -1,0 +1,15 @@
+@use "theme" as *;
+
+// ======================================================
+// TEXT MIXINS
+// ======================================================
+
+@mixin metallic-red-text {
+  background: $brand-red-metallic;
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}

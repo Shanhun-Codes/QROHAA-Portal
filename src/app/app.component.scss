@@ -1,0 +1,9 @@
+@use "../styles/theme" as *;
+
+.app-portal {
+  width: 100%;
+  min-height: 100vh;
+
+  background-color: $background;
+  color: $text-primary;
+}

@@ -1,0 +1,105 @@
+@use "styles/theme" as *;
+@use "styles/spacing" as *;
+@use "styles/component-sizing" as *;
+
+.side-bar-container {
+  --sidebar-width-expanded: #{$sidebar-width-expanded};
+  --sidebar-width-collapsed: #{$sidebar-width-collapsed};
+
+  width: var(--sidebar-width-expanded);
+
+  height: calc(100vh - $header-height);
+  background-color: $surface;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  width: var(--sidebar-width-expanded);
+
+  transition: width 0.25s ease;
+
+  &.collapsed {
+    width: var(--sidebar-width-collapsed);
+
+    .list-item {
+      justify-content: center;
+      margin-left: 0;
+      padding-left: 0;
+      padding-right: 0;
+      gap: 0;
+    }
+
+    .collapse-container {
+      justify-content: center;
+
+      li {
+        margin-left: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.nav-list {
+  list-style: none;
+  padding-top: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.line {
+  height: 2px;
+  background-color: $border;
+  margin: 0 1rem;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+
+  border-left: 4px solid transparent;
+
+  transition:
+    transform 0.2s ease-in-out,
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+  border-radius: 4px 0 0 4px;
+
+  &:hover,
+  &.active {
+    cursor: pointer;
+
+    border-left-color: $primary;
+    background-color: $surface-active;
+
+    transform: translateX(4px);
+  }
+}
+
+.collapse-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-bottom: 0.5rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
