@@ -19,7 +19,7 @@
     <thead>
       <tr>
         <th class="checkbox-cell">
-          <input class="table-checkbox" type="checkbox" />
+          <!-- <input class="table-checkbox" type="checkbox" /> -->
         </th>
 
         @for (column of tableHeaderConfig(); track column.label) {
@@ -37,7 +37,7 @@
 
     <tbody>
       @for (data of tableDataConfig(); track data.id) {
-        <tr>
+        <tr (click)="onRowClick(data.id)">
           <td class="checkbox-cell">
             <input class="table-checkbox" type="checkbox" />
           </td>
@@ -65,6 +65,7 @@
                     [config]="data[column.value!]"
                   ></aa-status-pill>
                 }
+
                 @case ("text") {
                   @if (column.value === "createdAt") {
                     {{ data[column.value!] | timeAgo }}
@@ -80,6 +81,18 @@
             </td>
           }
         </tr>
+
+        @if (row() === data.id) {
+          <tr class="expanded-row">
+            <td [attr.colspan]="tableHeaderConfig().length + 1">
+              <div class="expanded-row-shell">
+                <div class="expanded-row-content">
+                  <aa-expandable-table-row [rowData]="data" />
+                </div>
+              </div>
+            </td>
+          </tr>
+        }
       }
     </tbody>
   </table>

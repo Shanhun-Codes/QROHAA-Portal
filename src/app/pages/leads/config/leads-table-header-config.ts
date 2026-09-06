@@ -33,9 +33,4 @@ export const LEAD_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [
     type: 'icon',
     icon: 'note_stack',
   },
-  {
-    label: 'Actions',
-    type: 'actions',
-    icon: 'more_vert',
-  },
 ];
