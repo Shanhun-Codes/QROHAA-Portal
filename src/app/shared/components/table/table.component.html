@@ -81,7 +81,10 @@
             <td [attr.colspan]="tableHeaderConfig().length + 1">
               <div class="expanded-row-shell">
                 <div class="expanded-row-content">
-                  <aa-expandable-table-row [rowData]="data" />
+                  <aa-expandable-table-row
+                    [rowData]="data"
+                    [expandedRowTemplate]="expandedRowTemplate()"
+                  />
                 </div>
               </div>
             </td>

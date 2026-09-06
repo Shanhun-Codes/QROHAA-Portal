@@ -31,4 +31,6 @@ export class OpenHousesComponent implements OnInit {
   ngOnInit(): void {
     this.openHousesService.getOpenHouseData();
   }
+
+  onLeadExpanded(e: string) {}
 }

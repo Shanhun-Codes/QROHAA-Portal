@@ -35,4 +35,6 @@ export class LeadsComponent implements OnInit {
   ngOnInit(): void {
     this.leadsService.getLeads();
   }
+
+  onLeadExpanded(e: string) {}
 }

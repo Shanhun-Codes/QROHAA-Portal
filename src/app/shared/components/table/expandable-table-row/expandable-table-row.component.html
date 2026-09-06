@@ -1,5 +1,3 @@
-<div class="expandable-row-container">
-  <div class="dummy-block"></div>
-  <div class="dummy-block"></div>
-  <div class="dummy-block"></div>
-</div>
+<ng-container
+  *ngTemplateOutlet="expandedRowTemplate(); context: { $implicit: rowData() }"
+></ng-container>

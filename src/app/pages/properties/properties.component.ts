@@ -34,4 +34,6 @@ export class PropertiesComponent implements OnInit {
   ngOnInit(): void {
     this.propertyService.getPropertyData();
   }
+
+  onLeadExpanded(e: string) {}
 }
