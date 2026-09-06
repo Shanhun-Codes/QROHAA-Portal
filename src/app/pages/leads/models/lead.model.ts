@@ -5,7 +5,7 @@ export interface Lead {
   name: string;
   phone: string;
   email: string;
-  status: string;
+  status: LeadStatusType;
   createdAt: string;
 }
 
