@@ -22,7 +22,7 @@ export class LeadsService {
     if (!this.agentId()) return;
 
     this.http
-      .get<Lead[]>(`${this.baseUrl}/agent-app/agents/${this.agentId()}/leads`)
+      .get<Lead[]>(`${this.baseUrl}/agents/${this.agentId()}/leads`)
       .subscribe((response) => {
         this.leads.set(
           response.map((lead) => ({

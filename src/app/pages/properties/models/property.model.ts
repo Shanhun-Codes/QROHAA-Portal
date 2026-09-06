@@ -9,3 +9,7 @@ export interface Property {
   openHouses: [];
   createdAt: string;
 }
+
+export interface PropertyTableRow extends Property {
+  listingPrice: string;
+}

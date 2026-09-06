@@ -1,7 +1,9 @@
 export interface ButtonConfig {
   label?: string;
   icon?: string;
-  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
+  variant?: TVariant;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
 }
+
+export type TVariant = 'primary' | 'secondary' | 'danger' | 'ghost';

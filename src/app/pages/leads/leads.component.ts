@@ -1,12 +1,12 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 
-import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TableComponent } from '../../shared/components/table/table.component';
-import { LEAD_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
+import { LEADS_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
 import { LeadStatusType } from './models/lead.model';
 import { mapLeadStatusToPill } from './utils/lead-status.mapper';
 import { LeadsService } from './leads.service';
-import { PageTemplateComponent } from '../page-template/page-template.component';
+import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
+import { LEADS_BUTTON_CONFIG } from './config/button.config';
 
 @Component({
   selector: 'aa-leads',
@@ -21,7 +21,9 @@ export class LeadsComponent implements OnInit {
   readonly title = 'Leads';
   readonly subtitle = 'Manage and follow up with your open house leads here';
 
-  readonly tableHeaderConfig = LEAD_TABLE_HEADER_CONFIG;
+  readonly buttonConfig = LEADS_BUTTON_CONFIG;
+
+  readonly tableHeaderConfig = LEADS_TABLE_HEADER_CONFIG;
 
   readonly tableData = computed(() =>
     this.leadsService.leads().map((lead) => ({

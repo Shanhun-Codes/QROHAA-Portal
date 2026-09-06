@@ -1,7 +1,7 @@
 import { ITableHeaderConfig } from '../../../shared/models/table.model';
 import { Lead } from '../models/lead.model';
 
-export const LEAD_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [
+export const LEADS_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [
   {
     label: 'Name',
     value: 'name',

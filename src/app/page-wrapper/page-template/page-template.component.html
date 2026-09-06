@@ -8,13 +8,7 @@
     </div>
     @if (hasTemplateButton()) {
       <div class="page-button-container">
-        <aa-button
-          [config]="{
-            label: 'Add Property',
-            icon: 'add',
-            variant: 'primary',
-          }"
-        />
+        <aa-button [config]="buttonConfig()" />
       </div>
     }
   </div>

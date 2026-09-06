@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { ExpandableTableRowService } from './table/expandable-table-row/expandable-table-row.service';
+import { ExpandableTableRowService } from './expandable-table-row/expandable-table-row.service';
 
 @Injectable({
   providedIn: 'root',

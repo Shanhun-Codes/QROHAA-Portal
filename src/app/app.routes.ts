@@ -23,6 +23,13 @@ export const routes: Routes = [
             (m) => m.PropertiesComponent,
           ),
       },
+      {
+        path: 'open-houses',
+        loadComponent: () =>
+          import('./pages/open-houses/open-houses.component').then(
+            (m) => m.OpenHousesComponent,
+          ),
+      },
     ],
   },
 ];

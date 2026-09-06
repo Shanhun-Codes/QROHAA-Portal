@@ -8,6 +8,7 @@
 
 .table-container {
   max-height: calc(100% - $header-height);
+  flex: 1;
 }
 
 table {

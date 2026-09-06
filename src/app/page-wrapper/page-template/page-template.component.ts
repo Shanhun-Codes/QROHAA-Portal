@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { ButtonConfig } from '../../shared/components/button/button.config';
 
 @Component({
   selector: 'aa-page-template',
@@ -12,4 +13,5 @@ export class PageTemplateComponent {
   readonly title = input.required<string>();
   readonly subtitle = input.required<string>();
   readonly hasTemplateButton = input<boolean>(false);
+  readonly buttonConfig = input.required<ButtonConfig>();
 }
