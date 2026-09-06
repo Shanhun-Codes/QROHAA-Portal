@@ -8,8 +8,8 @@
 }
 
 main {
-  margin: 0.5rem;
-  padding: 1rem;
+  margin: $page-margin;
+  padding: $page-margin;
   border-radius: $radius-sm;
   height: calc(100vh - $header-height - 1rem);
 }

@@ -6,11 +6,12 @@ import { LEAD_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
 import { LeadStatusType } from './models/lead.model';
 import { mapLeadStatusToPill } from './utils/lead-status.mapper';
 import { LeadsService } from './leads.service';
+import { PageTemplateComponent } from '../page-template/page-template.component';
 
 @Component({
   selector: 'aa-leads',
   standalone: true,
-  imports: [ButtonComponent, TableComponent],
+  imports: [TableComponent, PageTemplateComponent],
   templateUrl: './leads.component.html',
   styleUrl: './leads.component.scss',
 })
@@ -18,7 +19,7 @@ export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);
 
   readonly title = 'Leads';
-  readonly subTitle = 'Manage and follow up with your open house leads here';
+  readonly subtitle = 'Manage and follow up with your open house leads here';
 
   readonly tableHeaderConfig = LEAD_TABLE_HEADER_CONFIG;
 

@@ -16,6 +16,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/leads/leads.component').then((m) => m.LeadsComponent),
       },
+      {
+        path: 'properties',
+        loadComponent: () =>
+          import('./pages/properties/properties.component').then(
+            (m) => m.PropertiesComponent,
+          ),
+      },
     ],
   },
 ];

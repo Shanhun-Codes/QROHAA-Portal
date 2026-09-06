@@ -1,0 +1,22 @@
+<div class="page">
+  <div class="page-header">
+    <div class="page-headings">
+      <h3>{{ title() }}</h3>
+      <p class="page-text-secondary">
+        {{ subtitle() }}
+      </p>
+    </div>
+    @if (hasTemplateButton()) {
+      <div class="page-button-container">
+        <aa-button
+          [config]="{
+            label: 'Add Property',
+            icon: 'add',
+            variant: 'primary',
+          }"
+        />
+      </div>
+    }
+  </div>
+  <ng-content></ng-content>
+</div>

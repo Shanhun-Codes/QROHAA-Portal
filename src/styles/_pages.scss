@@ -3,6 +3,19 @@
 @use "component-sizing" as *;
 @use "sizing" as *;
 
+.page {
+  height: calc(100vh - $header-height - $page-padding - $page-margin);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.page-content {
+  flex: 1;
+  min-height: 0;
+}
+
 // ======================================================
 // PAGE
 // ======================================================
@@ -13,6 +26,7 @@
   align-items: center;
   width: 100%;
   padding: 0 0.25rem;
+  height: $header-height;
 
   h3 {
     font-size: $page-header;
@@ -28,11 +42,12 @@
 }
 
 .component {
-  max-height: calc(100% - 2rem);
-  margin: 0.25rem;
-  border: 1px solid $border-light;
+  max-height: calc(100% - $page-margin - $page-padding);
+  margin: $page-margin;
+  border: $border-width solid $border-light;
   background-color: $surface;
   border-radius: $radius-lg;
   overflow-y: auto;
   overscroll-behavior-y: none;
+  scrollbar-width: $border-width;
 }
