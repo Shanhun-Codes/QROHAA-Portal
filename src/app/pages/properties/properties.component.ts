@@ -4,7 +4,7 @@ import { TableComponent } from '../../shared/components/table/table.component';
 import { PROPERTY_TABLE_HEADER_CONFIG } from './config/properties-table-header-config';
 import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
 import { PropertiesService } from './properties.service';
-import { formatListingPrice } from '../../shared/utils/format-listing-price';
+import { formatListingPrice } from '../../shared/utils/format-listing-price.util';
 import { PropertyTableRow } from './models/property.model';
 import { PROPERTY_BUTTON_CONFIG } from './config/button.config';
 

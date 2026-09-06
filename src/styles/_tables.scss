@@ -107,6 +107,21 @@ table {
   // ======================================================
 
   // ======================================================
+  // SHARED
+  // ======================================================
+  .created-at-column {
+    width: 7.5%;
+  }
+
+  .date-column {
+    width: 10%;
+  }
+
+  .time-column {
+    width: 15%;
+  }
+
+  // ======================================================
   // LEADS
   // ======================================================
 
@@ -115,7 +130,7 @@ table {
   }
 
   .name-column {
-    width: 15%;
+    width: 12%;
   }
 
   .phone-column {
@@ -127,11 +142,11 @@ table {
   }
 
   .status-column {
-    width: 140px;
+    width: 8%;
   }
 
   .received-column {
-    width: 130px;
+    width: 12%;
   }
 
   .icon-column {
@@ -142,11 +157,17 @@ table {
     width: 100px;
   }
 
+  .created-at-column {
+    width: 10%;
+  }
+
+  .listing-price-column {
+    width: 10%;
+  }
+
   // ======================================================
   // PROPERTIES
   // ======================================================
-
-  // TODO: TRAVIS PROPERTY TABLE HERE
 
   // ======================================================
   // CHECKBOX CELL
@@ -216,4 +237,19 @@ table {
 
 .received-column {
   text-align: left;
+}
+
+// ======================================================
+// SHARED
+// ======================================================
+.created-at-cell {
+  text-align: center;
+}
+
+.listing-price-cell {
+  text-align: right;
+}
+
+.property-cell {
+  white-space: pre-line;
 }
