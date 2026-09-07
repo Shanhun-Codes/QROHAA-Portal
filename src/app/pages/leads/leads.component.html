@@ -2,7 +2,7 @@
   [title]="title"
   [subtitle]="subtitle"
   [hasTemplateButton]="true"
-  [buttonConfig]="buttonConfig"
+  [buttonConfig]="addLeadButtonConfig"
 >
   <div class="table-container">
     <aa-table
@@ -13,10 +13,175 @@
     />
 
     <ng-template #expandedRowTemplate let-row>
-      <div class="lead-expanded-row">
-        <h3>{{ row.firstName }} {{ row.lastName }}</h3>
+      @let detail = getLeadDetail(row);
 
-        <p>{{ row.email }}</p>
+      <div class="lead-expanded-row">
+        <!-- HEADER -->
+        <div class="expanded-row-header">
+          <div class="expanded-row-header-left">
+            <div class="lead-avatar">
+              {{ row.firstName?.[0] }}{{ row.lastName?.[0] }}
+            </div>
+            <div class="expanded-row-header-title">
+              <div class="title-section">
+                <h3>{{ row.firstName }} {{ row.lastName }}</h3>
+                <aa-status-pill [config]="row.status"></aa-status-pill>
+              </div>
+
+              <p>
+                Added on {{ detail.createdAt | date: "MMM d, y 'at' h:mm a" }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="expanded-row-grid">
+          <!-- LEFT COLUMN -->
+          <div class="expanded-row-left">
+            <!-- CONTACT -->
+            <div class="contact-info component">
+              <h4>Contact Information</h4>
+
+              <div class="contact-row">
+                <mat-icon>email</mat-icon>
+                <p>{{ detail.email }}</p>
+              </div>
+
+              <div class="contact-row">
+                <mat-icon>phone</mat-icon>
+                <p>{{ detail.phone }}</p>
+              </div>
+            </div>
+
+            <!-- BUYER PROFILE -->
+            <div class="buyer-profile component">
+              <h4>Buyer Profile</h4>
+
+              <div class="profile-row">
+                <mat-icon>attach_money</mat-icon>
+                <span>Budget Range</span>
+                <strong>{{ detail.budgetRange }}</strong>
+              </div>
+
+              <div class="profile-row">
+                <mat-icon>home</mat-icon>
+                <span>Purchase Timeline</span>
+                <strong>{{ detail.purchaseTimeline }}</strong>
+              </div>
+
+              <div class="profile-row">
+                <mat-icon>check_circle</mat-icon>
+                <span>Prequalified</span>
+                <strong>{{ detail.preQualified }}</strong>
+              </div>
+
+              <div class="profile-row">
+                <mat-icon>group</mat-icon>
+                <span>Interested Areas</span>
+                <strong>{{ detail.neighborhoods }}</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- MIDDLE COLUMN -->
+          <div class="submission-details component">
+            <h4>Submission Details</h4>
+
+            <div class="property-summary">
+              <div class="property-image"></div>
+
+              <div class="property-info">
+                <strong>{{ detail.property }}</strong>
+                <p>{{ detail.propertyLocation }}</p>
+              </div>
+
+              <mat-icon>chevron_right</mat-icon>
+            </div>
+
+            <div class="submission-row">
+              <mat-icon>calendar_today</mat-icon>
+              <span>Open House</span>
+              <p>
+                {{ detail.createdAt | date: "MMM d, y 'at' h:mm a" }}
+              </p>
+            </div>
+
+            <div class="submission-row">
+              <mat-icon>description</mat-icon>
+              <span>Lead Generated</span>
+              <p>{{ detail.createdAt | date: "MMM d, y 'at' h:mm a" }}</p>
+            </div>
+
+            <div class="additional-answers">
+              <h4>Additional Answers</h4>
+
+              <div class="answer-row">
+                <mat-icon>favorite_border</mat-icon>
+                <span>What did you like most?</span>
+                <p>{{ detail.likedMost }}</p>
+              </div>
+
+              <div class="answer-row">
+                <mat-icon>thumb_down_off_alt</mat-icon>
+                <span>What did you like least?</span>
+                <p>{{ detail.likedLeast }}</p>
+              </div>
+
+              <div class="answer-row">
+                <mat-icon>chat</mat-icon>
+                <span>Anything else we should know?</span>
+                <p>{{ detail.additionalComments }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div class="notes component">
+            <div class="notes-header">
+              <h4>Notes & Activity</h4>
+              <aa-button [config]="addNoteButtonConfig"></aa-button>
+            </div>
+
+            <div class="notes-list">
+              @if (detail.notes.length) {
+                @for (note of detail.notes; track note.id) {
+                  <div class="note-row">
+                    <div class="note-avatar">
+                      <mat-icon>person</mat-icon>
+                    </div>
+
+                    <div class="note-content">
+                      <div class="note-meta">
+                        <strong>You</strong>
+                        <span>{{ note.createdAt }}</span>
+                      </div>
+
+                      <p>{{ note.body }}</p>
+                    </div>
+                  </div>
+                }
+              }
+
+              <div class="note-row">
+                <div class="note-avatar">
+                  <mat-icon>calendar_today</mat-icon>
+                </div>
+
+                <div class="note-content">
+                  <div class="note-meta">
+                    <strong>Lead Created</strong>
+                    <span>{{
+                      detail.createdAt | date: "MMM d, y 'at' h:mm a"
+                    }}</span>
+                  </div>
+
+                  <p>Lead submitted from open house.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </ng-template>
   </div>

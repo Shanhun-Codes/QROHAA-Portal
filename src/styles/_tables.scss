@@ -9,6 +9,7 @@
 .table-container {
   max-height: calc(100% - $header-height);
   flex: 1;
+  overflow-y: auto;
 }
 
 table {
@@ -97,7 +98,7 @@ table {
     }
 
     to {
-      height: 300px;
+      height: fit-content;
     }
   }
 
@@ -252,4 +253,11 @@ table {
 
 .property-cell {
   white-space: pre-line;
+}
+
+aa-expanded-table-row {
+  height: 100%;
+  .expanded-row-shell {
+    height: 100%;
+  }
 }

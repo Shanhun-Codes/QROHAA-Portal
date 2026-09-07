@@ -1,0 +1,7 @@
+:host {
+  display: contents;
+}
+
+:host ::ng-deep * {
+  overscroll-behavior: auto;
+}

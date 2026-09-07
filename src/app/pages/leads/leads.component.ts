@@ -6,12 +6,26 @@ import { LeadStatusType } from './models/lead.model';
 import { mapLeadStatusToPill } from './utils/lead-status.mapper';
 import { LeadsService } from './leads.service';
 import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
-import { LEADS_BUTTON_CONFIG } from './config/button.config';
+import {
+  ADD_NOTE_BUTTON_CONFIG,
+  LEADS_BUTTON_CONFIG,
+} from './config/button.config';
+import { StatusPillComponent } from '../../shared/components/status-pill/status-pill.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { MatIcon } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'aa-leads',
   standalone: true,
-  imports: [TableComponent, PageTemplateComponent],
+  imports: [
+    TableComponent,
+    PageTemplateComponent,
+    StatusPillComponent,
+    ButtonComponent,
+    MatIcon,
+    DatePipe,
+  ],
   templateUrl: './leads.component.html',
   styleUrl: './leads.component.scss',
 })
@@ -21,7 +35,8 @@ export class LeadsComponent implements OnInit {
   readonly title = 'Leads';
   readonly subtitle = 'Manage and follow up with your open house leads here';
 
-  readonly buttonConfig = LEADS_BUTTON_CONFIG;
+  readonly addLeadButtonConfig = LEADS_BUTTON_CONFIG;
+  readonly addNoteButtonConfig = ADD_NOTE_BUTTON_CONFIG;
 
   readonly tableHeaderConfig = LEADS_TABLE_HEADER_CONFIG;
 
@@ -37,4 +52,61 @@ export class LeadsComponent implements OnInit {
   }
 
   onLeadExpanded(e: string) {}
+
+  getLeadDetail(row: any) {
+    const submission = row.submissions?.[0];
+
+    const answers = Object.fromEntries(
+      submission?.feedbackAnswers?.map((answer: any) => [
+        answer.question.key,
+        answer.value,
+      ]) ?? [],
+    );
+
+    return {
+      createdAt: row.createdAt,
+      email: row.email,
+      phone: row.phone,
+
+      budgetRange: this.formatAnswer(answers['budget_range']),
+      purchaseTimeline: this.formatAnswer(answers['purchase_timeline']),
+      preQualified: this.formatAnswer(answers['pre_qualified']),
+      neighborhoods: answers['neighborhoods'] ?? '—',
+
+      visitedAt: submission?.createdAt ?? '—',
+
+      property: submission?.openHouse?.property?.street ?? '—',
+
+      propertyLocation: submission?.openHouse?.property
+        ? `${submission.openHouse.property.city}, ${submission.openHouse.property.state} ${submission.openHouse.property.zip}`
+        : '—',
+
+      openHouseDate: submission?.openHouse?.startsAt ?? '—',
+
+      likedMost: this.formatAnswer(answers['liked_most']),
+      likedLeast: this.formatAnswer(answers['liked_least']),
+      additionalComments: answers['additional_comments'] ?? '—',
+
+      notes: row.notes ?? [],
+    };
+  }
+
+  private formatAnswer(value?: string): string {
+    if (!value) {
+      return '—';
+    }
+
+    return value
+      .toLowerCase()
+      .replaceAll('_', ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  getAvatarStatusClass(status: any): string {
+    const label = status?.label ?? status?.text ?? status ?? '';
+
+    return `lead-avatar lead-avatar--${String(label)
+      .toLowerCase()
+      .replaceAll(' ', '-')}`;
+  }
 }
