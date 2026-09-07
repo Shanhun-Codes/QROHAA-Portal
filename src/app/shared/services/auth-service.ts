@@ -1,8 +1,9 @@
 import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  readonly agentId = signal('cmtp23wx10000jvv8l8fni38e');
+  readonly agentId = signal(environment.agentId);
 }

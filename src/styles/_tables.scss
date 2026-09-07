@@ -1,8 +1,16 @@
 @use "theme" as *;
+@use "spacing" as *;
+@use "styles/component-sizing" as *;
 
 // ======================================================
 // TABLE
 // ======================================================
+
+.table-container {
+  max-height: calc(100% - $header-height);
+  flex: 1;
+  overflow-y: auto;
+}
 
 table {
   width: 100%;
@@ -42,10 +50,6 @@ table {
     }
   }
 
-  tbody tr:hover {
-    cursor: pointer;
-  }
-
   // ======================================================
   // CELLS
   // ======================================================
@@ -68,8 +72,58 @@ table {
   }
 
   // ======================================================
+  // EXPANDABLE ROWS
+  // ======================================================
+
+  .expandable-row-container {
+    padding: 16px;
+  }
+
+  .dummy-block {
+    height: 100px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background: $surface-elevated;
+  }
+
+  .expanded-row-shell {
+    height: 0;
+    overflow: hidden;
+    animation: growRow 400ms ease-out forwards;
+  }
+
+  @keyframes growRow {
+    from {
+      height: 0;
+    }
+
+    to {
+      height: fit-content;
+    }
+  }
+
+  // ======================================================
   // COLUMN WIDTHS
   // Used by <colgroup>
+  // ======================================================
+
+  // ======================================================
+  // SHARED
+  // ======================================================
+  .created-at-column {
+    width: 7.5%;
+  }
+
+  .date-column {
+    width: 10%;
+  }
+
+  .time-column {
+    width: 15%;
+  }
+
+  // ======================================================
+  // LEADS
   // ======================================================
 
   .checkbox-column {
@@ -77,7 +131,7 @@ table {
   }
 
   .name-column {
-    width: 18%;
+    width: 12%;
   }
 
   .phone-column {
@@ -89,11 +143,11 @@ table {
   }
 
   .status-column {
-    width: 140px;
+    width: 8%;
   }
 
   .received-column {
-    width: 130px;
+    width: 12%;
   }
 
   .icon-column {
@@ -103,6 +157,18 @@ table {
   .action-column {
     width: 100px;
   }
+
+  .created-at-column {
+    width: 10%;
+  }
+
+  .listing-price-column {
+    width: 10%;
+  }
+
+  // ======================================================
+  // PROPERTIES
+  // ======================================================
 
   // ======================================================
   // CHECKBOX CELL
@@ -171,5 +237,27 @@ table {
 // ======================================================
 
 .received-column {
+  text-align: left;
+}
+
+// ======================================================
+// SHARED
+// ======================================================
+.created-at-cell {
+  text-align: center;
+}
+
+.listing-price-cell {
   text-align: right;
+}
+
+.property-cell {
+  white-space: pre-line;
+}
+
+aa-expanded-table-row {
+  height: 100%;
+  .expanded-row-shell {
+    height: 100%;
+  }
 }

@@ -16,6 +16,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/leads/leads.component').then((m) => m.LeadsComponent),
       },
+      {
+        path: 'properties',
+        loadComponent: () =>
+          import('./pages/properties/properties.component').then(
+            (m) => m.PropertiesComponent,
+          ),
+      },
+      {
+        path: 'open-houses',
+        loadComponent: () =>
+          import('./pages/open-houses/open-houses.component').then(
+            (m) => m.OpenHousesComponent,
+          ),
+      },
     ],
   },
 ];

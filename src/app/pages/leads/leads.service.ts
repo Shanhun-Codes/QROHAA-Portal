@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/auth-service';
 import { Lead } from './models/lead.model';
 import { mapLeadStatusToPill } from './utils/lead-status.mapper';
-import { formatPhoneNumber } from '../../shared/utils/format-phone-number';
+import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class LeadsService {
     if (!this.agentId()) return;
 
     this.http
-      .get<Lead[]>(`${this.baseUrl}/agent-app/agents/${this.agentId()}/leads`)
+      .get<Lead[]>(`${this.baseUrl}/agents/${this.agentId()}/leads`)
       .subscribe((response) => {
         this.leads.set(
           response.map((lead) => ({

@@ -1,7 +1,7 @@
 import { ITableHeaderConfig } from '../../../shared/models/table.model';
 import { Lead } from '../models/lead.model';
 
-export const LEAD_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [
+export const LEADS_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [
   {
     label: 'Name',
     value: 'name',
@@ -32,10 +32,5 @@ export const LEAD_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [
     label: 'Notes',
     type: 'icon',
     icon: 'note_stack',
-  },
-  {
-    label: 'Actions',
-    type: 'actions',
-    icon: 'more_vert',
   },
 ];

@@ -1,8 +1,11 @@
 @use "styles/theme" as *;
 @use "styles/spacing" as *;
 @use "styles/component-sizing" as *;
+@use "styles/sizing" as *;
 
 .side-bar-container {
+  border-right: solid $border-width $border-light;
+  border-radius: 0 $radius-sm $radius-sm 0;
   --sidebar-width-expanded: #{$sidebar-width-expanded};
   --sidebar-width-collapsed: #{$sidebar-width-collapsed};
 

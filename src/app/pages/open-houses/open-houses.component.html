@@ -1,0 +1,19 @@
+<aa-page-template
+  [title]="title"
+  [subtitle]="subtitle"
+  [hasTemplateButton]="true"
+  [buttonConfig]="buttonConfig"
+>
+  <aa-table
+    [tableDataConfig]="tableData()"
+    [tableHeaderConfig]="tableHeaderConfig"
+    [expandedRowTemplate]="expandedRowTemplate"
+    (rowExpanded)="onLeadExpanded($event)"
+  />
+
+  <ng-template #expandedRowTemplate let-row>
+    <div class="lead-expanded-row">
+      <h3>{{ row.property }}</h3>
+    </div>
+  </ng-template>
+</aa-page-template>
