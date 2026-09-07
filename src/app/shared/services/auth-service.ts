@@ -5,5 +5,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  readonly agentId = signal(environment.agentId);
+  readonly _agentId = environment.agentId;
+  readonly agentId = signal(this._agentId);
 }
