@@ -7,8 +7,9 @@ import { mapLeadStatusToPill } from './utils/lead-status.mapper';
 import { LeadsService } from './leads.service';
 import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
 import {
-  ADD_NOTE_BUTTON_CONFIG,
+  ACTION_BUTTON_CONFIG,
   LEADS_BUTTON_CONFIG,
+  NOTE_BUTTON_CONFIG,
 } from './config/button.config';
 import { StatusPillComponent } from '../../shared/components/status-pill/status-pill.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
@@ -36,7 +37,8 @@ export class LeadsComponent implements OnInit {
   readonly subtitle = 'Manage and follow up with your open house leads here';
 
   readonly addLeadButtonConfig = LEADS_BUTTON_CONFIG;
-  readonly addNoteButtonConfig = ADD_NOTE_BUTTON_CONFIG;
+  readonly addNoteButtonConfig = NOTE_BUTTON_CONFIG;
+  readonly actionsButtonConfig = ACTION_BUTTON_CONFIG;
 
   readonly tableHeaderConfig = LEADS_TABLE_HEADER_CONFIG;
 
