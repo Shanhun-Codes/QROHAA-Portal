@@ -7,9 +7,16 @@ export const LEADS_BUTTON_CONFIG: ButtonConfig = {
   size: 'md',
 };
 
-export const ADD_NOTE_BUTTON_CONFIG: ButtonConfig = {
+export const NOTE_BUTTON_CONFIG: ButtonConfig = {
   label: 'Add Note',
   icon: 'note_stack',
+  variant: 'primary',
+  size: 'sm',
+};
+
+export const ACTION_BUTTON_CONFIG: ButtonConfig = {
+  label: 'Actions',
+  icon: 'more_vert',
   variant: 'primary',
   size: 'sm',
 };
