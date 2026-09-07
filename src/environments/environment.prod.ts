@@ -2,5 +2,5 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://api.open-house.studio',
+  apiUrl: 'https://api.open-house.studio/agent-app',
 };
