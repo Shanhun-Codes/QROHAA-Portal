@@ -1,0 +1,71 @@
+@use "../../../../styles/variables" as *;
+
+.snackbar-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  z-index: 5000;
+
+  pointer-events: none;
+}
+
+.snackbar {
+  min-width: 20rem;
+  max-width: 28rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.875rem 1rem;
+
+  color: $text-primary;
+  background: $surface-elevated;
+
+  border: 1px solid $border;
+  border-left-width: 4px;
+  border-radius: 0.5rem;
+
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.3);
+
+  pointer-events: auto;
+}
+
+.snackbar--success {
+  border-left-color: $success;
+}
+
+.snackbar--error {
+  border-left-color: $danger;
+}
+
+.snackbar--warning {
+  border-left-color: $warning;
+}
+
+.snackbar--info {
+  border-left-color: $info;
+}
+
+.snackbar-close {
+  border: 0;
+  padding: 0;
+
+  color: $text-secondary;
+  background: transparent;
+
+  font-size: 1.25rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
