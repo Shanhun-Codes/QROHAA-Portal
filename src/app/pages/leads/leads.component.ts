@@ -1,4 +1,11 @@
-import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 
 import { TableComponent } from '../../shared/components/table/table.component';
 import { LEADS_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
@@ -15,6 +22,8 @@ import { StatusPillComponent } from '../../shared/components/status-pill/status-
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { MatIcon } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
+import { AppLoadingService } from '../../shared/services/app-loading.service';
+import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 
 @Component({
   selector: 'aa-leads',
@@ -32,6 +41,8 @@ import { DatePipe } from '@angular/common';
 })
 export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);
+  private readonly appLoaderService = inject(AppLoadingService);
+  readonly isLoading = this.appLoaderService.isAppLoading;
 
   readonly title = 'Leads';
   readonly subtitle = 'Manage and follow up with your open house leads here';
@@ -54,7 +65,39 @@ export class LeadsComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.leadsService.getLeads();
+    const minimumDelay = new Promise<void>((resolve) =>
+      setTimeout(resolve, 1500),
+    );
+
+    const fontsReady = document.fonts.ready;
+
+    const leadsRequest = new Promise<void>((resolve, reject) => {
+      const request = this.leadsService.getLeads();
+
+      if (!request) {
+        resolve();
+        return;
+      }
+
+      request.subscribe({
+        next: (response) => {
+          this.leadsService.leads.set(
+            response.map((lead) => ({
+              ...lead,
+              name: `${lead.firstName} ${lead.lastName}`,
+              phone: formatPhoneNumber(lead.phone),
+            })),
+          );
+
+          resolve();
+        },
+        error: reject,
+      });
+    });
+
+    Promise.all([leadsRequest, minimumDelay, fontsReady]).finally(() => {
+      this.appLoaderService.stopLoading();
+    });
   }
 
   onAddLeadClick() {

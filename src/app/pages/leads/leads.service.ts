@@ -20,20 +20,14 @@ export class LeadsService {
 
   public leads = signal<Lead[] | []>([]);
 
-  public getLeads(): void {
-    if (!this.agentId()) return;
+  public getLeads() {
+    if (!this.agentId()) {
+      return;
+    }
 
-    this.http
-      .get<Lead[]>(`${this.baseUrl}/agents/${this.agentId()}/leads`)
-      .subscribe((response) => {
-        this.leads.set(
-          response.map((lead) => ({
-            ...lead,
-            name: `${lead.firstName} ${lead.lastName}`,
-            phone: formatPhoneNumber(lead.phone),
-          })),
-        );
-      });
+    return this.http.get<Lead[]>(
+      `${this.baseUrl}/agents/${this.agentId()}/leads`,
+    );
   }
 
   async openAddLeadDialog(): Promise<void> {
