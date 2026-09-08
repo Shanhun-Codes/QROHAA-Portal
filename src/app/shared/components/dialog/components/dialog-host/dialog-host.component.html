@@ -48,13 +48,8 @@
         <footer class="dialog-actions">
           @for (action of dialog.config.actions; track action.label) {
             <aa-button
-              [config]="{
-                label: action.label,
-                variant: action.type ?? 'secondary',
-                disabled: action.disabled ?? false,
-              }"
+              [config]="getActionButtonConfig(dialog.id, action)"
               [class.dialog-primary-action]="action.type === 'primary'"
-              (click)="onActionClick(dialog.id, action)"
             />
           }
         </footer>

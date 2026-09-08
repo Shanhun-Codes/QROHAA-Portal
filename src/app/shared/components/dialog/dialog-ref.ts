@@ -26,6 +26,7 @@ export class DialogRef<TResult = unknown> {
     if (this._closed()) {
       return;
     }
+    console.log('DIALOG REF CLOSE:', result);
 
     this._result.set(result);
     this._closed.set(true);
@@ -43,10 +44,7 @@ export class DialogRef<TResult = unknown> {
   }
 
   submit(): void {
-    console.log('DIALOG REF SUBMIT');
-
     if (!this.submitHandler) {
-      console.log('NO SUBMIT HANDLER REGISTERED');
       return;
     }
 

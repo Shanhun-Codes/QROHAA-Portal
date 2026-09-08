@@ -64,7 +64,6 @@ export class DialogHostComponent {
   }
 
   onActionClick(id: string, action: DialogAction): void {
-    console.log('DIALOG ACTION:', action);
     if (action.disabled) {
       return;
     }
@@ -220,5 +219,14 @@ export class DialogHostComponent {
   private restorePreviousFocus(): void {
     this.previouslyFocusedElement?.focus();
     this.previouslyFocusedElement = null;
+  }
+
+  getActionButtonConfig(id: string, action: DialogAction) {
+    return {
+      label: action.label,
+      variant: action.type ?? 'secondary',
+      disabled: action.disabled ?? false,
+      click: () => this.onActionClick(id, action),
+    };
   }
 }

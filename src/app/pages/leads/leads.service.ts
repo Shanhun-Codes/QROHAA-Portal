@@ -37,7 +37,7 @@ export class LeadsService {
   }
 
   async openAddLeadDialog(): Promise<void> {
-    const ref = this.dialogService.open<string>({
+    const ref = this.dialogService.open<any>({
       title: 'Lead Details',
       contentComponent: AddLeadDialogComponent,
       data: {
@@ -56,9 +56,10 @@ export class LeadsService {
         },
       ],
     });
+    console.log('WAITING FOR DIALOG');
 
     const result = await ref.afterClosed();
 
-    console.log('Dialog result:', result);
+    console.log('RESULT IN LEADS SERVICE:', result);
   }
 }

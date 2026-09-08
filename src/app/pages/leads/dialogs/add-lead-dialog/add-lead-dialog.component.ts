@@ -13,7 +13,7 @@ import { DynamicFormComponent } from '../../../../shared/components/dynamic-form
 export class AddLeadDialogComponent {
   readonly data = input<{ name: string }>();
 
-  readonly config = ADD_LEAD_FORM_CONFIG;
+  readonly formConfig = ADD_LEAD_FORM_CONFIG;
 
   readonly dialogRef = input.required<DialogRef<any>>();
 }
