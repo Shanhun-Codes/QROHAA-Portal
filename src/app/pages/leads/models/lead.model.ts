@@ -17,3 +17,10 @@ export enum LeadStatusType {
   CLOSED = 'CLOSED',
   LOST = 'LOST',
 }
+
+export interface AddLeadFormValue {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}

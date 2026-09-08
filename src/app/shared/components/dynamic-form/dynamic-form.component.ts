@@ -43,11 +43,7 @@ export class DynamicFormComponent {
 
     const values = form.getRawValue();
 
-    console.log('FORM SUBMIT VALUES:', values);
-
     this.formSubmit.emit(values);
-
-    this.dialogRef()?.close(values);
   }
 
   private buildForm(config: DynamicFormConfig): FormGroup {

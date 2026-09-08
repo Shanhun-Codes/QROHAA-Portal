@@ -197,22 +197,27 @@ export class DialogHostComponent {
         return;
       }
 
+      const firstFormControl = dialog.querySelector<HTMLElement>(
+        [
+          'input:not([disabled]):not([type="hidden"])',
+          'select:not([disabled])',
+          'textarea:not([disabled])',
+        ].join(','),
+      );
+
       const primaryButton = dialog.querySelector<HTMLButtonElement>(
         '.dialog-primary-action button',
       );
 
       const firstFocusable = dialog.querySelector<HTMLElement>(
         [
-          'input:not([disabled])',
-          'select:not([disabled])',
-          'textarea:not([disabled])',
           'button:not([disabled])',
           '[href]',
           '[tabindex]:not([tabindex="-1"])',
         ].join(','),
       );
 
-      (primaryButton ?? firstFocusable)?.focus();
+      (firstFormControl ?? primaryButton ?? firstFocusable ?? dialog).focus();
     });
   }
 

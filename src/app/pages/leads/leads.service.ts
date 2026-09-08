@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/auth-service';
-import { Lead } from './models/lead.model';
+import { AddLeadFormValue, Lead } from './models/lead.model';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { AddLeadDialogComponent } from './dialogs/add-lead-dialog/add-lead-dialog.component';
+import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,7 @@ export class LeadsService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
+  private readonly snackbarService = inject(SnackbarService);
 
   private readonly baseUrl = environment.apiUrl;
   private readonly agentId = this.authService.agentId;
@@ -30,30 +33,57 @@ export class LeadsService {
     );
   }
 
+  async createLead(data: AddLeadFormValue): Promise<boolean> {
+    const payload = {
+      ...data,
+      phone: data.phone.trim() || null,
+      email: data.email.trim() || null,
+      agentId: this.agentId(),
+    };
+
+    try {
+      await firstValueFrom(
+        this.http.post<Lead>(`${this.baseUrl}/leads`, payload),
+      );
+
+      this.snackbarService.success('Lead successfully created');
+
+      this.getLeads()?.subscribe((response) => {
+        this.leads.set(
+          response.map((lead) => ({
+            ...lead,
+            name: `${lead.firstName} ${lead.lastName}`,
+            phone: formatPhoneNumber(lead.phone),
+          })),
+        );
+      });
+
+      return true;
+    } catch {
+      this.snackbarService.error('An error occurred, please try again');
+
+      return false;
+    }
+  }
+
   async openAddLeadDialog(): Promise<void> {
-    const ref = this.dialogService.open<any>({
+    this.dialogService.open({
       title: 'Lead Details',
       contentComponent: AddLeadDialogComponent,
       data: {
-        name: 'John Smith',
+        onSubmit: (values: AddLeadFormValue) => this.createLead(values),
       },
       actions: [
         {
           label: 'Cancel',
           type: 'secondary',
-          value: 'cancel',
         },
         {
-          label: 'Save',
+          label: 'Add Lead',
           type: 'primary',
           submit: true,
         },
       ],
     });
-    console.log('WAITING FOR DIALOG');
-
-    const result = await ref.afterClosed();
-
-    console.log('RESULT IN LEADS SERVICE:', result);
   }
 }

@@ -12,8 +12,8 @@ import { AppLoadingService } from './shared/services/app-loading.service';
   imports: [
     RouterOutlet,
     DialogHostComponent,
-    SnackbarHostComponent,
     AppLoaderComponent,
+    SnackbarHostComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

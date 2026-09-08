@@ -1,71 +1,78 @@
-@use "../../../../styles/variables" as *;
+@use "styles/theme" as *;
 
 .snackbar-container {
   position: fixed;
   top: 1.5rem;
   right: 1.5rem;
+  z-index: 20000;
 
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
-  z-index: 5000;
-
-  pointer-events: none;
 }
 
 .snackbar {
-  min-width: 20rem;
-  max-width: 28rem;
+  min-width: 300px;
+  max-width: 420px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 
-  padding: 0.875rem 1rem;
+  padding: 0.9rem 1.1rem;
 
-  color: $text-primary;
-  background: $surface-elevated;
+  border-radius: 0.6rem;
 
-  border: 1px solid $border;
-  border-left-width: 4px;
-  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
 
-  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 
-  pointer-events: auto;
+  animation: snackbar-enter 180ms ease-out;
 }
 
 .snackbar--success {
-  border-left-color: $success;
+  background-color: $success;
 }
 
 .snackbar--error {
-  border-left-color: $danger;
+  background-color: $danger;
 }
 
 .snackbar--warning {
-  border-left-color: $warning;
+  background-color: $warning;
 }
 
 .snackbar--info {
-  border-left-color: $info;
+  background-color: $info;
 }
 
 .snackbar-close {
   border: 0;
-  padding: 0;
-
-  color: $text-secondary;
   background: transparent;
+  color: inherit;
 
   font-size: 1.25rem;
   line-height: 1;
 
   cursor: pointer;
+  opacity: 0.8;
 
   &:hover {
-    color: $text-primary;
+    opacity: 1;
+  }
+}
+
+@keyframes snackbar-enter {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
