@@ -1,4 +1,4 @@
-import { ITableHeaderConfig } from '../../../shared/models/table.model';
+import { ITableHeaderConfig } from '../../../shared/components/models/table.model';
 import { Lead } from '../models/lead.model';
 
 export const LEADS_TABLE_HEADER_CONFIG: ITableHeaderConfig<Lead>[] = [

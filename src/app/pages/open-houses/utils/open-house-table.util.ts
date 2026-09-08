@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 
 import { OpenHouse, OpenHouseTableRow } from '../models/open-house.model';
 import { formatListingPrice } from '../../../shared/utils/format-listing-price.util';
-import { StatusPillConfig } from '../../../shared/models/status-pill.model';
+import { StatusPillConfig } from '../../../shared/components/models/status-pill.model';
 
 export function mapOpenHouseToTableRow(
   openHouse: OpenHouse,

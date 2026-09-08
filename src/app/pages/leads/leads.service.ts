@@ -3,8 +3,9 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/auth-service';
 import { Lead } from './models/lead.model';
-import { mapLeadStatusToPill } from './utils/lead-status.mapper';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
+import { DialogService } from '../../shared/components/dialog/dialog.service';
+import { AddLeadDialogComponent } from './dialogs/add-lead-dialog/add-lead-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 export class LeadsService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly dialogService = inject(DialogService);
 
   private readonly baseUrl = environment.apiUrl;
   private readonly agentId = this.authService.agentId;
@@ -32,5 +34,31 @@ export class LeadsService {
           })),
         );
       });
+  }
+
+  async openAddLeadDialog(): Promise<void> {
+    const ref = this.dialogService.open<string>({
+      title: 'Lead Details',
+      contentComponent: AddLeadDialogComponent,
+      data: {
+        name: 'John Smith',
+      },
+      actions: [
+        {
+          label: 'Cancel',
+          type: 'secondary',
+          value: 'cancel',
+        },
+        {
+          label: 'Save',
+          type: 'primary',
+          submit: true,
+        },
+      ],
+    });
+
+    const result = await ref.afterClosed();
+
+    console.log('Dialog result:', result);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
-import { ButtonConfig } from './button.config';
 import { MatIcon } from '@angular/material/icon';
+
+import { ButtonConfig } from './button.config';
 
 @Component({
   selector: 'aa-button',
@@ -16,4 +17,12 @@ export class ButtonComponent {
     size: 'md',
     disabled: false,
   });
+
+  onClick(): void {
+    if (this.config().disabled) {
+      return;
+    }
+
+    this.config().click?.();
+  }
 }

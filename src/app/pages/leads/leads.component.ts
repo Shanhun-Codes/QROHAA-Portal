@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit } from '@angular/core';
 
 import { TableComponent } from '../../shared/components/table/table.component';
 import { LEADS_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
@@ -36,7 +36,11 @@ export class LeadsComponent implements OnInit {
   readonly title = 'Leads';
   readonly subtitle = 'Manage and follow up with your open house leads here';
 
-  readonly addLeadButtonConfig = LEADS_BUTTON_CONFIG;
+  readonly addLeadButtonConfig = {
+    ...LEADS_BUTTON_CONFIG,
+    click: () => this.onAddLeadClick(),
+  };
+
   readonly addNoteButtonConfig = NOTE_BUTTON_CONFIG;
   readonly actionsButtonConfig = ACTION_BUTTON_CONFIG;
 
@@ -51,6 +55,10 @@ export class LeadsComponent implements OnInit {
 
   ngOnInit(): void {
     this.leadsService.getLeads();
+  }
+
+  onAddLeadClick() {
+    this.leadsService.openAddLeadDialog();
   }
 
   onLeadExpanded(e: string) {}

@@ -1,4 +1,4 @@
-import { StatusPillConfig } from '../../../shared/models/status-pill.model';
+import { StatusPillConfig } from '../../../shared/components/models/status-pill.model';
 import { Property } from '../../properties/models/property.model';
 
 export interface OpenHouse {

@@ -1,5 +1,5 @@
 import { Component, input, output, signal, TemplateRef } from '@angular/core';
-import { ITableHeaderConfig } from '../../models/table.model';
+import { ITableHeaderConfig } from '../models/table.model';
 import { MatIcon } from '@angular/material/icon';
 import { StatusPillComponent } from '../status-pill/status-pill.component';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';

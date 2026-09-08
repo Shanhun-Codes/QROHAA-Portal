@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { StatusPillConfig } from '../../models/status-pill.model';
+import { StatusPillConfig } from '../models/status-pill.model';
 
 @Component({
   selector: 'aa-status-pill',
