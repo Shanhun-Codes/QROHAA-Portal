@@ -1,11 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 
 import { TableComponent } from '../../shared/components/table/table.component';
 import { LEADS_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
@@ -24,18 +17,12 @@ import { MatIcon } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { AppLoadingService } from '../../shared/services/app-loading.service';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
+import { LeadExpandedRowComponent } from './components/lead-expanded-row/lead-expanded-row.component';
 
 @Component({
   selector: 'aa-leads',
   standalone: true,
-  imports: [
-    TableComponent,
-    PageTemplateComponent,
-    StatusPillComponent,
-    ButtonComponent,
-    MatIcon,
-    DatePipe,
-  ],
+  imports: [TableComponent, PageTemplateComponent, LeadExpandedRowComponent],
   templateUrl: './leads.component.html',
   styleUrl: './leads.component.scss',
 })
@@ -51,9 +38,6 @@ export class LeadsComponent implements OnInit {
     ...LEADS_BUTTON_CONFIG,
     click: () => this.onAddLeadClick(),
   };
-
-  readonly addNoteButtonConfig = NOTE_BUTTON_CONFIG;
-  readonly actionsButtonConfig = ACTION_BUTTON_CONFIG;
 
   readonly tableHeaderConfig = LEADS_TABLE_HEADER_CONFIG;
 
@@ -105,61 +89,4 @@ export class LeadsComponent implements OnInit {
   }
 
   onLeadExpanded(e: string) {}
-
-  getLeadDetail(row: any) {
-    const submission = row.submissions?.[0];
-
-    const answers = Object.fromEntries(
-      submission?.feedbackAnswers?.map((answer: any) => [
-        answer.question.key,
-        answer.value,
-      ]) ?? [],
-    );
-
-    return {
-      createdAt: row.createdAt,
-      email: row.email,
-      phone: row.phone,
-
-      budgetRange: this.formatAnswer(answers['budget_range']),
-      purchaseTimeline: this.formatAnswer(answers['purchase_timeline']),
-      preQualified: this.formatAnswer(answers['pre_qualified']),
-      neighborhoods: answers['neighborhoods'] ?? '—',
-
-      visitedAt: submission?.createdAt ?? '—',
-
-      property: submission?.openHouse?.property?.street ?? '—',
-
-      propertyLocation: submission?.openHouse?.property
-        ? `${submission.openHouse.property.city}, ${submission.openHouse.property.state} ${submission.openHouse.property.zip}`
-        : '—',
-
-      openHouseDate: submission?.openHouse?.startsAt ?? '—',
-
-      likedMost: this.formatAnswer(answers['liked_most']),
-      likedLeast: this.formatAnswer(answers['liked_least']),
-      additionalComments: answers['additional_comments'] ?? '—',
-
-      notes: row.notes ?? [],
-    };
-  }
-
-  private formatAnswer(value?: string): string {
-    if (!value) {
-      return '—';
-    }
-
-    return value
-      .toLowerCase()
-      .replaceAll('_', ' ')
-      .replace(/\b\w/g, (char) => char.toUpperCase());
-  }
-
-  getAvatarStatusClass(status: any): string {
-    const label = status?.label ?? status?.text ?? status ?? '';
-
-    return `lead-avatar lead-avatar--${String(label)
-      .toLowerCase()
-      .replaceAll(' ', '-')}`;
-  }
 }
