@@ -5,7 +5,7 @@ import { AuthService } from '../../shared/services/auth-service';
 import { AddLeadFormValue, Lead } from './models/lead.model';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
-import { LeadDialogComponent } from './dialogs/add-lead-dialog/add-lead-dialog.component';
+import { LeadDialogComponent } from './dialogs/lead-dialog/lead-dialog.component';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { firstValueFrom } from 'rxjs';
 import { DialogType } from './models/note.model';

@@ -1,6 +1,6 @@
 import { DynamicFormConfig } from '../../../shared/components/models/dynamic-form.model';
 
-export const ADD_LEAD_FORM_CONFIG: DynamicFormConfig = {
+export const LEAD_FORM_CONFIG: DynamicFormConfig = {
   layout: {
     gap: 'md',
     labelPosition: 'top',

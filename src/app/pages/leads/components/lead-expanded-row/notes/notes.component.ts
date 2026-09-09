@@ -48,7 +48,6 @@ export class NotesComponent implements OnInit, AfterViewInit {
   }
 
   onRowClick(noteId: string, noteBody: string): void {
-    console.log('CLICKED FROM COMPONENT', noteId);
     this.notesService.openNoteDialog('EDIT', noteId, noteBody);
   }
 }
