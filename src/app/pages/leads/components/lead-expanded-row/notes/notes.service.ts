@@ -98,7 +98,7 @@ export class NotesService {
       this.isNotesLoading.set(true);
 
       const response = await firstValueFrom(
-        this.http.put<Note[]>(
+        this.http.patch<Note[]>(
           `${this.baseUrl}/agents/${this.agentId}/leads/${this.leadId()}/notes/${noteId}`,
           payload,
         ),
@@ -123,7 +123,7 @@ export class NotesService {
     noteBody?: string,
   ): Promise<void> {
     this.dialogService.open({
-      title: mode === 'ADD' ? 'Add Note' : 'Edit Note',
+      title: mode === 'ADD' ? 'Add Note' : 'Update',
       contentComponent: NoteDialogComponent,
       data: {
         mode,
