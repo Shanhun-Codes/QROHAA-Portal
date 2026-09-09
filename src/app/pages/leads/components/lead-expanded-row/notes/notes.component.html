@@ -1,0 +1,46 @@
+<div class="notes-header">
+  <h4>Notes & Activity</h4>
+  <aa-button [config]="addNoteButtonConfig"></aa-button>
+</div>
+
+@if (isNotesLoading()) {
+  <div class="notes-loading">
+    <aa-spinner></aa-spinner>
+  </div>
+} @else {
+  <div class="notes-list">
+    @if (notes()) {
+      @for (note of notes(); track note.id) {
+        <div class="note-row" (click)="onRowClick(note.id, note.body)">
+          <div class="note-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <div class="note-content">
+            <div class="note-meta">
+              <strong>Created: </strong>
+              <span>{{ note.createdAt | date: "MMM d, y 'at' h:mm a" }}</span>
+            </div>
+
+            <p>{{ note.body }}</p>
+          </div>
+        </div>
+      }
+    }
+
+    <div class="note-row">
+      <div class="note-avatar">
+        <mat-icon>calendar_today</mat-icon>
+      </div>
+
+      <div class="note-content">
+        <div class="note-meta">
+          <strong>Lead Created</strong>
+          <span>{{ leadCreated() | date: "MMM d, y 'at' h:mm a" }}</span>
+        </div>
+
+        <p>Lead submitted from open house.</p>
+      </div>
+    </div>
+  </div>
+}

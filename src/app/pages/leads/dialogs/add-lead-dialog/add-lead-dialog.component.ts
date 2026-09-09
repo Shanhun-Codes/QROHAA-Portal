@@ -15,7 +15,7 @@ interface AddLeadDialogData {
   templateUrl: './add-lead-dialog.component.html',
   styleUrl: './add-lead-dialog.component.scss',
 })
-export class AddLeadDialogComponent {
+export class LeadDialogComponent {
   readonly data = input.required<AddLeadDialogData>();
   readonly dialogRef = input.required<DialogRef<any>>();
 

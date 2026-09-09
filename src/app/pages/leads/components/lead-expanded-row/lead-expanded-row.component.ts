@@ -2,19 +2,16 @@ import { Component, inject, input, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { StatusPillComponent } from '../../../../shared/components/status-pill/status-pill.component';
 import { DatePipe } from '@angular/common';
-import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import {
-  ACTION_BUTTON_CONFIG,
-  NOTE_BUTTON_CONFIG,
-} from '../../config/button.config';
+import { ACTION_BUTTON_CONFIG } from '../../config/button.config';
 import { LeadExpandedRowService } from './lead-expanded-row.service';
 import { Lead } from '../../models/lead.model';
 import { formatPhoneNumber } from '../../../../shared/utils/format-phone-number.util';
+import { NotesComponent } from './notes/notes.component';
 
 @Component({
   selector: 'aa-lead-expanded-row',
   standalone: true,
-  imports: [MatIcon, StatusPillComponent, DatePipe, ButtonComponent],
+  imports: [MatIcon, StatusPillComponent, DatePipe, NotesComponent],
   templateUrl: './lead-expanded-row.component.html',
   styleUrl: './lead-expanded-row.component.scss',
 })
@@ -26,11 +23,6 @@ export class LeadExpandedRowComponent implements OnInit {
   readonly leadDetails = this.expandedRowService.leadDetails;
 
   readonly actionsButtonConfig = ACTION_BUTTON_CONFIG;
-
-  readonly addNoteButtonConfig = {
-    ...NOTE_BUTTON_CONFIG,
-    click: () => this.onAddNoteClick(),
-  };
 
   ngOnInit(): void {
     const request = this.expandedRowService.getLead(this.row().id);
@@ -74,17 +66,11 @@ export class LeadExpandedRowComponent implements OnInit {
           likedMost: this.formatAnswer(answers['liked_most']),
           likedLeast: this.formatAnswer(answers['liked_least']),
           additionalComments: answers['additional_comments'] ?? '—',
-
-          notes: response.notes ?? [],
         });
 
         console.log('LEAD DETAIL:', response);
       },
     });
-  }
-
-  onAddNoteClick(): void {
-    this.expandedRowService.openAddNoteDialog();
   }
 
   private formatAnswer(value?: string): string {

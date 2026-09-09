@@ -5,9 +5,10 @@ import { AuthService } from '../../shared/services/auth-service';
 import { AddLeadFormValue, Lead } from './models/lead.model';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
-import { AddLeadDialogComponent } from './dialogs/add-lead-dialog/add-lead-dialog.component';
+import { LeadDialogComponent } from './dialogs/add-lead-dialog/add-lead-dialog.component';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { firstValueFrom } from 'rxjs';
+import { DialogType } from './models/note.model';
 
 @Injectable({
   providedIn: 'root',
@@ -66,10 +67,10 @@ export class LeadsService {
     }
   }
 
-  async openAddLeadDialog(): Promise<void> {
+  async openLeadDialog(mode: DialogType, leadId?: string): Promise<void> {
     this.dialogService.open({
       title: 'Lead Details',
-      contentComponent: AddLeadDialogComponent,
+      contentComponent: LeadDialogComponent,
       data: {
         onSubmit: (values: AddLeadFormValue) => this.createLead(values),
       },
@@ -79,7 +80,7 @@ export class LeadsService {
           type: 'secondary',
         },
         {
-          label: 'Add Lead',
+          label: mode === 'ADD' ? 'Add Lead' : 'Edit Lead',
           type: 'primary',
           submit: true,
         },

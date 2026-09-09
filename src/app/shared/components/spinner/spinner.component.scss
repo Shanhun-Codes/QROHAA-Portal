@@ -1,0 +1,16 @@
+.spinner {
+  flex-shrink: 0;
+
+  border: 3px solid var(--spinner-track-color);
+  border-top-color: var(--spinner-color);
+
+  border-radius: 50%;
+
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

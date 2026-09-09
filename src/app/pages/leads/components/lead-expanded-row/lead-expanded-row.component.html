@@ -113,59 +113,15 @@
           <span>What did you like least?</span>
           <p>{{ leadDetails().likedLeast }}</p>
         </div>
-
-        <div class="answer-row">
-          <mat-icon>chat</mat-icon>
-          <span>Anything else we should know?</span>
-          <p>{{ leadDetails().additionalComments }}</p>
-        </div>
       </div>
     </div>
 
     <!-- RIGHT COLUMN -->
     <div class="notes component">
-      <div class="notes-header">
-        <h4>Notes & Activity</h4>
-        <aa-button [config]="addNoteButtonConfig"></aa-button>
-      </div>
-
-      <div class="notes-list">
-        @if (leadDetails()) {
-          @for (note of leadDetails().notes; track note.id) {
-            <div class="note-row">
-              <div class="note-avatar">
-                <mat-icon>person</mat-icon>
-              </div>
-
-              <div class="note-content">
-                <div class="note-meta">
-                  <strong>You</strong>
-                  <span>{{ note.createdAt }}</span>
-                </div>
-
-                <p>{{ note.body }}</p>
-              </div>
-            </div>
-          }
-        }
-
-        <div class="note-row">
-          <div class="note-avatar">
-            <mat-icon>calendar_today</mat-icon>
-          </div>
-
-          <div class="note-content">
-            <div class="note-meta">
-              <strong>Lead Created</strong>
-              <span>{{
-                leadDetails().createdAt | date: "MMM d, y 'at' h:mm a"
-              }}</span>
-            </div>
-
-            <p>Lead submitted from open house.</p>
-          </div>
-        </div>
-      </div>
+      <aa-notes
+        [_leadId]="leadDetails().id"
+        [leadCreated]="leadDetails().createdAt"
+      ></aa-notes>
     </div>
   </div>
 </div>

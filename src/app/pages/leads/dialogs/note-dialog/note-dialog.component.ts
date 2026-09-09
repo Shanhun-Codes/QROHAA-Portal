@@ -1,7 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { DialogRef } from '../../../../shared/components/dialog/dialog-ref';
 import { ADD_NOTE_FORM_CONFIG } from '../../config/add-note-form.config';
-import { AddNoteFormValue } from '../../models/note.model';
+import { AddNoteFormValue, NoteDialogData } from '../../models/note.model';
 import { DynamicFormComponent } from '../../../../shared/components/dynamic-form/dynamic-form.component';
 
 interface AddNoteDialogData {
@@ -15,16 +15,26 @@ interface AddNoteDialogData {
   templateUrl: './add-note-dialog.component.html',
   styleUrl: './add-note-dialog.component.scss',
 })
-export class AddNoteDialogComponent {
-  readonly data = input.required<AddNoteDialogData>();
+export class NoteDialogComponent {
+  readonly data = input.required<NoteDialogData>();
   readonly dialogRef = input.required<DialogRef<any>>();
 
-  readonly formConfig = ADD_NOTE_FORM_CONFIG;
+  readonly formConfig = computed(() => ({
+    ...ADD_NOTE_FORM_CONFIG,
+    fields: ADD_NOTE_FORM_CONFIG.fields.map((field) =>
+      field.key === 'note'
+        ? {
+            ...field,
+            value: this.data().noteBody ?? '',
+          }
+        : field,
+    ),
+  }));
 
   async onSubmit(values: unknown): Promise<void> {
     const formValues = values as AddNoteFormValue;
+
     const success = await this.data().onSubmit(formValues.note);
-    console.log(formValues.note);
 
     if (success) {
       this.dialogRef().close();

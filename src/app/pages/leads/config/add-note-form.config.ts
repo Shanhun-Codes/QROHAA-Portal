@@ -14,6 +14,7 @@ export const ADD_NOTE_FORM_CONFIG: DynamicFormConfig = {
       layout: 'full',
       required: true,
       placeholder: 'Enter note details here...',
+      value: '',
       validation: {
         minLength: 2,
         maxLength: 1000,

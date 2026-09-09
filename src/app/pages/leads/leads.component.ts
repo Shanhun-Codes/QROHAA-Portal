@@ -85,7 +85,7 @@ export class LeadsComponent implements OnInit {
   }
 
   onAddLeadClick() {
-    this.leadsService.openAddLeadDialog();
+    this.leadsService.openLeadDialog('ADD');
   }
 
   onLeadExpanded(e: string) {}
