@@ -13,3 +13,12 @@ export interface Property {
 export interface PropertyTableRow extends Property {
   listingPrice: string;
 }
+
+export interface PropertyFormValue {
+  street: string;
+  street2?: string;
+  city: string;
+  state: string;
+  zip: string;
+  listingPrice: number;
+}

@@ -1,8 +1,11 @@
+<ng-template #headerActions>
+  <aa-button [config]="addPropertyButtonConfig"></aa-button>
+</ng-template>
+
 <aa-page-template
   [title]="title"
   [subtitle]="subtitle"
-  [hasTemplateButton]="true"
-  [buttonConfig]="buttonConfig"
+  [headerActions]="headerActions"
 >
   <div class="table-container">
     <aa-table

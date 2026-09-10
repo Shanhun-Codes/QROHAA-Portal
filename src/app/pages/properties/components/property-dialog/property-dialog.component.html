@@ -1,1 +1,5 @@
-<p>property-dialog works!</p>
+<aa-dynamic-form
+  [config]="formConfig"
+  [dialogRef]="dialogRef()"
+  (formSubmit)="onSubmit($event)"
+/>
