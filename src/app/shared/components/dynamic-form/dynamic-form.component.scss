@@ -106,8 +106,36 @@ textarea {
   resize: vertical;
 }
 
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  right: 0.9rem;
+
+  width: 0.5rem;
+  height: 0.5rem;
+
+  border-right: 2px solid $text-secondary;
+  border-bottom: 2px solid $text-secondary;
+
+  transform: translateY(-65%) rotate(45deg);
+
+  pointer-events: none;
+}
+
 select {
+  appearance: none;
+  -webkit-appearance: none;
+
   cursor: pointer;
+  background-color: $surface-elevated;
+
+  padding-right: 2.5rem;
 }
 
 .form-helper {

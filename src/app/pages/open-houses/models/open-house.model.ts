@@ -20,3 +20,22 @@ export interface OpenHouseTableRow extends Omit<OpenHouse, 'property'> {
   time: string;
   status: StatusPillConfig;
 }
+
+export interface OpenHouseFormValue {
+  propertyId: string;
+  createProperty: boolean;
+
+  street?: string;
+  street2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  listingPrice?: string;
+
+  startDate: string;
+  startTime: string;
+
+  durationDays: 1 | 2;
+
+  endTime: string;
+}

@@ -98,45 +98,34 @@ export class LeadsComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    const minimumDelay = new Promise<void>((resolve) =>
-      setTimeout(resolve, 1500),
+    this.appLoaderService.runInitialLoad(
+      () =>
+        new Promise<void>((resolve) => {
+          const request = this.leadsService.getLeads();
+
+          if (!request) {
+            resolve();
+            return;
+          }
+
+          request.subscribe({
+            next: (response) => {
+              this.leadsService.leads.set(
+                response.map((lead) => ({
+                  ...lead,
+                  name: `${lead.firstName} ${lead.lastName}`,
+                  phone: formatPhoneNumber(lead.phone),
+                })),
+              );
+
+              resolve();
+            },
+            error: () => {
+              resolve();
+            },
+          });
+        }),
     );
-
-    const fontsReady = document.fonts.ready;
-
-    const leadsRequest = new Promise<void>((resolve) => {
-      const request = this.leadsService.getLeads();
-
-      if (!request) {
-        resolve();
-        return;
-      }
-
-      request.subscribe({
-        next: (response) => {
-          this.leadsService.leads.set(
-            response.map((lead) => ({
-              ...lead,
-              name: `${lead.firstName} ${lead.lastName}`,
-              phone: formatPhoneNumber(lead.phone),
-            })),
-          );
-
-          resolve();
-        },
-        error: () => {
-          resolve();
-        },
-      });
-    });
-
-    if (!this.appLoaderService.isAppLoading()) {
-      return;
-    }
-
-    Promise.all([leadsRequest, minimumDelay, fontsReady]).finally(() => {
-      this.appLoaderService.stopLoading();
-    });
   }
 
   onAddLeadClick(): void {

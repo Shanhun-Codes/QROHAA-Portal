@@ -40,43 +40,32 @@ export class PropertiesComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    const minimumDelay = new Promise<void>((resolve) =>
-      setTimeout(resolve, 1500),
+    this.appLoaderService.runInitialLoad(
+      () =>
+        new Promise<void>((resolve) => {
+          const request = this.propertyService.getProperties();
+
+          if (!request) {
+            resolve();
+            return;
+          }
+
+          request.subscribe({
+            next: (response) => {
+              this.propertyService.tableData.set(
+                response.map((property: Property) => ({
+                  ...property,
+                })),
+              );
+
+              resolve();
+            },
+            error: () => {
+              resolve();
+            },
+          });
+        }),
     );
-
-    const fontsReady = document.fonts.ready;
-
-    const leadsRequest = new Promise<void>((resolve) => {
-      const request = this.propertyService.getProperties();
-
-      if (!request) {
-        resolve();
-        return;
-      }
-
-      request.subscribe({
-        next: (response) => {
-          this.propertyService.tableData.set(
-            response.map((property: Property) => ({
-              ...property,
-            })),
-          );
-
-          resolve();
-        },
-        error: () => {
-          resolve();
-        },
-      });
-    });
-
-    if (!this.appLoaderService.isAppLoading()) {
-      return;
-    }
-
-    Promise.all([leadsRequest, minimumDelay, fontsReady]).finally(() => {
-      this.appLoaderService.stopLoading();
-    });
   }
 
   onAddPropertyClick() {

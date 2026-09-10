@@ -34,19 +34,21 @@
         }
 
         @case ("select") {
-          <select [id]="field.key" [formControlName]="field.key">
-            @if (field.selectPlaceholder) {
-              <option value="" disabled>
-                {{ field.selectPlaceholder }}
-              </option>
-            }
+          <div class="select-wrapper">
+            <select [id]="field.key" [formControlName]="field.key">
+              @if (field.selectPlaceholder) {
+                <option value="" disabled>
+                  {{ field.selectPlaceholder }}
+                </option>
+              }
 
-            @for (option of field.options ?? []; track option.label) {
-              <option [ngValue]="option.value">
-                {{ option.label }}
-              </option>
-            }
-          </select>
+              @for (option of field.options ?? []; track option.label) {
+                <option [ngValue]="option.value">
+                  {{ option.label }}
+                </option>
+              }
+            </select>
+          </div>
         }
 
         @case ("checkbox") {

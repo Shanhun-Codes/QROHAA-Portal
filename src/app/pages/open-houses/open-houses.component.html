@@ -1,8 +1,12 @@
+<ng-template #headerActions>
+  <aa-button [config]="addOpenHouseButtonConfig"></aa-button>
+</ng-template>
+
 <aa-page-template
   [title]="title"
   [subtitle]="subtitle"
   [hasTemplateButton]="true"
-  [buttonConfig]="buttonConfig"
+  [headerActions]="headerActions"
 >
   <aa-table
     [tableDataConfig]="tableData()"
@@ -13,7 +17,7 @@
 
   <ng-template #expandedRowTemplate let-row>
     <div class="lead-expanded-row">
-      <h3>{{ row.property }}</h3>
+      <!-- <h3>{{ row.property }}</h3> -->
     </div>
   </ng-template>
 </aa-page-template>

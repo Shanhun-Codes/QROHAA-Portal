@@ -1,0 +1,84 @@
+<div class="open-house-dialog">
+  <section class="dialog-section">
+    <div class="dialog-section-header">
+      <div>
+        <h4>Property</h4>
+        <p>Select an existing property or create a new one.</p>
+      </div>
+
+      <aa-button [config]="propertyToggleButtonConfig()" />
+    </div>
+
+    @if (!createProperty()) {
+      <aa-dynamic-form [config]="propertySelectionFormConfig" />
+    } @else {
+      <aa-dynamic-form [config]="propertyFormConfig" />
+    }
+  </section>
+
+  <section class="dialog-section">
+    <div class="dialog-section-header">
+      <div>
+        <h4>Open House Details</h4>
+        <p>Set the date and time for this open house.</p>
+      </div>
+    </div>
+
+    <aa-dynamic-form
+      [config]="openHouseFormConfig"
+      [dialogRef]="dialogRef()"
+      (formSubmit)="onSubmit($event)"
+    />
+  </section>
+
+  <section class="dialog-section">
+    <div class="dialog-section-header">
+      <div>
+        <h4>Feedback Questions</h4>
+        <p>Choose which questions visitors will be asked.</p>
+      </div>
+    </div>
+
+    <label class="default-question-toggle">
+      <div class="default-question-toggle-left">
+        <input
+          type="checkbox"
+          [checked]="useDefaultQuestions()"
+          (change)="useDefaultQuestions.set(!useDefaultQuestions())"
+        />
+
+        <div>
+          <span class="default-question-title">
+            Use my default feedback questions
+          </span>
+
+          <span class="default-question-description">
+            Use the question set saved in your profile settings.
+          </span>
+        </div>
+      </div>
+    </label>
+
+    @if (!useDefaultQuestions()) {
+      <aa-feedback-question-selector [questions]="feedbackQuestions" />
+
+      <label class="save-default-questions">
+        <input
+          type="checkbox"
+          [checked]="saveAsDefaultQuestions()"
+          (change)="saveAsDefaultQuestions.set(!saveAsDefaultQuestions())"
+        />
+
+        <div>
+          <span class="save-default-questions-title">
+            Save these as my default questions
+          </span>
+
+          <span class="save-default-questions-description">
+            Use this selection for future open houses.
+          </span>
+        </div>
+      </label>
+    }
+  </section>
+</div>

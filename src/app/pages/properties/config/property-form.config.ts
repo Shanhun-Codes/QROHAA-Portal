@@ -82,3 +82,35 @@ export const PROPERTY_FORM_CONFIG: DynamicFormConfig = {
     },
   ],
 };
+
+export const PROPERTY_SELECTION_FORM_CONFIG: DynamicFormConfig = {
+  layout: {
+    gap: 'md',
+    labelPosition: 'top',
+  },
+
+  fields: [
+    {
+      key: 'propertyId',
+      label: 'Property',
+      type: 'select',
+      layout: 'full',
+      required: true,
+      placeholder: 'Select a property',
+      options: [
+        {
+          label: '1949 E Sunshine St, Springfield, MO',
+          value: 'property-1',
+        },
+        {
+          label: '310 N Jefferson Ave, Springfield, MO',
+          value: 'property-2',
+        },
+        {
+          label: '2201 S Campbell Ave, Springfield, MO',
+          value: 'property-3',
+        },
+      ],
+    },
+  ],
+};

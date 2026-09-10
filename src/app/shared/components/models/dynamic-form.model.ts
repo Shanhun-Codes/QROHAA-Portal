@@ -41,7 +41,8 @@ export type DynamicFormFieldType =
   | 'select'
   | 'checkbox'
   | 'radio'
-  | 'date';
+  | 'date'
+  | 'time';
 
 export interface DialogSubmittable {
   submit(): void;
