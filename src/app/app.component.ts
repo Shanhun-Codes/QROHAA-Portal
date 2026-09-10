@@ -4,7 +4,7 @@ import { PageWrapperComponent } from './page-wrapper/page-wrapper.component';
 import { DialogHostComponent } from './shared/components/dialog/components/dialog-host/dialog-host.component';
 import { SnackbarHostComponent } from './shared/components/snackbar/snackbar-host/snackbar-host.component';
 import { AppLoaderComponent } from './shared/components/app-loader/app-loader.component';
-import { AppLoadingService } from './shared/services/app-loading.service';
+import { AppLoaderService } from './shared/components/app-loader/app-loader.service';
 
 @Component({
   selector: 'aa-root',
@@ -19,6 +19,6 @@ import { AppLoadingService } from './shared/services/app-loading.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private readonly appLoadingService = inject(AppLoadingService);
-  readonly isAppLoading = this.appLoadingService.isAppLoading;
+  private readonly appLoaderService = inject(AppLoaderService);
+  readonly isAppLoading = this.appLoaderService.isAppLoading;
 }

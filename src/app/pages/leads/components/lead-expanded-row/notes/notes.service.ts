@@ -5,7 +5,7 @@ import { SnackbarService } from '../../../../../shared/components/snackbar/snack
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
-import { NoteDialogComponent } from '../../../dialogs/note-dialog/note-dialog.component';
+import { NoteDialogComponent } from '../../dialogs/note-dialog/note-dialog.component';
 
 @Injectable({
   providedIn: 'root',

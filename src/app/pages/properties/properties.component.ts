@@ -5,8 +5,9 @@ import { PROPERTY_TABLE_HEADER_CONFIG } from './config/properties-table-header-c
 import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
 import { PropertiesService } from './properties.service';
 import { formatListingPrice } from '../../shared/utils/format-listing-price.util';
-import { PropertyTableRow } from './models/property.model';
+import { Property, PropertyTableRow } from './models/property.model';
 import { PROPERTY_BUTTON_CONFIG } from './config/button.config';
+import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
   selector: 'aa-properties',
@@ -17,6 +18,7 @@ import { PROPERTY_BUTTON_CONFIG } from './config/button.config';
 })
 export class PropertiesComponent implements OnInit {
   private readonly propertyService = inject(PropertiesService);
+  private readonly appLoaderService = inject(AppLoaderService);
 
   readonly title = 'Properties';
   readonly subtitle = 'Manage your properties here';
@@ -32,7 +34,43 @@ export class PropertiesComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.propertyService.getPropertyData();
+    const minimumDelay = new Promise<void>((resolve) =>
+      setTimeout(resolve, 1500),
+    );
+
+    const fontsReady = document.fonts.ready;
+
+    const leadsRequest = new Promise<void>((resolve) => {
+      const request = this.propertyService.getProperties();
+
+      if (!request) {
+        resolve();
+        return;
+      }
+
+      request.subscribe({
+        next: (response) => {
+          this.propertyService.tableData.set(
+            response.map((property: Property) => ({
+              ...property,
+            })),
+          );
+
+          resolve();
+        },
+        error: () => {
+          resolve();
+        },
+      });
+    });
+
+    if (!this.appLoaderService.isAppLoading()) {
+      return;
+    }
+
+    Promise.all([leadsRequest, minimumDelay, fontsReady]).finally(() => {
+      this.appLoaderService.stopLoading();
+    });
   }
 
   onLeadExpanded(e: string) {}

@@ -18,7 +18,6 @@ import {
   UPDATE_STATUS_BUTTON_CONFIG,
 } from './config/button.config';
 
-import { AppLoadingService } from '../../shared/services/app-loading.service';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { LeadExpandedRowComponent } from './components/lead-expanded-row/lead-expanded-row.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
@@ -26,6 +25,7 @@ import {
   SelectComponent,
   SelectOption,
 } from '../../shared/components/inputs/select/select.component';
+import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
   selector: 'aa-leads',
@@ -42,7 +42,7 @@ import {
 })
 export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);
-  private readonly appLoaderService = inject(AppLoadingService);
+  private readonly appLoaderService = inject(AppLoaderService);
   readonly leadView = signal<'ACTIVE' | 'CLOSED'>('ACTIVE');
 
   readonly table = viewChild(TableComponent);
@@ -104,7 +104,7 @@ export class LeadsComponent implements OnInit {
 
     const fontsReady = document.fonts.ready;
 
-    const leadsRequest = new Promise<void>((resolve, reject) => {
+    const leadsRequest = new Promise<void>((resolve) => {
       const request = this.leadsService.getLeads();
 
       if (!request) {
@@ -124,9 +124,15 @@ export class LeadsComponent implements OnInit {
 
           resolve();
         },
-        error: reject,
+        error: () => {
+          resolve();
+        },
       });
     });
+
+    if (!this.appLoaderService.isAppLoading()) {
+      return;
+    }
 
     Promise.all([leadsRequest, minimumDelay, fontsReady]).finally(() => {
       this.appLoaderService.stopLoading();

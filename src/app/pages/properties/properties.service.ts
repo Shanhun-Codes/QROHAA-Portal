@@ -14,11 +14,12 @@ export class PropertiesService {
   private readonly agentId = this.authService.agentId;
   public tableData = signal<Property[]>([]);
 
-  getPropertyData() {
-    return this.http
-      .get<any>(`${this.baseUrl}/agents/${this.agentId()}/properties`)
-      .subscribe((response) => {
-        this.tableData.set(response);
-      });
+  public getProperties() {
+    if (!this.agentId()) {
+      return;
+    }
+    return this.http.get<any>(
+      `${this.baseUrl}/agents/${this.agentId()}/properties`,
+    );
   }
 }

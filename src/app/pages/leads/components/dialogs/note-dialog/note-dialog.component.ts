@@ -1,8 +1,8 @@
 import { Component, computed, input, signal } from '@angular/core';
-import { DialogRef } from '../../../../shared/components/dialog/dialog-ref';
-import { NOTE_FORM_CONFIG } from '../../config/note-form.config';
-import { AddNoteFormValue, NoteDialogData } from '../../models/note.model';
-import { DynamicFormComponent } from '../../../../shared/components/dynamic-form/dynamic-form.component';
+import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
+import { NOTE_FORM_CONFIG } from '../../../config/note-form.config';
+import { AddNoteFormValue, NoteDialogData } from '../../../models/note.model';
+import { DynamicFormComponent } from '../../../../../shared/components/dynamic-form/dynamic-form.component';
 
 interface AddNoteDialogData {
   onSubmit: (note: string) => Promise<boolean>;

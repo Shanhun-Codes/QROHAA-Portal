@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'aa-app-loader',
   standalone: true,
   imports: [],
   templateUrl: './app-loader.component.html',
-  styleUrl: './app-loader.component.scss'
+  styleUrl: './app-loader.component.scss',
 })
-export class AppLoaderComponent {
-
-}
+export class AppLoaderComponent {}
