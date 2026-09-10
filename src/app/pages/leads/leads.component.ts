@@ -43,6 +43,7 @@ import {
 export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);
   private readonly appLoaderService = inject(AppLoadingService);
+  readonly leadView = signal<'ACTIVE' | 'CLOSED'>('ACTIVE');
 
   readonly table = viewChild(TableComponent);
 
@@ -163,6 +164,11 @@ export class LeadsComponent implements OnInit {
 
     if (!success) return;
 
+    this.table()?.clearSelection();
+    this.selectedStatus.set(null);
+  }
+
+  onClearSelectionClick(): void {
     this.table()?.clearSelection();
     this.selectedStatus.set(null);
   }

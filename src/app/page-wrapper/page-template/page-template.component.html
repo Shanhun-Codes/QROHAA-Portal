@@ -2,15 +2,26 @@
   <div class="page-header">
     <div class="page-headings">
       <h3>{{ title() }}</h3>
+
       <p class="page-text-secondary">
         {{ subtitle() }}
       </p>
     </div>
-    @if (hasTemplateButton()) {
+
+    @if (headerActions()) {
       <div class="page-button-container">
-        <aa-button [config]="buttonConfig()" />
+        <ng-container *ngTemplateOutlet="headerActions()!" />
       </div>
+    } @else {
+      @let config = buttonConfig();
+
+      @if (hasTemplateButton() && config) {
+        <div class="page-button-container">
+          <aa-button [config]="config" />
+        </div>
+      }
     }
   </div>
+
   <ng-content></ng-content>
 </div>

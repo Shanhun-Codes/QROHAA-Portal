@@ -67,6 +67,18 @@ table {
     overflow: scroll;
   }
 
+  tbody tr {
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+
+    &:hover {
+      background-color: $surface-active;
+      box-shadow: inset 3px 0 0 $primary;
+    }
+  }
+
   tbody tr:nth-child(even) {
     background-color: $surface-elevated;
   }

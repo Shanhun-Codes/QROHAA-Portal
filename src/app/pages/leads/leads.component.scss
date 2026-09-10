@@ -3,6 +3,12 @@
 @use "styles/spacing" as *;
 
 // leads.component.scss
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 .table-actions-bar {
   display: flex;
   align-items: center;
@@ -21,8 +27,13 @@
 .table-actions-selection {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 1rem;
+}
 
+.table-actions-selection-text {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   color: $text-secondary;
 
   strong {
@@ -30,8 +41,74 @@
   }
 }
 
-.table-actions {
+.leads-header-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+}
+
+.lead-view-toggle {
+  display: flex;
+  align-items: center;
+
+  padding: 0.2rem;
+
+  border: 1px solid $border;
+  border-radius: 8px;
+
+  background: $surface;
+}
+
+.lead-view-toggle-button {
+  min-width: 78px;
+  height: 34px;
+
+  padding: 0 0.85rem;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: $text-secondary;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    color: $text-primary;
+    background: $surface-elevated;
+  }
+
+  &.active {
+    color: $text-primary;
+    background: $surface-active;
+  }
+}
+
+.clear-selection-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $danger;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    opacity 150ms ease;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
 }

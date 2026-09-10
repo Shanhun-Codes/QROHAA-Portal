@@ -1,18 +1,53 @@
+<ng-template #headerActions>
+  <div class="leads-header-actions">
+    <div class="lead-view-toggle">
+      <button
+        type="button"
+        class="lead-view-toggle-button"
+        [class.active]="leadView() === 'ACTIVE'"
+        (click)="leadView.set('ACTIVE')"
+      >
+        Active
+      </button>
+
+      <button
+        type="button"
+        class="lead-view-toggle-button"
+        [class.active]="leadView() === 'CLOSED'"
+        (click)="leadView.set('CLOSED')"
+      >
+        Closed
+      </button>
+    </div>
+
+    <aa-button [config]="addLeadButtonConfig" />
+  </div>
+</ng-template>
+
 <aa-page-template
   [title]="title"
   [subtitle]="subtitle"
-  [hasTemplateButton]="true"
-  [buttonConfig]="addLeadButtonConfig"
+  [headerActions]="headerActions"
 >
   <div class="table-container">
     @if (selectedLeadIds().length > 0) {
       <div class="table-actions-bar">
         <div class="table-actions-selection">
-          <strong>{{ selectedLeadIds().length }}</strong>
+          <div class="table-actions-selection-text">
+            <strong>{{ selectedLeadIds().length }}</strong>
 
-          <span>
-            {{ selectedLeadIds().length === 1 ? "lead" : "leads" }} selected
-          </span>
+            <span>
+              {{ selectedLeadIds().length === 1 ? "lead" : "leads" }} selected
+            </span>
+          </div>
+
+          <button
+            type="button"
+            class="clear-selection-button"
+            (click)="onClearSelectionClick()"
+          >
+            Clear All
+          </button>
         </div>
 
         <div class="table-actions">
@@ -23,7 +58,7 @@
             (valueChange)="onStatusChange($event)"
           />
 
-          <aa-button [config]="updateStatusButtonConfig"></aa-button>
+          <aa-button [config]="updateStatusButtonConfig" />
         </div>
       </div>
     }
