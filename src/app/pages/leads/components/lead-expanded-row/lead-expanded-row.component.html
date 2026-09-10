@@ -5,19 +5,26 @@
       <div class="lead-avatar">
         {{ leadDetails().firstName?.[0] }}{{ leadDetails().lastName?.[0] }}
       </div>
+
       <div class="expanded-row-header-title">
         <div class="title-section">
           <h3>{{ leadDetails().firstName }} {{ row().lastName }}</h3>
+
           <aa-status-pill [config]="leadDetails().status"></aa-status-pill>
         </div>
 
         <p>
-          Added on {{ leadDetails().createdAt | date: "MMM d, y 'at' h:mm a" }}
+          Added on
+          {{ leadDetails().createdAt | date: "MMM d, y 'at' h:mm a" }}
         </p>
       </div>
     </div>
+
     <div class="expanded-row-header-right">
-      <mat-icon title="actions">more_vert</mat-icon>
+      <aa-action-menu
+        ariaLabel="Lead actions"
+        [actions]="getLeadActions(leadDetails())"
+      />
     </div>
   </div>
 
@@ -88,6 +95,7 @@
       <div class="submission-row">
         <mat-icon>calendar_today</mat-icon>
         <span>Open House</span>
+
         <p>
           {{ leadDetails().createdAt | date: "MMM d, y 'at' h:mm a" }}
         </p>
@@ -96,7 +104,10 @@
       <div class="submission-row">
         <mat-icon>description</mat-icon>
         <span>Lead Generated</span>
-        <p>{{ leadDetails().createdAt | date: "MMM d, y 'at' h:mm a" }}</p>
+
+        <p>
+          {{ leadDetails().createdAt | date: "MMM d, y 'at' h:mm a" }}
+        </p>
       </div>
 
       <div class="additional-answers">
@@ -118,10 +129,7 @@
 
     <!-- RIGHT COLUMN -->
     <div class="notes component">
-      <aa-notes
-        [_leadId]="leadDetails().id"
-        [leadCreated]="leadDetails().createdAt"
-      ></aa-notes>
+      <aa-notes [leadCreated]="leadDetails().createdAt"></aa-notes>
     </div>
   </div>
 </div>

@@ -17,7 +17,7 @@ export interface NotesResponse {
   notes: Note[];
 }
 
-export type DialogType = 'ADD' | 'EDIT';
+export type DialogType = 'CREATE' | 'EDIT';
 
 export interface NoteDialogData {
   mode: DialogType;

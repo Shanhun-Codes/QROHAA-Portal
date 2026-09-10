@@ -21,4 +21,8 @@ export class LeadExpandedRowService {
       `${this.baseUrl}/agents/${this.agentId}/leads/${leadId}`,
     );
   }
+
+  editLead(leadId: string, leadData: any) {}
+
+  markLeadAsLost(leadId: string) {}
 }

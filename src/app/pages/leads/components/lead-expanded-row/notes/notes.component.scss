@@ -55,12 +55,25 @@
   &:last-child {
     padding-bottom: 0;
     border: none;
+
+    &:hover {
+      background-color: $surface;
+      transform: none;
+    }
   }
 
   &:hover {
     background-color: $surface-elevated;
     transform: scale(1.01);
-    cursor: pointer;
+  }
+
+  > aa-action-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 

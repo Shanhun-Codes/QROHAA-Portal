@@ -11,15 +11,18 @@
   <div class="notes-list">
     @if (notes()) {
       @for (note of notes(); track note.id) {
-        <div class="note-row" (click)="onRowClick(note.id, note.body)">
-          <div class="note-avatar">
-            <mat-icon>person</mat-icon>
-          </div>
+        <div class="note-row">
+          <aa-action-menu
+            ariaLabel="Note actions"
+            [actions]="getNoteActions(note)"
+          />
 
           <div class="note-content">
             <div class="note-meta">
               <strong>Created: </strong>
-              <span>{{ note.createdAt | date: "MMM d, y 'at' h:mm a" }}</span>
+              <span>
+                {{ note.createdAt | date: "MMM d, y 'at' h:mm a" }}
+              </span>
             </div>
 
             <p>{{ note.body }}</p>
@@ -36,7 +39,9 @@
       <div class="note-content">
         <div class="note-meta">
           <strong>Lead Created</strong>
-          <span>{{ leadCreated() | date: "MMM d, y 'at' h:mm a" }}</span>
+          <span>
+            {{ leadCreated() | date: "MMM d, y 'at' h:mm a" }}
+          </span>
         </div>
 
         <p>Lead submitted from open house.</p>

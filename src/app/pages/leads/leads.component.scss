@@ -1,1 +1,37 @@
+@use "styles/theme" as *;
+@use "styles/sizing" as *;
+@use "styles/spacing" as *;
+
 // leads.component.scss
+.table-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.75rem;
+
+  border: 1px solid $border;
+  border-radius: $radius-md;
+
+  background: $surface;
+}
+
+.table-actions-selection {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  color: $text-secondary;
+
+  strong {
+    color: $text-primary;
+  }
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}

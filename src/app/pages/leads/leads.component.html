@@ -5,11 +5,35 @@
   [buttonConfig]="addLeadButtonConfig"
 >
   <div class="table-container">
+    @if (selectedLeadIds().length > 0) {
+      <div class="table-actions-bar">
+        <div class="table-actions-selection">
+          <strong>{{ selectedLeadIds().length }}</strong>
+
+          <span>
+            {{ selectedLeadIds().length === 1 ? "lead" : "leads" }} selected
+          </span>
+        </div>
+
+        <div class="table-actions">
+          <aa-select
+            placeholder="Change Status"
+            [options]="statusOptions"
+            [value]="selectedStatus()"
+            (valueChange)="onStatusChange($event)"
+          />
+
+          <aa-button [config]="updateStatusButtonConfig"></aa-button>
+        </div>
+      </div>
+    }
+
     <aa-table
       [tableDataConfig]="tableData()"
       [tableHeaderConfig]="tableHeaderConfig"
       [expandedRowTemplate]="expandedRowTemplate"
       (rowExpanded)="onLeadExpanded($event)"
+      (selectionChange)="onSelectionChange($event)"
     />
 
     <ng-template #expandedRowTemplate let-row>

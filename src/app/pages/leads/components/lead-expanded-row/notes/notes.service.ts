@@ -123,13 +123,13 @@ export class NotesService {
     noteBody?: string,
   ): Promise<void> {
     this.dialogService.open({
-      title: mode === 'ADD' ? 'Add Note' : 'Update',
+      title: mode === 'CREATE' ? 'Note Details' : 'Update',
       contentComponent: NoteDialogComponent,
       data: {
         mode,
         noteBody,
         onSubmit:
-          mode === 'ADD'
+          mode === 'CREATE'
             ? (note: string) => this.createNote(note)
             : (note: string) => this.editNote(noteId!, note),
       },
@@ -139,7 +139,7 @@ export class NotesService {
           type: 'secondary',
         },
         {
-          label: mode === 'ADD' ? 'Add Note' : 'Edit Note',
+          label: mode === 'CREATE' ? 'Create Note' : 'Edit Note',
           type: 'primary',
           submit: true,
         },

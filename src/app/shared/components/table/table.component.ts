@@ -26,7 +26,11 @@ export class TableComponent<T extends { id: string }> {
 
   readonly rowExpanded = output<string>();
 
+  readonly selectionChange = output<string[]>();
+
   readonly row = signal<string | null>(null);
+
+  readonly selectedIds = signal<string[]>([]);
 
   onRowClick(id: string): void {
     const isOpening = this.row() !== id;
@@ -51,5 +55,32 @@ export class TableComponent<T extends { id: string }> {
       .toLowerCase();
 
     return `${columnName}-${suffix}`;
+  }
+
+  onCheckboxClick(event: MouseEvent, id: string): void {
+    event.stopPropagation();
+
+    const checkbox = event.target as HTMLInputElement;
+
+    this.selectedIds.update((ids) => {
+      if (checkbox.checked) {
+        return ids.includes(id) ? ids : [...ids, id];
+      }
+
+      return ids.filter((selectedId) => selectedId !== id);
+    });
+
+    this.selectionChange.emit(this.selectedIds());
+
+    console.log('SELECTED IDS:', this.selectedIds());
+  }
+
+  clearSelection(): void {
+    this.selectedIds.set([]);
+    this.selectionChange.emit([]);
+  }
+
+  isSelected(id: string): boolean {
+    return this.selectedIds().includes(id);
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/services/auth-service';
-import { AddLeadFormValue, Lead } from './models/lead.model';
+import { AddLeadFormValue, Lead, LeadStatusType } from './models/lead.model';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { LeadDialogComponent } from './dialogs/lead-dialog/lead-dialog.component';
@@ -80,11 +80,41 @@ export class LeadsService {
           type: 'secondary',
         },
         {
-          label: mode === 'ADD' ? 'Add Lead' : 'Edit Lead',
+          label: mode === 'CREATE' ? 'Create Lead' : 'Update Lead',
           type: 'primary',
           submit: true,
         },
       ],
     });
+  }
+
+  async updateMultipleLeadsStatus(leadIds: string[], status: LeadStatusType) {
+    try {
+      const response = await firstValueFrom(
+        this.http.patch<Lead[]>(
+          `${this.baseUrl}/agents/${this.agentId()}/leads/status`,
+          {
+            leadIds,
+            status,
+          },
+        ),
+      );
+
+      this.leads.set(
+        response.map((lead) => ({
+          ...lead,
+          name: `${lead.firstName} ${lead.lastName}`,
+          phone: formatPhoneNumber(lead.phone),
+        })),
+      );
+
+      this.snackbarService.success('Lead status successfully updated');
+
+      return true;
+    } catch {
+      this.snackbarService.error('An error occurred, please try again');
+
+      return false;
+    }
   }
 }

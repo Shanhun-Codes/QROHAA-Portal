@@ -1,30 +1,40 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { StatusPillComponent } from '../../../../shared/components/status-pill/status-pill.component';
 import { DatePipe } from '@angular/common';
-import { ACTION_BUTTON_CONFIG } from '../../config/button.config';
+
+import { StatusPillComponent } from '../../../../shared/components/status-pill/status-pill.component';
 import { LeadExpandedRowService } from './lead-expanded-row.service';
 import { Lead } from '../../models/lead.model';
 import { formatPhoneNumber } from '../../../../shared/utils/format-phone-number.util';
 import { NotesComponent } from './notes/notes.component';
+import { NotesService } from './notes/notes.service';
+import { ActionMenuComponent } from '../../../../shared/components/action-menu/action-menu.component';
+import { ActionMenuItem } from '../../../../shared/components/models/action-menu.model';
 
 @Component({
   selector: 'aa-lead-expanded-row',
   standalone: true,
-  imports: [MatIcon, StatusPillComponent, DatePipe, NotesComponent],
+  imports: [
+    MatIcon,
+    StatusPillComponent,
+    DatePipe,
+    NotesComponent,
+    ActionMenuComponent,
+  ],
   templateUrl: './lead-expanded-row.component.html',
   styleUrl: './lead-expanded-row.component.scss',
 })
 export class LeadExpandedRowComponent implements OnInit {
   private readonly expandedRowService = inject(LeadExpandedRowService);
+  private readonly notesService = inject(NotesService);
 
   readonly row = input.required<Lead>();
 
   readonly leadDetails = this.expandedRowService.leadDetails;
 
-  readonly actionsButtonConfig = ACTION_BUTTON_CONFIG;
-
   ngOnInit(): void {
+    this.notesService.leadId.set(this.row().id);
+
     const request = this.expandedRowService.getLead(this.row().id);
 
     if (!request) {
@@ -71,6 +81,8 @@ export class LeadExpandedRowComponent implements OnInit {
         console.log('LEAD DETAIL:', response);
       },
     });
+
+    this.notesService.getNotes();
   }
 
   private formatAnswer(value?: string): string {
@@ -90,5 +102,29 @@ export class LeadExpandedRowComponent implements OnInit {
     return `lead-avatar lead-avatar--${String(label)
       .toLowerCase()
       .replaceAll(' ', '-')}`;
+  }
+
+  getLeadActions(lead: Lead): ActionMenuItem[] {
+    return [
+      {
+        label: 'Edit Lead',
+        icon: 'edit',
+        action: () => this.onEditClick(lead.id),
+      },
+      {
+        label: 'Mark as Lost',
+        icon: 'cancel',
+        danger: true,
+        action: () => this.onMarkAsLostClick(lead.id),
+      },
+    ];
+  }
+
+  onEditClick(leadId: string): void {
+    this.expandedRowService.editLead(leadId, this.leadDetails());
+  }
+
+  onMarkAsLostClick(leadId: string): void {
+    this.expandedRowService.markLeadAsLost(leadId);
   }
 }
