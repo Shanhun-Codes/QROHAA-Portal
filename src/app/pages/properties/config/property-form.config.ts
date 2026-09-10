@@ -92,25 +92,12 @@ export const PROPERTY_SELECTION_FORM_CONFIG: DynamicFormConfig = {
   fields: [
     {
       key: 'propertyId',
-      label: 'Property',
+      label: 'Select Property',
       type: 'select',
       layout: 'full',
       required: true,
-      placeholder: 'Select a property',
-      options: [
-        {
-          label: '1949 E Sunshine St, Springfield, MO',
-          value: 'property-1',
-        },
-        {
-          label: '310 N Jefferson Ave, Springfield, MO',
-          value: 'property-2',
-        },
-        {
-          label: '2201 S Campbell Ave, Springfield, MO',
-          value: 'property-3',
-        },
-      ],
+      placeholder: 'Select an existing property',
+      options: [],
     },
   ],
 };

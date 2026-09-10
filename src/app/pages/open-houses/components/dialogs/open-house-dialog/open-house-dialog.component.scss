@@ -2,6 +2,11 @@
 @use "styles/sizing" as *;
 @use "styles/spacing" as *;
 
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
 .open-house-dialog {
   display: flex;
   flex-direction: column;

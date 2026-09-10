@@ -4,4 +4,5 @@ export interface FeedbackQuestionSelection {
   selected: boolean;
   required: boolean;
   sortOrder: number;
+  questionId: string;
 }

@@ -10,7 +10,7 @@
     </div>
 
     @if (!createProperty()) {
-      <aa-dynamic-form [config]="propertySelectionFormConfig" />
+      <aa-dynamic-form [config]="propertySelectionFormConfig()" />
     } @else {
       <aa-dynamic-form [config]="propertyFormConfig" />
     }
@@ -47,7 +47,7 @@
           (change)="useDefaultQuestions.set(!useDefaultQuestions())"
         />
 
-        <div>
+        <div class="column">
           <span class="default-question-title">
             Use my default feedback questions
           </span>
@@ -60,7 +60,7 @@
     </label>
 
     @if (!useDefaultQuestions()) {
-      <aa-feedback-question-selector [questions]="feedbackQuestions" />
+      <aa-feedback-question-selector [questions]="feedbackQuestions()" />
 
       <label class="save-default-questions">
         <input
