@@ -1,5 +1,5 @@
-import { DOCUMENT, NgComponentOutlet } from '@angular/common';
-import { Component, effect, HostListener, inject } from '@angular/core';
+import { NgComponentOutlet } from '@angular/common';
+import { Component, effect, HostListener, inject, DOCUMENT } from '@angular/core';
 
 import { DialogService } from '../../dialog.service';
 import { DialogAction } from '../../models/dialog.model';
