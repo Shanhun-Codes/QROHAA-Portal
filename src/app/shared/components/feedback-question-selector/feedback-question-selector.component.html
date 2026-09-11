@@ -8,7 +8,11 @@
     @for (question of questions(); track question.id) {
       <div class="feedback-question-row" [class.selected]="question.selected">
         <label class="question-selection">
-          <input type="checkbox" [checked]="question.selected" />
+          <input
+            type="checkbox"
+            [checked]="question.selected"
+            (change)="toggleQuestion(question)"
+          />
 
           <span class="question-label">
             {{ question.label }}
@@ -20,6 +24,7 @@
             type="checkbox"
             [checked]="question.required"
             [disabled]="!question.selected"
+            (change)="toggleRequired(question)"
           />
 
           <span>Required</span>

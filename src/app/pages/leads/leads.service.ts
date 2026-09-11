@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../../shared/services/auth-service';
 import { AddLeadFormValue, Lead, LeadStatusType } from './models/lead.model';
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
@@ -9,6 +8,7 @@ import { LeadDialogComponent } from './components/dialogs/lead-dialog/lead-dialo
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { firstValueFrom } from 'rxjs';
 import { DialogType } from './models/note.model';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

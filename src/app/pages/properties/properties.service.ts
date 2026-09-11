@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../../shared/services/auth-service';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { DialogType } from '../leads/models/note.model';
 import { PropertyDialogComponent } from './components/property-dialog/property-dialog.component';
 import { firstValueFrom } from 'rxjs';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { Property, PropertyFormValue } from './models/property.model';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

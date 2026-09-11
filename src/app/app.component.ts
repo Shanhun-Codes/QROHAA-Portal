@@ -5,6 +5,7 @@ import { DialogHostComponent } from './shared/components/dialog/components/dialo
 import { SnackbarHostComponent } from './shared/components/snackbar/snackbar-host/snackbar-host.component';
 import { AppLoaderComponent } from './shared/components/app-loader/app-loader.component';
 import { AppLoaderService } from './shared/components/app-loader/app-loader.service';
+import { AuthComponent } from './auth/auth.component';
 
 @Component({
   selector: 'aa-root',
@@ -14,6 +15,7 @@ import { AppLoaderService } from './shared/components/app-loader/app-loader.serv
     DialogHostComponent,
     AppLoaderComponent,
     SnackbarHostComponent,
+    AuthComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

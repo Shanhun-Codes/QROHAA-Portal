@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { AuthService } from '../../shared/services/auth-service';
 import { environment } from '../../../environments/environment';
 import { OpenHouse, OpenHouseFormValue } from './models/open-house.model';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { DialogType } from '../leads/models/note.model';
 import { OpenHouseDialogComponent } from './components/dialogs/open-house-dialog/open-house-dialog.component';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
