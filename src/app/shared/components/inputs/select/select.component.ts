@@ -15,11 +15,10 @@ export interface SelectOption<T = string> {
 }
 
 @Component({
-  selector: 'aa-select',
-  standalone: true,
-  imports: [MatIcon],
-  templateUrl: './select.component.html',
-  styleUrl: './select.component.scss',
+    selector: 'aa-select',
+    imports: [MatIcon],
+    templateUrl: './select.component.html',
+    styleUrl: './select.component.scss'
 })
 export class SelectComponent<T = string> {
   private readonly elementRef = inject(ElementRef<HTMLElement>);

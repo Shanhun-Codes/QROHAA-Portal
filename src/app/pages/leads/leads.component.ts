@@ -28,17 +28,16 @@ import {
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
-  selector: 'aa-leads',
-  standalone: true,
-  imports: [
-    TableComponent,
-    PageTemplateComponent,
-    LeadExpandedRowComponent,
-    ButtonComponent,
-    SelectComponent,
-  ],
-  templateUrl: './leads.component.html',
-  styleUrl: './leads.component.scss',
+    selector: 'aa-leads',
+    imports: [
+        TableComponent,
+        PageTemplateComponent,
+        LeadExpandedRowComponent,
+        ButtonComponent,
+        SelectComponent,
+    ],
+    templateUrl: './leads.component.html',
+    styleUrl: './leads.component.scss'
 })
 export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);

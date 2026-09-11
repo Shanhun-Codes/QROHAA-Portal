@@ -8,11 +8,10 @@ import { MatIcon } from '@angular/material/icon';
 import { ActionMenuItem } from '../models/action-menu.model';
 
 @Component({
-  selector: 'aa-action-menu',
-  standalone: true,
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, MatIcon],
-  templateUrl: './action-menu.component.html',
-  styleUrl: './action-menu.component.scss',
+    selector: 'aa-action-menu',
+    imports: [CdkConnectedOverlay, CdkOverlayOrigin, MatIcon],
+    templateUrl: './action-menu.component.html',
+    styleUrl: './action-menu.component.scss'
 })
 export class ActionMenuComponent {
   readonly actions = input.required<ActionMenuItem[]>();

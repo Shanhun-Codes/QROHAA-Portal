@@ -29,15 +29,14 @@ interface OpenHouseDialogData {
 }
 
 @Component({
-  selector: 'aa-open-house-dialog',
-  standalone: true,
-  imports: [
-    FeedbackQuestionSelectorComponent,
-    DynamicFormComponent,
-    ButtonComponent,
-  ],
-  templateUrl: './open-house-dialog.component.html',
-  styleUrl: './open-house-dialog.component.scss',
+    selector: 'aa-open-house-dialog',
+    imports: [
+        FeedbackQuestionSelectorComponent,
+        DynamicFormComponent,
+        ButtonComponent,
+    ],
+    templateUrl: './open-house-dialog.component.html',
+    styleUrl: './open-house-dialog.component.scss'
 })
 export class OpenHouseDialogComponent implements OnInit {
   private readonly propertyService = inject(PropertiesService);

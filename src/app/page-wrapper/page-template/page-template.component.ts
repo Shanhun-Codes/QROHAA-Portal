@@ -4,11 +4,10 @@ import { ButtonConfig } from '../../shared/components/button/button.config';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
-  selector: 'aa-page-template',
-  standalone: true,
-  imports: [ButtonComponent, NgTemplateOutlet],
-  templateUrl: './page-template.component.html',
-  styleUrl: './page-template.component.scss',
+    selector: 'aa-page-template',
+    imports: [ButtonComponent, NgTemplateOutlet],
+    templateUrl: './page-template.component.html',
+    styleUrl: './page-template.component.scss'
 })
 export class PageTemplateComponent {
   readonly title = input.required<string>();

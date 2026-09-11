@@ -4,11 +4,10 @@ import { MatIcon } from '@angular/material/icon';
 import { ButtonConfig } from './button.config';
 
 @Component({
-  selector: 'aa-button',
-  standalone: true,
-  imports: [MatIcon],
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.scss',
+    selector: 'aa-button',
+    imports: [MatIcon],
+    templateUrl: './button.component.html',
+    styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
   public config = input<ButtonConfig>({

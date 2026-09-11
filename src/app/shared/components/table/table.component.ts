@@ -6,16 +6,15 @@ import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { ExpandableTableRowComponent } from './expandable-table-row/expandable-table-row.component';
 
 @Component({
-  selector: 'aa-table',
-  standalone: true,
-  imports: [
-    MatIcon,
-    StatusPillComponent,
-    TimeAgoPipe,
-    ExpandableTableRowComponent,
-  ],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
+    selector: 'aa-table',
+    imports: [
+        MatIcon,
+        StatusPillComponent,
+        TimeAgoPipe,
+        ExpandableTableRowComponent,
+    ],
+    templateUrl: './table.component.html',
+    styleUrl: './table.component.scss'
 })
 export class TableComponent<T extends { id: string }> {
   readonly tableHeaderConfig = input.required<ITableHeaderConfig<any>[]>();

@@ -12,11 +12,10 @@ import { NgTemplateOutlet } from '@angular/common';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 
 @Component({
-  selector: 'aa-properties',
-  standalone: true,
-  imports: [TableComponent, PageTemplateComponent, ButtonComponent],
-  templateUrl: './properties.component.html',
-  styleUrl: './properties.component.scss',
+    selector: 'aa-properties',
+    imports: [TableComponent, PageTemplateComponent, ButtonComponent],
+    templateUrl: './properties.component.html',
+    styleUrl: './properties.component.scss'
 })
 export class PropertiesComponent implements OnInit {
   private readonly propertyService = inject(PropertiesService);

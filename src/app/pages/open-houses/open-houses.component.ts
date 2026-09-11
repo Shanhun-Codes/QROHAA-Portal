@@ -10,11 +10,10 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
-  selector: 'aa-open-houses',
-  standalone: true,
-  imports: [PageTemplateComponent, TableComponent, ButtonComponent],
-  templateUrl: './open-houses.component.html',
-  styleUrl: './open-houses.component.scss',
+    selector: 'aa-open-houses',
+    imports: [PageTemplateComponent, TableComponent, ButtonComponent],
+    templateUrl: './open-houses.component.html',
+    styleUrl: './open-houses.component.scss'
 })
 export class OpenHousesComponent implements OnInit {
   private readonly openHouseService = inject(OpenHousesService);

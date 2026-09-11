@@ -9,11 +9,10 @@ interface AddNoteDialogData {
 }
 
 @Component({
-  selector: 'aa-add-note-dialog',
-  standalone: true,
-  imports: [DynamicFormComponent],
-  templateUrl: './note-dialog.component.html',
-  styleUrl: './note-dialog.component.scss',
+    selector: 'aa-add-note-dialog',
+    imports: [DynamicFormComponent],
+    templateUrl: './note-dialog.component.html',
+    styleUrl: './note-dialog.component.scss'
 })
 export class NoteDialogComponent {
   readonly data = input.required<NoteDialogData>();

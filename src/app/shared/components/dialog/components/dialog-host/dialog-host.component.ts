@@ -6,11 +6,10 @@ import { DialogAction } from '../../models/dialog.model';
 import { ButtonComponent } from '../../../button/button.component';
 
 @Component({
-  selector: 'aa-dialog-host',
-  standalone: true,
-  imports: [ButtonComponent, NgComponentOutlet],
-  templateUrl: './dialog-host.component.html',
-  styleUrl: './dialog-host.component.scss',
+    selector: 'aa-dialog-host',
+    imports: [ButtonComponent, NgComponentOutlet],
+    templateUrl: './dialog-host.component.html',
+    styleUrl: './dialog-host.component.scss'
 })
 export class DialogHostComponent {
   readonly dialogService = inject(DialogService);

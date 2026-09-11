@@ -9,11 +9,10 @@ import { DialogRef } from '../dialog/dialog-ref';
 import { DynamicFormConfig } from '../models/dynamic-form.model';
 
 @Component({
-  selector: 'aa-dynamic-form',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './dynamic-form.component.html',
-  styleUrl: './dynamic-form.component.scss',
+    selector: 'aa-dynamic-form',
+    imports: [ReactiveFormsModule],
+    templateUrl: './dynamic-form.component.html',
+    styleUrl: './dynamic-form.component.scss'
 })
 export class DynamicFormComponent {
   readonly config = input.required<DynamicFormConfig>();

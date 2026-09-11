@@ -12,17 +12,16 @@ import { ActionMenuComponent } from '../../../../shared/components/action-menu/a
 import { ActionMenuItem } from '../../../../shared/components/models/action-menu.model';
 
 @Component({
-  selector: 'aa-lead-expanded-row',
-  standalone: true,
-  imports: [
-    MatIcon,
-    StatusPillComponent,
-    DatePipe,
-    NotesComponent,
-    ActionMenuComponent,
-  ],
-  templateUrl: './lead-expanded-row.component.html',
-  styleUrl: './lead-expanded-row.component.scss',
+    selector: 'aa-lead-expanded-row',
+    imports: [
+        MatIcon,
+        StatusPillComponent,
+        DatePipe,
+        NotesComponent,
+        ActionMenuComponent,
+    ],
+    templateUrl: './lead-expanded-row.component.html',
+    styleUrl: './lead-expanded-row.component.scss'
 })
 export class LeadExpandedRowComponent implements OnInit {
   private readonly expandedRowService = inject(LeadExpandedRowService);

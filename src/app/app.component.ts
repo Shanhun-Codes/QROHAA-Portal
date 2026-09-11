@@ -9,13 +9,11 @@ import { AuthComponent } from './auth/auth.component';
 
 @Component({
   selector: 'aa-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     DialogHostComponent,
     AppLoaderComponent,
     SnackbarHostComponent,
-    AuthComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

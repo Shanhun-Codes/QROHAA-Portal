@@ -3,11 +3,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'aa-top-bar',
-  standalone: true,
-  imports: [MatIconModule, RouterLink],
-  templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.scss',
+    selector: 'aa-top-bar',
+    imports: [MatIconModule, RouterLink],
+    templateUrl: './top-bar.component.html',
+    styleUrl: './top-bar.component.scss'
 })
 export class TopBarComponent {
   readonly title = 'Open House Studio';

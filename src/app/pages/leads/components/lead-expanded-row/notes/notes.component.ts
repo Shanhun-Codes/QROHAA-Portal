@@ -10,17 +10,16 @@ import { Note } from '../../../models/note.model';
 import { ActionMenuItem } from '../../../../../shared/components/models/action-menu.model';
 
 @Component({
-  selector: 'aa-notes',
-  standalone: true,
-  imports: [
-    MatIcon,
-    DatePipe,
-    ButtonComponent,
-    SpinnerComponent,
-    ActionMenuComponent,
-  ],
-  templateUrl: './notes.component.html',
-  styleUrl: './notes.component.scss',
+    selector: 'aa-notes',
+    imports: [
+        MatIcon,
+        DatePipe,
+        ButtonComponent,
+        SpinnerComponent,
+        ActionMenuComponent,
+    ],
+    templateUrl: './notes.component.html',
+    styleUrl: './notes.component.scss'
 })
 export class NotesComponent {
   private readonly notesService = inject(NotesService);

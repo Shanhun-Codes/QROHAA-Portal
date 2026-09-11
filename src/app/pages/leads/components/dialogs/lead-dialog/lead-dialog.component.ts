@@ -9,11 +9,10 @@ interface AddLeadDialogData {
 }
 
 @Component({
-  selector: 'aa-add-lead-dialog',
-  standalone: true,
-  imports: [DynamicFormComponent],
-  templateUrl: './lead-dialog.component.html',
-  styleUrl: './lead-dialog.component.scss',
+    selector: 'aa-add-lead-dialog',
+    imports: [DynamicFormComponent],
+    templateUrl: './lead-dialog.component.html',
+    styleUrl: './lead-dialog.component.scss'
 })
 export class LeadDialogComponent {
   readonly data = input.required<AddLeadDialogData>();
