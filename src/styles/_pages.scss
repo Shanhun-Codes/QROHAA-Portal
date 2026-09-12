@@ -5,7 +5,6 @@
 
 .page {
   height: calc(100vh - $header-height - $page-padding - $page-margin);
-
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -13,7 +12,6 @@
 
 .page-content {
   height: 100%;
-
   flex: 1;
   min-height: 0;
 }
@@ -44,12 +42,9 @@
 }
 
 .component {
-  max-height: calc(100% - $page-margin - $page-padding);
   margin: $page-margin;
+
   border: $border-width solid $border-light;
   background-color: $surface;
   border-radius: $radius-lg;
-  overflow-y: auto;
-  overscroll-behavior-y: none;
-  scrollbar-width: $border-width;
 }

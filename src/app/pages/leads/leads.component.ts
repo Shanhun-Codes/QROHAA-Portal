@@ -97,15 +97,6 @@ export class LeadsComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.leadsService.on().subscribe({
-      next: (response) => {
-        console.log('ONBOARDING:', response);
-      },
-      error: (error) => {
-        console.error('ONBOARDING ERROR:', error);
-      },
-    });
-
     this.appLoaderService.runInitialLoad(
       () =>
         new Promise<void>((resolve) => {

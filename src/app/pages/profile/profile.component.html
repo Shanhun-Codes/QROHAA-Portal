@@ -1,0 +1,212 @@
+<aa-page-template [title]="title" [subtitle]="subtitle">
+  <div class="profile-page-content">
+    <!-- ======================================================
+         AGENT PROFILE
+         ====================================================== -->
+
+    <section class="profile-section component">
+      <div class="section-header">
+        <div>
+          <h2>Agent Profile</h2>
+
+          <p>
+            Your contact and professional information shown throughout the
+            portal and public open house pages.
+          </p>
+        </div>
+
+        <aa-button [config]="editProfileButtonConfig" />
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-field">
+          <span class="profile-field-label">First Name</span>
+          <span class="profile-field-value">{{ agent()?.firstName }}</span>
+        </div>
+
+        <div class="profile-field">
+          <span class="profile-field-label">Last Name</span>
+          <span class="profile-field-value">{{ agent()?.lastName }}</span>
+        </div>
+
+        <div class="profile-field">
+          <span class="profile-field-label">Email</span>
+          <span class="profile-field-value">{{ agent()?.email }}</span>
+        </div>
+
+        <div class="profile-field">
+          <span class="profile-field-label">Phone</span>
+          <span class="profile-field-value">{{ agent()?.phone }}</span>
+        </div>
+
+        <div class="profile-field profile-field-full">
+          <span class="profile-field-label">Brokerage</span>
+          <span class="profile-field-value">{{ agent()?.brokerageName }}</span>
+        </div>
+
+        <div class="profile-field profile-field-full">
+          <span class="profile-field-label">Headline</span>
+
+          <span class="profile-field-value">
+            {{ agent()?.headline }}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         BRANDING
+         ====================================================== -->
+
+    <section class="profile-section component">
+      <div class="section-header">
+        <div>
+          <h2>Branding</h2>
+
+          <p>
+            Branding used on your public open house pages and agent-facing
+            materials.
+          </p>
+        </div>
+
+        <aa-button [config]="editBrandingButtonConfig" />
+      </div>
+
+      <div class="branding-content">
+        <!-- ==================================================
+             BRANDING SETTINGS
+             ================================================== -->
+
+        <div class="branding-settings">
+          <div class="branding-images">
+            <div class="branding-image-group">
+              <span class="profile-field-label">Headshot</span>
+
+              <div class="headshot-preview">
+                <div class="headshot-placeholder">TS</div>
+              </div>
+            </div>
+
+            <div class="branding-image-group branding-logo-group">
+              <span class="profile-field-label">Logo</span>
+
+              <div class="logo-preview">
+                <span>Brokerage / Agent Logo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="branding-colors">
+            <div class="branding-color">
+              <div
+                class="branding-color-swatch"
+                [style]="`background-color: #${agent()?.primaryColor}`"
+              ></div>
+
+              <div class="branding-color-info">
+                <span class="profile-field-label">Primary Color</span>
+
+                <span class="profile-field-value">
+                  #{{ agent()?.primaryColor?.toUpperCase() }}
+                </span>
+              </div>
+            </div>
+
+            <div class="branding-color">
+              <div
+                class="branding-color-swatch"
+                [style]="`background-color: #${agent()?.secondaryColor}`"
+              ></div>
+
+              <div class="branding-color-info">
+                <span class="profile-field-label">Secondary Color</span>
+
+                <span class="profile-field-value">
+                  #{{ agent()?.secondaryColor?.toUpperCase() }}
+                </span>
+              </div>
+            </div>
+
+            <div class="branding-color">
+              <div
+                class="branding-color-swatch"
+                [style]="`background-color: #${agent()?.accentColor}`"
+              ></div>
+
+              <div class="branding-color-info">
+                <span class="profile-field-label">Accent Color</span>
+
+                <span class="profile-field-value">
+                  #{{ agent()?.accentColor?.toUpperCase() }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="branding-actions">
+            <aa-button [config]="previewButtonConfig" />
+          </div>
+        </div>
+
+        <!-- ==================================================
+             PUBLIC PAGE PREVIEW
+             ================================================== -->
+
+        <div class="public-preview-container">
+          <span class="profile-field-label">Public Page Preview</span>
+
+          <div class="iphone-preview">
+            @if (showPreview()) {
+              <iframe
+                #publicPreviewFrame
+                class="public-preview-frame"
+                [src]="previewUrl"
+                title="Public open house preview"
+              ></iframe>
+            } @else {
+              <div class="preview-placeholder">
+                <span>Click "Preview Public Branding" to load preview</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         DEFAULT QUESTIONS
+         ====================================================== -->
+
+    <section class="profile-section component">
+      <div class="section-header">
+        <div>
+          <h2>Default Feedback Questions</h2>
+
+          <p>
+            Your currently selected questions, automatically included with each
+            new open house.
+          </p>
+        </div>
+
+        <aa-button [config]="editDefaultQuestionsButtonConfig" />
+      </div>
+
+      <div class="default-question-list">
+        @for (question of defaultQuestions(); track question.id) {
+          <div class="default-question-row">
+            <span class="default-question-label">
+              {{ question.label }}
+            </span>
+
+            <span
+              class="default-question-required"
+              [class.required]="question.required"
+            >
+              {{ question.required ? "Required" : "Optional" }}
+            </span>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</aa-page-template>

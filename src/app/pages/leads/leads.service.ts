@@ -15,7 +15,6 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class LeadsService {
   private readonly http = inject(HttpClient);
-  private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
   private readonly snackbarService = inject(SnackbarService);
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;

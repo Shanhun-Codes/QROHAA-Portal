@@ -14,7 +14,7 @@ export const routes: Routes = [
 
   {
     path: 'setup-agent',
-    canActivate: [authGuard],
+    canActivate: [onboardingGuard],
     loadComponent: () =>
       import('./pages/setup-agent/setup-agent.component').then(
         (m) => m.SetupAgentComponent,
@@ -24,7 +24,7 @@ export const routes: Routes = [
   {
     path: '',
     component: PageWrapperComponent,
-    canActivate: [authGuard, onboardingGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -48,6 +48,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/open-houses/open-houses.component').then(
             (m) => m.OpenHousesComponent,
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./pages/profile/profile.component').then(
+            (m) => m.ProfileComponent,
           ),
       },
     ],

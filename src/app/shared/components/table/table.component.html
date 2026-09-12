@@ -31,6 +31,17 @@
     </thead>
 
     <tbody>
+      @if (tableDataConfig().length === 0) {
+        <tr class="no-hover">
+          <td
+            style="text-align: center; height: 75px; vertical-align: middle"
+            [attr.colspan]="tableHeaderConfig().length + 1"
+            class="no-hover"
+          >
+            No data currently available.
+          </td>
+        </tr>
+      }
       @for (data of tableDataConfig(); track data.id) {
         <tr (click)="onRowClick(data.id)">
           <td class="checkbox-cell">

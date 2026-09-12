@@ -1,5 +1,5 @@
-@use "theme" as *;
-@use "spacing" as *;
+@use "styles/theme" as *;
+@use "styles/spacing" as *;
 @use "styles/component-sizing" as *;
 
 // ======================================================
@@ -265,4 +265,17 @@ table {
 
 .property-cell {
   white-space: pre-line;
+}
+
+.no-hover:hover {
+  box-shadow: none;
+  cursor: default;
+}
+
+tbody tr.no-hover:nth-child(even):hover {
+  background-color: $surface-elevated;
+}
+
+tbody tr.no-hover:nth-child(odd):hover {
+  background-color: transparent;
 }
