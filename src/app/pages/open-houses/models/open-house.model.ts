@@ -1,4 +1,4 @@
-import { StatusPillConfig } from '../../../shared/models/status-pill.model';
+import { StatusPillConfig } from '../../../shared/components/models/status-pill.model';
 import { Property } from '../../properties/models/property.model';
 
 export interface OpenHouse {
@@ -19,4 +19,23 @@ export interface OpenHouseTableRow extends Omit<OpenHouse, 'property'> {
   date: string;
   time: string;
   status: StatusPillConfig;
+}
+
+export interface OpenHouseFormValue {
+  propertyId: string;
+  createProperty: boolean;
+
+  street?: string;
+  street2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  listingPrice?: string;
+
+  startDate: string;
+  startTime: string;
+
+  durationDays: 1 | 2;
+
+  endTime: string;
 }

@@ -1,0 +1,390 @@
+@use "styles/theme" as *;
+@use "styles/spacing" as *;
+@use "styles/component-sizing" as *;
+
+// ======================================================
+// PAGE
+// ======================================================
+
+.profile-page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  padding-bottom: 2rem;
+}
+
+// ======================================================
+// SECTIONS
+// ======================================================
+
+.profile-section {
+  padding: 1.5rem;
+
+  background-color: $surface;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  border-bottom: 1px solid $border-light;
+
+  h2 {
+    margin: 0 0 0.35rem;
+
+    color: $text-primary;
+
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+
+    color: $text-secondary;
+
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+// ======================================================
+// PROFILE INFORMATION
+// ======================================================
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  min-height: 70px;
+
+  padding: 1rem;
+
+  background-color: $surface-elevated;
+  border: 1px solid $border-light;
+  border-radius: 0.5rem;
+}
+
+.profile-field-full {
+  grid-column: 1 / -1;
+}
+
+.profile-field-label {
+  color: $text-muted;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.profile-field-value {
+  color: $text-primary;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+// ======================================================
+// BRANDING LAYOUT
+// ======================================================
+
+.branding-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.branding-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  min-width: 0;
+}
+
+// ======================================================
+// BRANDING IMAGES
+// ======================================================
+
+.branding-images {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.branding-image-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.branding-logo-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.headshot-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 130px;
+  height: 130px;
+
+  background-color: $surface-elevated;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.headshot-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 82px;
+  height: 82px;
+
+  color: $text-primary;
+  background: $brand-red-metallic;
+
+  border-radius: 50%;
+
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.logo-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 220px;
+  height: 130px;
+
+  padding: 1rem;
+
+  color: $text-muted;
+  background-color: $surface-elevated;
+
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+// ======================================================
+// BRANDING COLORS
+// ======================================================
+
+.branding-colors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.branding-color {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.75rem;
+
+  background-color: $surface-elevated;
+  border: 1px solid $border-light;
+  border-radius: 0.5rem;
+}
+
+.branding-color-swatch {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border: 1px solid $border-light;
+  border-radius: 0.4rem;
+}
+
+.branding-color-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+// ======================================================
+// BRANDING ACTIONS
+// ======================================================
+
+.branding-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 0.25rem;
+}
+
+// ======================================================
+// PUBLIC PAGE PREVIEW
+// ======================================================
+
+.public-preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  width: 390px;
+}
+
+.iphone-preview {
+  width: 390px;
+  height: 844px;
+
+  overflow: hidden;
+
+  background-color: #000;
+  border: 8px solid $surface-elevated;
+  border-radius: 2.5rem;
+
+  box-shadow: 0 12px 30px rgb(0 0 0 / 30%);
+}
+
+.public-preview-frame {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  background-color: white;
+}
+
+.preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 2rem;
+
+  color: $text-muted;
+  background-color: $background;
+
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+// ======================================================
+// DEFAULT QUESTIONS
+// ======================================================
+
+.default-question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.default-question-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1rem 1.25rem;
+
+  background-color: $surface-elevated;
+  border: 1px solid $border-light;
+  border-radius: 0.6rem;
+}
+
+.default-question-label {
+  color: $text-primary;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.default-question-required {
+  flex-shrink: 0;
+
+  color: $text-muted;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &.required {
+    color: $success;
+  }
+}
+
+// ======================================================
+// RESPONSIVE
+// ======================================================
+
+@media (max-width: 1200px) {
+  .branding-content {
+    grid-template-columns: 1fr;
+  }
+
+  .public-preview-container {
+    width: 390px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-field-full {
+    grid-column: auto;
+  }
+
+  .branding-images {
+    flex-direction: column;
+  }
+
+  .branding-logo-group {
+    width: 100%;
+  }
+
+  .logo-preview {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .public-preview-container {
+    width: 100%;
+  }
+
+  .iphone-preview {
+    width: 100%;
+    max-width: 390px;
+  }
+}

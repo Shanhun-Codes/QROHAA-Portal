@@ -4,10 +4,9 @@ import { LeftHandNavComponent } from './components/left-hand-nav/left-hand-nav.c
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'aa-page-wrapper',
-  standalone: true,
-  imports: [TopBarComponent, LeftHandNavComponent, RouterOutlet],
-  templateUrl: './page-wrapper.component.html',
-  styleUrl: './page-wrapper.component.scss',
+    selector: 'aa-page-wrapper',
+    imports: [TopBarComponent, LeftHandNavComponent, RouterOutlet],
+    templateUrl: './page-wrapper.component.html',
+    styleUrl: './page-wrapper.component.scss'
 })
 export class PageWrapperComponent {}

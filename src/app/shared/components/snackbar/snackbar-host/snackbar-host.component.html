@@ -1,0 +1,22 @@
+<div class="snackbar-container">
+  @for (snackbar of snackbarService.messages(); track snackbar.id) {
+    <div
+      class="snackbar"
+      [class.snackbar--success]="snackbar.type === 'success'"
+      [class.snackbar--error]="snackbar.type === 'error'"
+      [class.snackbar--warning]="snackbar.type === 'warning'"
+      [class.snackbar--info]="snackbar.type === 'info'"
+    >
+      <span>{{ snackbar.message }}</span>
+
+      <button
+        type="button"
+        class="snackbar-close"
+        (click)="snackbarService.dismiss(snackbar.id)"
+        aria-label="Dismiss notification"
+      >
+        ×
+      </button>
+    </div>
+  }
+</div>

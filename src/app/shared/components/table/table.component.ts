@@ -1,21 +1,20 @@
 import { Component, input, output, signal, TemplateRef } from '@angular/core';
-import { ITableHeaderConfig } from '../../models/table.model';
+import { ITableHeaderConfig } from '../models/table.model';
 import { MatIcon } from '@angular/material/icon';
 import { StatusPillComponent } from '../status-pill/status-pill.component';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { ExpandableTableRowComponent } from './expandable-table-row/expandable-table-row.component';
 
 @Component({
-  selector: 'aa-table',
-  standalone: true,
-  imports: [
-    MatIcon,
-    StatusPillComponent,
-    TimeAgoPipe,
-    ExpandableTableRowComponent,
-  ],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
+    selector: 'aa-table',
+    imports: [
+        MatIcon,
+        StatusPillComponent,
+        TimeAgoPipe,
+        ExpandableTableRowComponent,
+    ],
+    templateUrl: './table.component.html',
+    styleUrl: './table.component.scss'
 })
 export class TableComponent<T extends { id: string }> {
   readonly tableHeaderConfig = input.required<ITableHeaderConfig<any>[]>();
@@ -26,7 +25,11 @@ export class TableComponent<T extends { id: string }> {
 
   readonly rowExpanded = output<string>();
 
+  readonly selectionChange = output<string[]>();
+
   readonly row = signal<string | null>(null);
+
+  readonly selectedIds = signal<string[]>([]);
 
   onRowClick(id: string): void {
     const isOpening = this.row() !== id;
@@ -51,5 +54,32 @@ export class TableComponent<T extends { id: string }> {
       .toLowerCase();
 
     return `${columnName}-${suffix}`;
+  }
+
+  onCheckboxClick(event: MouseEvent, id: string): void {
+    event.stopPropagation();
+
+    const checkbox = event.target as HTMLInputElement;
+
+    this.selectedIds.update((ids) => {
+      if (checkbox.checked) {
+        return ids.includes(id) ? ids : [...ids, id];
+      }
+
+      return ids.filter((selectedId) => selectedId !== id);
+    });
+
+    this.selectionChange.emit(this.selectedIds());
+
+    console.log('SELECTED IDS:', this.selectedIds());
+  }
+
+  clearSelection(): void {
+    this.selectedIds.set([]);
+    this.selectionChange.emit([]);
+  }
+
+  isSelected(id: string): boolean {
+    return this.selectedIds().includes(id);
   }
 }

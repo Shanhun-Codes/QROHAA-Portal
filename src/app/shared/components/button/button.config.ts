@@ -4,6 +4,7 @@ export interface ButtonConfig {
   variant?: TVariant;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
+  click?: () => void;
 }
 
 export type TVariant = 'primary' | 'secondary' | 'danger' | 'ghost';

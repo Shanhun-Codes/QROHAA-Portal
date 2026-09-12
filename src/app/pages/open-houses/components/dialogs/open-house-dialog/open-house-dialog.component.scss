@@ -1,0 +1,124 @@
+@use "styles/theme" as *;
+@use "styles/sizing" as *;
+@use "styles/spacing" as *;
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.open-house-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.dialog-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dialog-section + .dialog-section {
+  padding-top: 1.5rem;
+  border-top: 1px solid $border;
+}
+
+.dialog-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  h4 {
+    margin: 0 0 0.25rem;
+    color: $text-primary;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    color: $text-muted;
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+
+.default-question-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.85rem 1rem;
+
+  border: 1px solid $border;
+  border-radius: $radius-md;
+
+  background: $surface;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    background: $surface-elevated;
+    border-color: $border-light;
+  }
+}
+
+.default-question-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.default-question-title {
+  color: $text-primary;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.default-question-description {
+  color: $text-muted;
+  font-size: 0.75rem;
+}
+
+.feedback-question-section {
+  padding-top: 0.25rem;
+}
+
+.save-default-questions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+
+  border: 1px solid $border;
+  border-radius: $radius-md;
+
+  background: $surface;
+  cursor: pointer;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+}
+
+.save-default-questions-title {
+  color: $text-primary;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.save-default-questions-description {
+  color: $text-muted;
+  font-size: 0.75rem;
+}

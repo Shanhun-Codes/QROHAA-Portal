@@ -1,5 +1,6 @@
 @use "theme" as *;
 @use "spacing" as *;
+@use "mixins" as *;
 
 // ======================================================
 // BUTTON RESET
@@ -89,7 +90,6 @@ $button-secondary-border: $border-light;
 // ======================================================
 
 $button-danger-background: $brand-red-metallic;
-
 $button-danger-text: $text-primary;
 $button-danger-border: $brand-red-light;
 

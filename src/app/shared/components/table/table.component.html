@@ -15,7 +15,7 @@
     <thead>
       <tr>
         <th class="checkbox-cell">
-          <!-- <input class="table-checkbox" type="checkbox" /> -->
+          <!-- Select-all checkbox can go here later -->
         </th>
 
         @for (column of tableHeaderConfig(); track column.label) {
@@ -31,10 +31,26 @@
     </thead>
 
     <tbody>
+      @if (tableDataConfig().length === 0) {
+        <tr class="no-hover">
+          <td
+            style="text-align: center; height: 75px; vertical-align: middle"
+            [attr.colspan]="tableHeaderConfig().length + 1"
+            class="no-hover"
+          >
+            No data currently available.
+          </td>
+        </tr>
+      }
       @for (data of tableDataConfig(); track data.id) {
         <tr (click)="onRowClick(data.id)">
           <td class="checkbox-cell">
-            <input class="table-checkbox" type="checkbox" />
+            <input
+              class="table-checkbox"
+              type="checkbox"
+              [checked]="isSelected(data.id)"
+              (click)="onCheckboxClick($event, data.id)"
+            />
           </td>
 
           @for (column of tableHeaderConfig(); track column.label) {

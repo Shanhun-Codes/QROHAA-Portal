@@ -1,0 +1,209 @@
+<form
+  [formGroup]="form()"
+  [class.form-gap-sm]="config().layout?.gap === 'sm'"
+  [class.form-gap-md]="!config().layout?.gap || config().layout?.gap === 'md'"
+  [class.form-gap-lg]="config().layout?.gap === 'lg'"
+  [class.form-label-left]="config().layout?.labelPosition === 'left'"
+>
+  @for (field of config().fields; track field.key) {
+    <div
+      class="form-field"
+      [class.form-field--full]="!field.layout || field.layout === 'full'"
+      [class.form-field--half]="field.layout === 'half'"
+      [class.form-field--third]="field.layout === 'third'"
+      [class.form-field--quarter]="field.layout === 'quarter'"
+    >
+      @if (field.type !== "checkbox") {
+        <label [for]="field.key">
+          {{ field.label }}
+
+          @if (field.required) {
+            <span>*</span>
+          }
+
+          @if (field.tooltip) {
+            <span
+              class="field-tooltip"
+              [attr.data-tooltip]="field.tooltip"
+              tabindex="0"
+              aria-label="More information"
+            >
+              i
+            </span>
+          }
+        </label>
+      }
+
+      @switch (field.type) {
+        @case ("textarea") {
+          <textarea
+            [id]="field.key"
+            [formControlName]="field.key"
+            [placeholder]="field.placeholder ?? ''"
+            [readonly]="field.readonly ?? false"
+          ></textarea>
+        }
+
+        @case ("select") {
+          <div class="select-wrapper">
+            <select [id]="field.key" [formControlName]="field.key">
+              @if (field.selectPlaceholder) {
+                <option value="" disabled>
+                  {{ field.selectPlaceholder }}
+                </option>
+              }
+
+              @for (option of field.options ?? []; track option.label) {
+                <option [ngValue]="option.value">
+                  {{ option.label }}
+                </option>
+              }
+            </select>
+          </div>
+        }
+
+        @case ("checkbox") {
+          <label class="form-checkbox" [for]="field.key">
+            <input
+              type="checkbox"
+              [id]="field.key"
+              [formControlName]="field.key"
+            />
+
+            <span>
+              {{ field.label }}
+
+              @if (field.required) {
+                <span>*</span>
+              }
+
+              @if (field.tooltip) {
+                <span
+                  class="field-tooltip"
+                  [attr.data-tooltip]="field.tooltip"
+                  tabindex="0"
+                  aria-label="More information"
+                >
+                  i
+                </span>
+              }
+            </span>
+          </label>
+        }
+
+        @case ("radio") {
+          <div class="form-radio-group">
+            @for (option of field.options ?? []; track option.label) {
+              <label class="form-radio">
+                <input
+                  type="radio"
+                  [formControlName]="field.key"
+                  [value]="option.value"
+                />
+
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+        }
+
+        @case ("date") {
+          <input
+            [id]="field.key"
+            type="date"
+            [formControlName]="field.key"
+            [readonly]="field.readonly ?? false"
+          />
+        }
+
+        @default {
+          <input
+            [id]="field.key"
+            [type]="field.type"
+            [formControlName]="field.key"
+            [placeholder]="field.placeholder ?? ''"
+            [readonly]="field.readonly ?? false"
+          />
+        }
+      }
+
+      @if (field.helperText) {
+        <span class="form-helper">
+          {{ field.helperText }}
+        </span>
+      }
+
+      @if (form().get(field.key)?.touched) {
+        @if (form().get(field.key)?.hasError("required")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.required ??
+                field.label + " is required."
+            }}
+          </span>
+        }
+
+        @if (form().get(field.key)?.hasError("email")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.email ?? "Enter a valid email address."
+            }}
+          </span>
+        }
+
+        @if (form().get(field.key)?.hasError("minlength")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.minLength ??
+                field.label +
+                  " must be at least " +
+                  field.validation?.minLength +
+                  " characters."
+            }}
+          </span>
+        }
+
+        @if (form().get(field.key)?.hasError("maxlength")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.maxLength ??
+                field.label +
+                  " cannot exceed " +
+                  field.validation?.maxLength +
+                  " characters."
+            }}
+          </span>
+        }
+
+        @if (form().get(field.key)?.hasError("min")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.min ??
+                field.label + " must be at least " + field.validation?.min + "."
+            }}
+          </span>
+        }
+
+        @if (form().get(field.key)?.hasError("max")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.max ??
+                field.label +
+                  " cannot be greater than " +
+                  field.validation?.max +
+                  "."
+            }}
+          </span>
+        }
+
+        @if (form().get(field.key)?.hasError("pattern")) {
+          <span class="form-error">
+            {{
+              field.validationMessages?.pattern ?? field.label + " is invalid."
+            }}
+          </span>
+        }
+      }
+    </div>
+  }
+</form>

@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ExpandableTableRowService } from './expandable-table-row/expandable-table-row.service';
 
 @Injectable({
@@ -6,6 +6,7 @@ import { ExpandableTableRowService } from './expandable-table-row/expandable-tab
 })
 export class TableService {
   private exTableService = inject(ExpandableTableRowService);
+
   private row = this.exTableService.row;
 
   handleRowClick(id: string): void {

@@ -8,6 +8,7 @@
   [class.btn-sm]="config().size === 'sm'"
   [class.btn-lg]="config().size === 'lg'"
   [disabled]="config().disabled"
+  (click)="onClick()"
 >
   @if (config().icon) {
     <mat-icon>{{ config().icon }}</mat-icon>

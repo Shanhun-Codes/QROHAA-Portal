@@ -1,0 +1,139 @@
+@use "styles/theme" as *;
+
+:host {
+  display: inline-flex;
+}
+
+.action-menu-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  background: transparent;
+  color: $text-secondary;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+
+  mat-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+  }
+
+  &:hover {
+    background-color: $surface-elevated;
+    border-color: $border;
+    color: $text-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+.action-menu-panel {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 190px;
+
+  padding: 0.4rem;
+
+  background-color: $surface-elevated;
+
+  border: 1px solid $border;
+  border-radius: 8px;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.action-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  width: 100%;
+
+  padding: 0.7rem 0.8rem;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+  color: $text-primary;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  mat-icon {
+    flex-shrink: 0;
+
+    width: 19px;
+    height: 19px;
+
+    font-size: 19px;
+
+    color: $text-secondary;
+  }
+
+  span {
+    flex: 1;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: $surface-active;
+
+    mat-icon {
+      color: $text-primary;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.action-menu-item-danger {
+  color: $danger;
+
+  mat-icon {
+    color: $danger;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: rgba($danger, 0.12);
+    color: $danger;
+
+    mat-icon {
+      color: $danger;
+    }
+  }
+}

@@ -20,3 +20,10 @@ export const ACTION_BUTTON_CONFIG: ButtonConfig = {
   variant: 'primary',
   size: 'sm',
 };
+
+export const UPDATE_STATUS_BUTTON_CONFIG: ButtonConfig = {
+  label: 'Update Status',
+  icon: 'sync_alt',
+  variant: 'primary',
+  size: 'sm',
+};

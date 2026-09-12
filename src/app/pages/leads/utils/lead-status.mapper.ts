@@ -1,6 +1,6 @@
 // lead-status.mapper.ts
 
-import { StatusPillConfig } from '../../../shared/models/status-pill.model';
+import { StatusPillConfig } from '../../../shared/components/models/status-pill.model';
 import { LeadStatusType } from '../models/lead.model';
 
 export function mapLeadStatusToPill(status: LeadStatusType): StatusPillConfig {

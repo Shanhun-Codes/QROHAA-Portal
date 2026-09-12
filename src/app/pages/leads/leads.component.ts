@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 import { TableComponent } from '../../shared/components/table/table.component';
 import { LEADS_TABLE_HEADER_CONFIG } from './config/leads-table-header-config';
@@ -7,38 +14,78 @@ import { mapLeadStatusToPill } from './utils/lead-status.mapper';
 import { LeadsService } from './leads.service';
 import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
 import {
-  ACTION_BUTTON_CONFIG,
   LEADS_BUTTON_CONFIG,
-  NOTE_BUTTON_CONFIG,
+  UPDATE_STATUS_BUTTON_CONFIG,
 } from './config/button.config';
-import { StatusPillComponent } from '../../shared/components/status-pill/status-pill.component';
+
+import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
+import { LeadExpandedRowComponent } from './components/lead-expanded-row/lead-expanded-row.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
-import { MatIcon } from '@angular/material/icon';
-import { DatePipe } from '@angular/common';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../shared/components/inputs/select/select.component';
+import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
   selector: 'aa-leads',
-  standalone: true,
   imports: [
     TableComponent,
     PageTemplateComponent,
-    StatusPillComponent,
+    LeadExpandedRowComponent,
     ButtonComponent,
-    MatIcon,
-    DatePipe,
+    SelectComponent,
   ],
   templateUrl: './leads.component.html',
   styleUrl: './leads.component.scss',
 })
 export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);
+  private readonly appLoaderService = inject(AppLoaderService);
+  readonly leadView = signal<'ACTIVE' | 'CLOSED'>('ACTIVE');
+
+  readonly table = viewChild(TableComponent);
+
+  readonly isLoading = this.appLoaderService.isAppLoading;
 
   readonly title = 'Leads';
   readonly subtitle = 'Manage and follow up with your open house leads here';
 
-  readonly addLeadButtonConfig = LEADS_BUTTON_CONFIG;
-  readonly addNoteButtonConfig = NOTE_BUTTON_CONFIG;
-  readonly actionsButtonConfig = ACTION_BUTTON_CONFIG;
+  readonly selectedLeadIds = signal<string[]>([]);
+  readonly selectedStatus = signal<LeadStatusType | null>(null);
+
+  readonly statusOptions: SelectOption<LeadStatusType>[] = [
+    {
+      label: 'New',
+      value: LeadStatusType.NEW,
+    },
+    {
+      label: 'Contacted',
+      value: LeadStatusType.CONTACTED,
+    },
+    {
+      label: 'Follow Up',
+      value: LeadStatusType.FOLLOW_UP,
+    },
+    {
+      label: 'Qualified',
+      value: LeadStatusType.QUALIFIED,
+    },
+    {
+      label: 'Closed',
+      value: LeadStatusType.CLOSED,
+    },
+  ];
+
+  readonly addLeadButtonConfig = {
+    ...LEADS_BUTTON_CONFIG,
+    click: () => this.onAddLeadClick(),
+  };
+
+  readonly updateStatusButtonConfig = {
+    ...UPDATE_STATUS_BUTTON_CONFIG,
+    click: () => this.onUpdateStatusClick(),
+  };
 
   readonly tableHeaderConfig = LEADS_TABLE_HEADER_CONFIG;
 
@@ -50,65 +97,73 @@ export class LeadsComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.leadsService.getLeads();
-  }
+    this.appLoaderService.runInitialLoad(
+      () =>
+        new Promise<void>((resolve) => {
+          const request = this.leadsService.getLeads();
 
-  onLeadExpanded(e: string) {}
+          if (!request) {
+            resolve();
+            return;
+          }
 
-  getLeadDetail(row: any) {
-    const submission = row.submissions?.[0];
+          request.subscribe({
+            next: (response) => {
+              this.leadsService.leads.set(
+                response.map((lead) => ({
+                  ...lead,
+                  name: `${lead.firstName} ${lead.lastName}`,
+                  phone: formatPhoneNumber(lead.phone),
+                })),
+              );
 
-    const answers = Object.fromEntries(
-      submission?.feedbackAnswers?.map((answer: any) => [
-        answer.question.key,
-        answer.value,
-      ]) ?? [],
+              resolve();
+            },
+            error: () => {
+              resolve();
+            },
+          });
+        }),
     );
-
-    return {
-      createdAt: row.createdAt,
-      email: row.email,
-      phone: row.phone,
-
-      budgetRange: this.formatAnswer(answers['budget_range']),
-      purchaseTimeline: this.formatAnswer(answers['purchase_timeline']),
-      preQualified: this.formatAnswer(answers['pre_qualified']),
-      neighborhoods: answers['neighborhoods'] ?? '—',
-
-      visitedAt: submission?.createdAt ?? '—',
-
-      property: submission?.openHouse?.property?.street ?? '—',
-
-      propertyLocation: submission?.openHouse?.property
-        ? `${submission.openHouse.property.city}, ${submission.openHouse.property.state} ${submission.openHouse.property.zip}`
-        : '—',
-
-      openHouseDate: submission?.openHouse?.startsAt ?? '—',
-
-      likedMost: this.formatAnswer(answers['liked_most']),
-      likedLeast: this.formatAnswer(answers['liked_least']),
-      additionalComments: answers['additional_comments'] ?? '—',
-
-      notes: row.notes ?? [],
-    };
   }
 
-  private formatAnswer(value?: string): string {
-    if (!value) {
-      return '—';
+  onAddLeadClick(): void {
+    this.leadsService.openLeadDialog('CREATE');
+  }
+
+  onLeadExpanded(e: string): void {}
+
+  onSelectionChange(ids: string[]): void {
+    this.selectedLeadIds.set(ids);
+
+    console.log('SELECTED LEAD IDS:', ids);
+  }
+
+  onStatusChange(status: LeadStatusType): void {
+    this.selectedStatus.set(status);
+  }
+
+  async onUpdateStatusClick(): Promise<void> {
+    const leadIds = this.selectedLeadIds();
+    const status = this.selectedStatus();
+
+    if (!leadIds.length || !status) {
+      return;
     }
 
-    return value
-      .toLowerCase()
-      .replaceAll('_', ' ')
-      .replace(/\b\w/g, (char) => char.toUpperCase());
+    const success = await this.leadsService.updateMultipleLeadsStatus(
+      leadIds,
+      status,
+    );
+
+    if (!success) return;
+
+    this.table()?.clearSelection();
+    this.selectedStatus.set(null);
   }
 
-  getAvatarStatusClass(status: any): string {
-    const label = status?.label ?? status?.text ?? status ?? '';
-
-    return `lead-avatar lead-avatar--${String(label)
-      .toLowerCase()
-      .replaceAll(' ', '-')}`;
+  onClearSelectionClick(): void {
+    this.table()?.clearSelection();
+    this.selectedStatus.set(null);
   }
 }

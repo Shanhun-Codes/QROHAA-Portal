@@ -5,11 +5,10 @@ import { MatIcon } from '@angular/material/icon';
 import { PageWrapperService } from '../../page-wrapper.service';
 
 @Component({
-  selector: 'aa-left-hand-nav',
-  standalone: true,
-  imports: [RouterLink, MatIcon, RouterLinkActive],
-  templateUrl: './left-hand-nav.component.html',
-  styleUrl: './left-hand-nav.component.scss',
+    selector: 'aa-left-hand-nav',
+    imports: [RouterLink, MatIcon, RouterLinkActive],
+    templateUrl: './left-hand-nav.component.html',
+    styleUrl: './left-hand-nav.component.scss'
 })
 export class LeftHandNavComponent {
   public pageWrapperService = inject(PageWrapperService);

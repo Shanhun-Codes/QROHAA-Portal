@@ -4,32 +4,65 @@ import { OPEN_HOUSE_BUTTON_CONFIG } from './config/button.config';
 import { OpenHousesService } from './open-houses.service';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { OPEN_HOUSE_TABLE_HEADER_CONFIG } from './config/open-houses-table-header.config';
-import { formatListingPrice } from '../../shared/utils/format-listing-price.util';
-import { formatDate } from '@angular/common';
-import { formatDateTime } from '../../shared/utils/format-date-time.util';
+
 import { mapOpenHouseToTableRow } from './utils/open-house-table.util';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
-  selector: 'aa-open-houses',
-  standalone: true,
-  imports: [PageTemplateComponent, TableComponent],
-  templateUrl: './open-houses.component.html',
-  styleUrl: './open-houses.component.scss',
+    selector: 'aa-open-houses',
+    imports: [PageTemplateComponent, TableComponent, ButtonComponent],
+    templateUrl: './open-houses.component.html',
+    styleUrl: './open-houses.component.scss'
 })
 export class OpenHousesComponent implements OnInit {
-  private readonly openHousesService = inject(OpenHousesService);
+  private readonly openHouseService = inject(OpenHousesService);
+  private readonly appLoaderService = inject(AppLoaderService);
 
   readonly title = 'Open Houses';
   readonly subtitle = 'Manage your open houses here';
   readonly tableHeaderConfig = OPEN_HOUSE_TABLE_HEADER_CONFIG;
-  readonly buttonConfig = OPEN_HOUSE_BUTTON_CONFIG;
+
+  readonly addOpenHouseButtonConfig = {
+    ...OPEN_HOUSE_BUTTON_CONFIG,
+    click: () => this.onCreateNewOpenHouseClick(),
+  };
 
   readonly tableData = computed(() =>
-    this.openHousesService.tableData().map(mapOpenHouseToTableRow),
+    this.openHouseService.tableData().map(mapOpenHouseToTableRow),
   );
 
   ngOnInit(): void {
-    this.openHousesService.getOpenHouseData();
+    this.appLoaderService.runInitialLoad(
+      () =>
+        new Promise<void>((resolve) => {
+          const request = this.openHouseService.getOpenHouses();
+
+          if (!request) {
+            resolve();
+            return;
+          }
+
+          request.subscribe({
+            next: (response) => {
+              this.openHouseService.tableData.set(
+                response.map((openHouse) => ({
+                  ...openHouse,
+                })),
+              );
+
+              resolve();
+            },
+            error: () => {
+              resolve();
+            },
+          });
+        }),
+    );
+  }
+
+  onCreateNewOpenHouseClick() {
+    this.openHouseService.openOpenHouseDialog('CREATE');
   }
 
   onLeadExpanded(e: string) {}

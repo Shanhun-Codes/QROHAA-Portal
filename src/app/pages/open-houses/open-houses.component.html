@@ -1,19 +1,25 @@
+<ng-template #headerActions>
+  <aa-button [config]="addOpenHouseButtonConfig"></aa-button>
+</ng-template>
+
 <aa-page-template
   [title]="title"
   [subtitle]="subtitle"
   [hasTemplateButton]="true"
-  [buttonConfig]="buttonConfig"
+  [headerActions]="headerActions"
 >
-  <aa-table
-    [tableDataConfig]="tableData()"
-    [tableHeaderConfig]="tableHeaderConfig"
-    [expandedRowTemplate]="expandedRowTemplate"
-    (rowExpanded)="onLeadExpanded($event)"
-  />
+  <div class="table-container">
+    <aa-table
+      [tableDataConfig]="tableData()"
+      [tableHeaderConfig]="tableHeaderConfig"
+      [expandedRowTemplate]="expandedRowTemplate"
+      (rowExpanded)="onLeadExpanded($event)"
+    />
 
-  <ng-template #expandedRowTemplate let-row>
-    <div class="lead-expanded-row">
-      <h3>{{ row.property }}</h3>
-    </div>
-  </ng-template>
+    <ng-template #expandedRowTemplate let-row>
+      <div class="lead-expanded-row">
+        <!-- <h3>{{ row.property }}</h3> -->
+      </div>
+    </ng-template>
+  </div>
 </aa-page-template>

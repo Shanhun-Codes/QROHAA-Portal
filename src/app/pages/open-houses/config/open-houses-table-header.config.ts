@@ -1,4 +1,4 @@
-import { ITableHeaderConfig } from '../../../shared/models/table.model';
+import { ITableHeaderConfig } from '../../../shared/components/models/table.model';
 import { OpenHouseTableRow } from '../models/open-house.model';
 
 export const OPEN_HOUSE_TABLE_HEADER_CONFIG: ITableHeaderConfig<OpenHouseTableRow>[] =

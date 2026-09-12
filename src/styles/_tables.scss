@@ -1,5 +1,5 @@
-@use "theme" as *;
-@use "spacing" as *;
+@use "styles/theme" as *;
+@use "styles/spacing" as *;
 @use "styles/component-sizing" as *;
 
 // ======================================================
@@ -67,6 +67,18 @@ table {
     overflow: scroll;
   }
 
+  tbody tr {
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+
+    &:hover {
+      background-color: $surface-active;
+      box-shadow: inset 3px 0 0 $primary;
+    }
+  }
+
   tbody tr:nth-child(even) {
     background-color: $surface-elevated;
   }
@@ -115,11 +127,11 @@ table {
   }
 
   .date-column {
-    width: 10%;
+    width: 15%;
   }
 
   .time-column {
-    width: 15%;
+    width: 20%;
   }
 
   // ======================================================
@@ -131,7 +143,7 @@ table {
   }
 
   .name-column {
-    width: 12%;
+    width: 20%;
   }
 
   .phone-column {
@@ -163,7 +175,7 @@ table {
   }
 
   .listing-price-column {
-    width: 10%;
+    width: 15%;
   }
 
   // ======================================================
@@ -255,9 +267,15 @@ table {
   white-space: pre-line;
 }
 
-aa-expanded-table-row {
-  height: 100%;
-  .expanded-row-shell {
-    height: 100%;
-  }
+.no-hover:hover {
+  box-shadow: none;
+  cursor: default;
+}
+
+tbody tr.no-hover:nth-child(even):hover {
+  background-color: $surface-elevated;
+}
+
+tbody tr.no-hover:nth-child(odd):hover {
+  background-color: transparent;
 }

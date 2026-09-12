@@ -1,0 +1,42 @@
+<button
+  #menuTrigger="cdkOverlayOrigin"
+  cdkOverlayOrigin
+  type="button"
+  class="action-menu-trigger"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-expanded]="isOpen()"
+  aria-haspopup="menu"
+  (click)="toggle($event)"
+>
+  <mat-icon>more_vert</mat-icon>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="menuTrigger"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  (backdropClick)="close()"
+  (detach)="close()"
+>
+  <div class="action-menu-panel" role="menu" (click)="$event.stopPropagation()">
+    @for (action of actions(); track action.label) {
+      <button
+        type="button"
+        class="action-menu-item"
+        [class.action-menu-item-danger]="action.danger"
+        [disabled]="action.disabled"
+        role="menuitem"
+        (click)="onActionClick($event, action)"
+      >
+        @if (action.icon) {
+          <mat-icon>{{ action.icon }}</mat-icon>
+        }
+
+        <span>{{ action.label }}</span>
+      </button>
+    }
+  </div>
+</ng-template>

@@ -1,0 +1,59 @@
+@for (dialog of dialogService.dialogs(); track dialog.id; let i = $index) {
+  <div
+    class="dialog-backdrop"
+    [style.z-index]="1000 + i * 2"
+    (click)="onBackdropClick(dialog.id)"
+  >
+    <section
+      class="dialog component"
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      [attr.data-dialog-id]="dialog.id"
+      [attr.aria-label]="dialog.config.ariaLabel ?? dialog.config.title"
+      [style.z-index]="1001 + i * 2"
+      (click)="$event.stopPropagation()"
+    >
+      @if (dialog.config.title) {
+        <header class="dialog-header">
+          <h2>{{ dialog.config.title }}</h2>
+
+          <button
+            type="button"
+            class="dialog-close-button"
+            (click)="dialogService.close(dialog.id)"
+          >
+            ×
+          </button>
+        </header>
+      }
+
+      <div class="dialog-content">
+        @if (dialog.config.contentComponent) {
+          <ng-container
+            *ngComponentOutlet="
+              dialog.config.contentComponent;
+              inputs: {
+                data: dialog.config.data,
+                dialogRef: dialog.ref,
+              }
+            "
+          />
+        } @else if (dialog.config.message) {
+          <p>{{ dialog.config.message }}</p>
+        }
+      </div>
+
+      @if (dialog.config.actions?.length) {
+        <footer class="dialog-actions">
+          @for (action of dialog.config.actions; track action.label) {
+            <aa-button
+              [config]="getActionButtonConfig(dialog.id, action)"
+              [class.dialog-primary-action]="action.type === 'primary'"
+            />
+          }
+        </footer>
+      }
+    </section>
+  </div>
+}

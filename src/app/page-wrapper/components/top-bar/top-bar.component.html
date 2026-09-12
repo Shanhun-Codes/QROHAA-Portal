@@ -25,14 +25,14 @@
 
     <img
       class="user-avatar"
-      [src]="userAvatarUrl"
+      [src]="userAvatarUrl()"
       alt="User Avatar"
       draggable="false"
     />
 
     <div class="user-info">
-      <h3>{{ userName }}</h3>
-      <p>{{ userEmail }}</p>
+      <h3>{{ userName() }}</h3>
+      <p>{{ userEmail() }}</p>
     </div>
 
     <button

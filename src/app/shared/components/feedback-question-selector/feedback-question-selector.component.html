@@ -1,0 +1,35 @@
+<div class="feedback-question-selector">
+  <div class="feedback-question-selector-header">
+    <h4>Feedback Questions</h4>
+    <p>Choose which questions visitors will be asked.</p>
+  </div>
+
+  <div class="feedback-question-list">
+    @for (question of questions(); track question.id) {
+      <div class="feedback-question-row" [class.selected]="question.selected">
+        <label class="question-selection">
+          <input
+            type="checkbox"
+            [checked]="question.selected"
+            (change)="toggleQuestion(question)"
+          />
+
+          <span class="question-label">
+            {{ question.label }}
+          </span>
+        </label>
+
+        <label class="required-selection" [class.disabled]="!question.selected">
+          <input
+            type="checkbox"
+            [checked]="question.required"
+            [disabled]="!question.selected"
+            (change)="toggleRequired(question)"
+          />
+
+          <span>Required</span>
+        </label>
+      </div>
+    }
+  </div>
+</div>
