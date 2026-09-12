@@ -9,10 +9,10 @@ import { DialogRef } from '../dialog/dialog-ref';
 import { DynamicFormConfig } from '../models/dynamic-form.model';
 
 @Component({
-    selector: 'aa-dynamic-form',
-    imports: [ReactiveFormsModule],
-    templateUrl: './dynamic-form.component.html',
-    styleUrl: './dynamic-form.component.scss'
+  selector: 'aa-dynamic-form',
+  imports: [ReactiveFormsModule],
+  templateUrl: './dynamic-form.component.html',
+  styleUrl: './dynamic-form.component.scss',
 })
 export class DynamicFormComponent {
   readonly config = input.required<DynamicFormConfig>();
@@ -43,6 +43,18 @@ export class DynamicFormComponent {
     const values = form.getRawValue();
 
     this.formSubmit.emit(values);
+  }
+
+  reset(): void {
+    const initialValues = this.config().fields.reduce(
+      (values, field) => {
+        values[field.key] = field.value ?? null;
+        return values;
+      },
+      {} as Record<string, unknown>,
+    );
+
+    this.form().reset(initialValues);
   }
 
   private buildForm(config: DynamicFormConfig): FormGroup {

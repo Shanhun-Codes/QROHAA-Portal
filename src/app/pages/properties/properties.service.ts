@@ -17,17 +17,12 @@ export class PropertiesService {
   private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
   private readonly snackbarService = inject(SnackbarService);
-  private readonly baseUrl = environment.apiUrl;
-  private readonly agentId = this.authService.agentId;
+  private readonly agentAppBaseUrl = environment.agentAppApiUrl;
+
   public tableData = signal<Property[]>([]);
 
   public getProperties() {
-    if (!this.agentId()) {
-      return;
-    }
-    return this.http.get<any>(
-      `${this.baseUrl}/agents/${this.agentId()}/properties`,
-    );
+    return this.http.get<any>(`${this.agentAppBaseUrl}/properties`);
   }
 
   async updateProperty(
@@ -39,13 +34,12 @@ export class PropertiesService {
       listingPriceCents: data.listingPrice
         ? Math.round(Number(data.listingPrice) * 100)
         : null,
-      agentId: this.agentId(),
     };
 
     try {
       await firstValueFrom(
         this.http.patch<Property>(
-          `${this.baseUrl}/agents/${this.agentId()}/properties/${propertyId}`,
+          `${this.agentAppBaseUrl}/properties/${propertyId}`,
           payload,
         ),
       );
@@ -74,15 +68,11 @@ export class PropertiesService {
       listingPriceCents: data.listingPrice
         ? Math.round(Number(data.listingPrice) * 100)
         : null,
-      agentId: this.agentId(),
     };
 
     try {
       await firstValueFrom(
-        this.http.post<Property>(
-          `${this.baseUrl}/agents/${this.agentId()}/properties`,
-          payload,
-        ),
+        this.http.post<Property>(`${this.agentAppBaseUrl}/properties`, payload),
       );
 
       this.snackbarService.success('Property successfully created');

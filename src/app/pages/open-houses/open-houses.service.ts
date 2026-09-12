@@ -14,14 +14,12 @@ export class OpenHousesService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
-  private readonly baseUrl = environment.apiUrl;
-  private readonly agentId = this.authService.agentId;
+  private readonly agentAppBaseUrl = environment.agentAppApiUrl;
+
   public tableData = signal<OpenHouse[]>([]);
 
   getOpenHouses() {
-    return this.http.get<OpenHouse[]>(
-      `${this.baseUrl}/agents/${this.agentId()}/open-houses`,
-    );
+    return this.http.get<OpenHouse[]>(`${this.agentAppBaseUrl}/open-houses`);
   }
 
   createOpenHouse(values: OpenHouseFormValue) {

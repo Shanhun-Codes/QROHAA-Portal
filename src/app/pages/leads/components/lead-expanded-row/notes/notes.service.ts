@@ -14,15 +14,14 @@ export class NotesService {
   private readonly dialogService = inject(DialogService);
   private readonly snackbarService = inject(SnackbarService);
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
-  private readonly agentId = environment.agentId;
+  private readonly agentAppBaseUrl = environment.agentAppApiUrl;
 
   public isNotesLoading = signal<boolean>(false);
   public leadId = signal<string>('');
   public notes = signal<Note[] | null>(null);
 
   async getNotes() {
-    if (!this.agentId || !this.leadId()) {
+    if (!this.leadId()) {
       console.log('AgentId LeadId error');
       return;
     }
@@ -34,7 +33,7 @@ export class NotesService {
 
       const response = await firstValueFrom(
         this.http.get<Note[]>(
-          `${this.baseUrl}/agents/${this.agentId}/leads/${this.leadId()}/notes`,
+          `${this.agentAppBaseUrl}/leads/${this.leadId()}/notes`,
         ),
       );
 
@@ -66,7 +65,7 @@ export class NotesService {
 
       const response = await firstValueFrom(
         this.http.post<Note[]>(
-          `${this.baseUrl}/agents/${this.agentId}/leads/${this.leadId()}/notes`,
+          `${this.agentAppBaseUrl}/leads/${this.leadId()}/notes`,
           payload,
         ),
       );
@@ -99,7 +98,7 @@ export class NotesService {
 
       const response = await firstValueFrom(
         this.http.patch<Note[]>(
-          `${this.baseUrl}/agents/${this.agentId}/leads/${this.leadId()}/notes/${noteId}`,
+          `${this.agentAppBaseUrl}/leads/${this.leadId()}/notes/${noteId}`,
           payload,
         ),
       );

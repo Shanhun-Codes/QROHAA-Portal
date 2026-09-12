@@ -2,6 +2,6 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://api.open-house.studio/agent-app',
-  agentId: 'doesnt exisit',
+  apiBaseUrl: 'http://localhost:3000',
+  agentAppApiUrl: 'http://localhost:3000/agent-app',
 };

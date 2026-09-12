@@ -1,8 +1,16 @@
 <div class="auth-page">
-  <div class="auth-card">
+  <div class="auth-card component">
     @if (auth.isAuthenticated$ | async; as authResult) {
       @if (authResult.isAuthenticated) {
         <div class="auth-content">
+          <div class="auth-brand">
+            <img
+              class="auth-logo"
+              src="/open-house-domain-transparent.png"
+              alt="Open House Studio"
+            />
+          </div>
+
           <div class="auth-header">
             <h1>Welcome Back</h1>
 
@@ -16,19 +24,17 @@
           @if (auth.userData$ | async; as userResult) {
             @if (userResult.userData; as user) {
               <div class="profile-card">
-                <h2>User Profile</h2>
+                @if (user.name) {
+                  <div class="profile-row">
+                    <span>Name</span>
+                    <strong>{{ user.name }}</strong>
+                  </div>
+                }
 
                 @if (user.email) {
                   <div class="profile-row">
                     <span>Email</span>
                     <strong>{{ user.email }}</strong>
-                  </div>
-                }
-
-                @if (user.name) {
-                  <div class="profile-row">
-                    <span>Name</span>
-                    <strong>{{ user.name }}</strong>
                   </div>
                 }
               </div>
@@ -41,14 +47,26 @@
         </div>
       } @else {
         <div class="auth-content">
+          <div class="auth-brand">
+            <img
+              class="auth-logo"
+              src="/open-house-domain-transparent.png"
+              alt="Open House Studio"
+            />
+          </div>
+
           <div class="auth-header">
             <h1>Open House Studio</h1>
             <p>Sign in to manage your leads, properties, and open houses.</p>
           </div>
 
+          <div class="auth-divider"></div>
+
           <div class="auth-actions">
             <aa-button (click)="login()"> Log In </aa-button>
           </div>
+
+          <p class="auth-footer">Securely powered by Open House Studio</p>
         </div>
       }
     }

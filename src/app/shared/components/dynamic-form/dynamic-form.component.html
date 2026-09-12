@@ -20,6 +20,17 @@
           @if (field.required) {
             <span>*</span>
           }
+
+          @if (field.tooltip) {
+            <span
+              class="field-tooltip"
+              [attr.data-tooltip]="field.tooltip"
+              tabindex="0"
+              aria-label="More information"
+            >
+              i
+            </span>
+          }
         </label>
       }
 
@@ -64,6 +75,17 @@
 
               @if (field.required) {
                 <span>*</span>
+              }
+
+              @if (field.tooltip) {
+                <span
+                  class="field-tooltip"
+                  [attr.data-tooltip]="field.tooltip"
+                  tabindex="0"
+                  aria-label="More information"
+                >
+                  i
+                </span>
               }
             </span>
           </label>

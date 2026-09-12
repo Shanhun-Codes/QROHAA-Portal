@@ -18,20 +18,17 @@ export class LeadsService {
   private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
   private readonly snackbarService = inject(SnackbarService);
-
-  private readonly baseUrl = environment.apiUrl;
-  private readonly agentId = this.authService.agentId;
+  private readonly agentAppBaseUrl = environment.agentAppApiUrl;
+  private readonly basUrl = environment.apiBaseUrl;
 
   public leads = signal<Lead[] | []>([]);
 
   public getLeads() {
-    if (!this.agentId()) {
-      return;
-    }
+    return this.http.get<Lead[]>(`${this.agentAppBaseUrl}/leads`);
+  }
 
-    return this.http.get<Lead[]>(
-      `${this.baseUrl}/agents/${this.agentId()}/leads`,
-    );
+  on() {
+    return this.http.get<any>(`${this.basUrl}/onboarding/me`);
   }
 
   async createLead(data: AddLeadFormValue): Promise<boolean> {
@@ -39,12 +36,11 @@ export class LeadsService {
       ...data,
       phone: data.phone.trim() || null,
       email: data.email.trim() || null,
-      agentId: this.agentId(),
     };
 
     try {
       await firstValueFrom(
-        this.http.post<Lead>(`${this.baseUrl}/leads`, payload),
+        this.http.post<Lead>(`${this.agentAppBaseUrl}/leads`, payload),
       );
 
       this.snackbarService.success('Lead successfully created');
@@ -91,13 +87,10 @@ export class LeadsService {
   async updateMultipleLeadsStatus(leadIds: string[], status: LeadStatusType) {
     try {
       const response = await firstValueFrom(
-        this.http.patch<Lead[]>(
-          `${this.baseUrl}/agents/${this.agentId()}/leads/status`,
-          {
-            leadIds,
-            status,
-          },
-        ),
+        this.http.patch<Lead[]>(`${this.agentAppBaseUrl}/leads/status`, {
+          leadIds,
+          status,
+        }),
       );
 
       this.leads.set(

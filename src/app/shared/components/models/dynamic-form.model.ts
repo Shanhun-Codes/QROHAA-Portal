@@ -24,6 +24,7 @@ export interface DynamicFormField {
   validationMessages?: DynamicFormValidationMessages;
   selectPlaceholder?: string;
   helperText?: string;
+  tooltip?: string;
   readonly?: boolean;
 }
 

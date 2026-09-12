@@ -8,20 +8,19 @@ import { FeedbackQuestionSelection } from '../components/models/feedback-questio
 })
 export class FeedbackQuestionsService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
-  private readonly agentId = environment.agentId;
+  private readonly agentAppBaseUrl = environment.agentAppApiUrl;
 
   readonly feedbackQuestions = signal<FeedbackQuestionSelection[]>([]);
   readonly agentDefaultQuestions = signal<FeedbackQuestionSelection[]>([]);
   getFeedbackQuestions() {
     return this.http.get<FeedbackQuestionSelection[]>(
-      `${this.baseUrl}/feedback-questions`,
+      `${this.agentAppBaseUrl}/feedback-questions`,
     );
   }
 
   getAgentDefaultQuestions() {
     return this.http.get<FeedbackQuestionSelection[]>(
-      `${this.baseUrl}/agents/${this.agentId}/feedback-questions`,
+      `${this.agentAppBaseUrl}/feedback-questions`,
     );
   }
 }

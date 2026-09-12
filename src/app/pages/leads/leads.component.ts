@@ -28,16 +28,16 @@ import {
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 
 @Component({
-    selector: 'aa-leads',
-    imports: [
-        TableComponent,
-        PageTemplateComponent,
-        LeadExpandedRowComponent,
-        ButtonComponent,
-        SelectComponent,
-    ],
-    templateUrl: './leads.component.html',
-    styleUrl: './leads.component.scss'
+  selector: 'aa-leads',
+  imports: [
+    TableComponent,
+    PageTemplateComponent,
+    LeadExpandedRowComponent,
+    ButtonComponent,
+    SelectComponent,
+  ],
+  templateUrl: './leads.component.html',
+  styleUrl: './leads.component.scss',
 })
 export class LeadsComponent implements OnInit {
   private readonly leadsService = inject(LeadsService);
@@ -97,6 +97,15 @@ export class LeadsComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.leadsService.on().subscribe({
+      next: (response) => {
+        console.log('ONBOARDING:', response);
+      },
+      error: (error) => {
+        console.error('ONBOARDING ERROR:', error);
+      },
+    });
+
     this.appLoaderService.runInitialLoad(
       () =>
         new Promise<void>((resolve) => {

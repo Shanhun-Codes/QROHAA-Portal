@@ -1,0 +1,30 @@
+<div class="setup-agent-page">
+  <div class="setup-agent-card component">
+    <div class="setup-agent-header">
+      <div class="setup-agent-header-content">
+        <div>
+          <p class="eyebrow">Open House Studio</p>
+
+          <h1>Set up your agent profile</h1>
+
+          <p class="subtitle">
+            This information will be used across your portal and public open
+            house pages.
+          </p>
+        </div>
+
+        <img
+          class="setup-agent-logo"
+          src="open-house-domain-transparent.png"
+          alt="Open House Studio"
+        />
+      </div>
+    </div>
+
+    <aa-dynamic-form [config]="formConfig" (formSubmit)="onSubmit($event)" />
+    <div class="button-container">
+      <aa-button [config]="resetButtonConfig">Reset</aa-button>
+      <aa-button [config]="saveButtonConfig">Save</aa-button>
+    </div>
+  </div>
+</div>

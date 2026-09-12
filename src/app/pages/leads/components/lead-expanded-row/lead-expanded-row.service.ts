@@ -7,19 +7,16 @@ import { environment } from '../../../../../environments/environment';
 })
 export class LeadExpandedRowService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
-  private readonly agentId = environment.agentId;
+  private readonly agentAppBaseUrl = environment.agentAppApiUrl;
 
   public leadDetails = signal<any>({});
 
   public getLead(leadId: string) {
-    if (!this.agentId || !leadId) {
+    if (!leadId) {
       return;
     }
 
-    return this.http.get<any>(
-      `${this.baseUrl}/agents/${this.agentId}/leads/${leadId}`,
-    );
+    return this.http.get<any>(`${this.agentAppBaseUrl}/leads/${leadId}`);
   }
 
   editLead(leadId: string, leadData: any) {}
