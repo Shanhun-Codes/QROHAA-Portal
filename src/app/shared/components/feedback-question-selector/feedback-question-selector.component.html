@@ -14,9 +14,29 @@
             (change)="toggleQuestion(question)"
           />
 
-          <span class="question-label">
-            {{ question.label }}
-          </span>
+          <div class="question-content">
+            <div class="question-main">
+              <span class="question-label">
+                {{ question.label }}
+              </span>
+
+              <span class="question-type">
+                {{ getQuestionTypeLabel(question.type) }}
+              </span>
+            </div>
+
+            <div class="question-meta">
+              <span>{{ getCategoryLabel(question.category) }}</span>
+
+              @if (question.options.length) {
+                <span class="meta-divider">•</span>
+
+                <span class="question-options">
+                  {{ getOptionPreview(question) }}
+                </span>
+              }
+            </div>
+          </div>
         </label>
 
         <label class="required-selection" [class.disabled]="!question.selected">

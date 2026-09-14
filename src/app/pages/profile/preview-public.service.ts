@@ -1,11 +1,4 @@
-import {
-  computed,
-  effect,
-  ElementRef,
-  inject,
-  Injectable,
-  signal,
-} from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 
 import { AgentProfile } from '../../auth/auth.model';
 import { AuthService } from '../../auth/auth.service';
@@ -82,6 +75,7 @@ export class PublicPreviewService {
 
     iframe.src = iframe.src;
   }
+
   sendPreviewConfig(): void {
     const config = this.previewConfig();
     const frame = this.previewFrame;
@@ -183,15 +177,20 @@ export class PublicPreviewService {
       },
 
       feedbackForm: {
-        questions: defaultQuestions.map((question) => ({
-          id: question.id,
-          key: question.key,
-          label: question.label,
-          type: question.type,
-          category: question.category,
-          required: question.required,
-          sortOrder: question.sortOrder,
-          options: question.options,
+        questions: defaultQuestions.map((selection) => ({
+          id: selection.question.id,
+          key: selection.question.key,
+          label: selection.question.label,
+          type: selection.question.type,
+          category: selection.question.category,
+          required: selection.required,
+          sortOrder: selection.sortOrder,
+          options: selection.question.options.map((option: any) => ({
+            id: option.id,
+            label: option.label,
+            value: option.value,
+            sortOrder: option.sortOrder,
+          })),
         })),
       },
     };

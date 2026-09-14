@@ -174,8 +174,8 @@
     </section>
 
     <!-- ======================================================
-         DEFAULT QUESTIONS
-         ====================================================== -->
+     DEFAULT QUESTIONS
+     ====================================================== -->
 
     <section class="profile-section component">
       <div class="section-header">
@@ -194,16 +194,41 @@
       <div class="default-question-list">
         @for (question of defaultQuestions(); track question.id) {
           <div class="default-question-row">
-            <span class="default-question-label">
-              {{ question.label }}
-            </span>
+            <div class="default-question-content">
+              <span class="default-question-label">
+                {{ question.label }}
+              </span>
 
-            <span
-              class="default-question-required"
-              [class.required]="question.required"
-            >
-              {{ question.required ? "Required" : "Optional" }}
-            </span>
+              <div class="default-question-details">
+                <span class="default-question-detail">
+                  {{ question.type }}
+                </span>
+
+                <span class="default-question-divider">•</span>
+
+                <span class="default-question-detail">
+                  {{ question.category }}
+                </span>
+
+                @if (question.optionCount > 0) {
+                  <span class="default-question-divider">•</span>
+
+                  <span class="default-question-detail">
+                    {{ question.optionCount }}
+                    {{ question.optionCount === 1 ? "option" : "options" }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <div class="default-question-meta">
+              <span
+                class="default-question-required"
+                [class.required]="question.required"
+              >
+                {{ question.required ? "Required" : "Optional" }}
+              </span>
+            </div>
           </div>
         }
       </div>

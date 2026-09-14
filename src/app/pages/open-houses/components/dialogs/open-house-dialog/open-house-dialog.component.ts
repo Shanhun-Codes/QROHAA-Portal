@@ -29,14 +29,14 @@ interface OpenHouseDialogData {
 }
 
 @Component({
-    selector: 'aa-open-house-dialog',
-    imports: [
-        FeedbackQuestionSelectorComponent,
-        DynamicFormComponent,
-        ButtonComponent,
-    ],
-    templateUrl: './open-house-dialog.component.html',
-    styleUrl: './open-house-dialog.component.scss'
+  selector: 'aa-open-house-dialog',
+  imports: [
+    FeedbackQuestionSelectorComponent,
+    DynamicFormComponent,
+    ButtonComponent,
+  ],
+  templateUrl: './open-house-dialog.component.html',
+  styleUrl: './open-house-dialog.component.scss',
 })
 export class OpenHouseDialogComponent implements OnInit {
   private readonly propertyService = inject(PropertiesService);
@@ -93,28 +93,8 @@ export class OpenHouseDialogComponent implements OnInit {
       next: ({ properties, feedbackQuestions, agentDefaultQuestions }) => {
         this.propertyService.tableData.set(properties);
 
-        const mappedFeedbackQuestions = feedbackQuestions.map(
-          (feedbackQuestion) => {
-            const defaultQuestion = agentDefaultQuestions.find(
-              (agentDefaultQuestion) =>
-                agentDefaultQuestion.questionId === feedbackQuestion.id,
-            );
-
-            return {
-              ...feedbackQuestion,
-              selected: !!defaultQuestion,
-              required: defaultQuestion?.required ?? false,
-              sortOrder:
-                defaultQuestion?.sortOrder ?? feedbackQuestion.sortOrder,
-            };
-          },
-        );
-
-        this.feedbackQuestionsService.feedbackQuestions.set(
-          mappedFeedbackQuestions,
-        );
-
-        this.feedbackQuestionsService.agentDefaultQuestions.set(
+        this.feedbackQuestionsService.setQuestionsWithDefaults(
+          feedbackQuestions,
           agentDefaultQuestions,
         );
       },

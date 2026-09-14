@@ -18,10 +18,13 @@ import { ButtonConfig } from '../../shared/components/button/button.config';
 import { PublicPreviewService } from './preview-public.service';
 import { ProfileService } from './profile.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { QuestionsDialogService } from './components/dialogs/questions-dialog/questions-dialog.service';
+import { DefaultQuestionDisplay } from './models/question.model';
+import { BidiModule } from '@angular/cdk/bidi';
 
 @Component({
   selector: 'aa-profile',
-  imports: [PageTemplateComponent, ButtonComponent],
+  imports: [PageTemplateComponent, ButtonComponent, BidiModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -31,8 +34,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private readonly feedbackQuestionsService = inject(FeedbackQuestionsService);
   private readonly publicPreviewService = inject(PublicPreviewService);
   private readonly profileService = inject(ProfileService);
-  readonly showPreview = this.publicPreviewService.showPreview;
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly questionsDialogService = inject(QuestionsDialogService);
+  readonly showPreview = this.publicPreviewService.showPreview;
 
   readonly title = 'My Profile';
 
@@ -86,9 +90,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
       phone: formatPhoneNumber(agent.phone),
     };
   });
+  readonly defaultQuestions = computed<DefaultQuestionDisplay[]>(() =>
+    this.feedbackQuestionsService.agentDefaultQuestions().map((selection) => {
+      const question = selection.question;
 
-  readonly defaultQuestions =
-    this.feedbackQuestionsService.agentDefaultQuestions;
+      return {
+        id: question.id,
+        label: question.label,
+        type: this.getQuestionTypeLabel(question.type),
+        category: this.getQuestionCategoryLabel(question.category),
+        required: selection.required,
+        optionCount: question.options?.length ?? 0,
+      };
+    }),
+  );
 
   ngOnInit(): void {
     window.addEventListener(
@@ -108,17 +123,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   private onEditProfile(): void {
-    // Implement the logic for editing the profile here
     this.profileService.openAgentDialog('PROFILE');
   }
 
   private onEditBranding(): void {
-    // Implement the logic for editing the branding here
     this.profileService.openAgentDialog('BRANDING');
   }
 
   private onEditDefaultQuestions(): void {
-    // Implement the logic for editing the default questions here
+    this.questionsDialogService.openQuestionsDialog();
   }
 
   ngOnDestroy(): void {
@@ -134,5 +147,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onPreviewLoad(frame: HTMLIFrameElement): void {
     this.publicPreviewService.registerFrame(frame);
+  }
+
+  private getQuestionTypeLabel(type: string): string {
+    const labels: Record<string, string> = {
+      SINGLE_SELECT: 'Single Select',
+      RATING: 'Rating',
+      TEXTAREA: 'Long Answer',
+    };
+
+    return labels[type] ?? type;
+  }
+
+  private getQuestionCategoryLabel(category: string): string {
+    const labels: Record<string, string> = {
+      BUYER_PROFILE: 'Buyer Profile',
+      PROPERTY_FEEDBACK: 'Property Feedback',
+    };
+
+    return labels[category] ?? category;
   }
 }
