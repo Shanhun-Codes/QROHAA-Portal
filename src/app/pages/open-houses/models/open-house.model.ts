@@ -1,4 +1,6 @@
 import { StatusPillConfig } from '../../../shared/components/models/status-pill.model';
+import { AgentFeedbackQuestionRequest } from '../../profile/models/question.model';
+
 import { Property } from '../../properties/models/property.model';
 
 export interface OpenHouse {
@@ -34,8 +36,13 @@ export interface OpenHouseFormValue {
 
   startDate: string;
   startTime: string;
-
   durationDays: 1 | 2;
-
   endTime: string;
+}
+
+export interface CreateOpenHouseRequest {
+  propertyId: string;
+  startsAt: string | Date;
+  endsAt: string | Date;
+  feedbackQuestions?: AgentFeedbackQuestionRequest[];
 }

@@ -6,3 +6,15 @@ export const OPEN_HOUSE_BUTTON_CONFIG: ButtonConfig = {
   variant: 'primary',
   size: 'md',
 };
+
+export const EDIT_OPEN_HOUSE_BUTTON_CONFIG: ButtonConfig = {
+  label: 'Edit Open House',
+  variant: 'primary',
+  size: 'md',
+};
+
+export const CONFIRM_OPEN_HOUSE_BUTTON_CONFIG: ButtonConfig = {
+  label: 'Confirm',
+  variant: 'primary',
+  size: 'md',
+};

@@ -62,7 +62,7 @@ export class PropertiesService {
     }
   }
 
-  async createProperty(data: PropertyFormValue): Promise<boolean> {
+  async createProperty(data: PropertyFormValue): Promise<Property | null> {
     const payload = {
       ...data,
       listingPriceCents: data.listingPrice
@@ -71,26 +71,21 @@ export class PropertiesService {
     };
 
     try {
-      await firstValueFrom(
+      const property = await firstValueFrom(
         this.http.post<Property>(`${this.agentAppBaseUrl}/properties`, payload),
       );
 
+      this.tableData.update((properties) => [property, ...properties]);
+
       this.snackbarService.success('Property successfully created');
 
-      this.getProperties()?.subscribe((response) => {
-        this.tableData.set(
-          response.map((Property: Property) => ({
-            ...Property,
-          })),
-        );
-      });
-      console.log('AFTER HTTP', payload);
+      return property;
+    } catch (error) {
+      console.error('Failed to create property:', error);
 
-      return true;
-    } catch {
       this.snackbarService.error('An error occurred, please try again');
 
-      return false;
+      return null;
     }
   }
 

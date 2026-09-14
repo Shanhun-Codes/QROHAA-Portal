@@ -3,16 +3,22 @@
     <div class="dialog-section-header">
       <div>
         <h4>Property</h4>
+
         <p>Select an existing property or create a new one.</p>
       </div>
 
-      <aa-button [config]="propertyToggleButtonConfig()" />
+      @if (hasProperties()) {
+        <aa-button [config]="propertyToggleButtonConfig()" />
+      }
     </div>
 
     @if (!createProperty()) {
-      <aa-dynamic-form [config]="propertySelectionFormConfig()" />
+      <aa-dynamic-form
+        #propertySelectionForm
+        [config]="propertySelectionFormConfig()"
+      />
     } @else {
-      <aa-dynamic-form [config]="propertyFormConfig" />
+      <aa-dynamic-form #propertyForm [config]="propertyFormConfig" />
     }
   </section>
 
@@ -20,21 +26,19 @@
     <div class="dialog-section-header">
       <div>
         <h4>Open House Details</h4>
+
         <p>Set the date and time for this open house.</p>
       </div>
     </div>
 
-    <aa-dynamic-form
-      [config]="openHouseFormConfig"
-      [dialogRef]="dialogRef()"
-      (formSubmit)="onSubmit($event)"
-    />
+    <aa-dynamic-form #openHouseForm [config]="openHouseFormConfig()" />
   </section>
 
   <section class="dialog-section">
     <div class="dialog-section-header">
       <div>
         <h4>Feedback Questions</h4>
+
         <p>Choose which questions visitors will be asked.</p>
       </div>
     </div>

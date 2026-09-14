@@ -1,0 +1,70 @@
+<div class="open-house-preview">
+  <section class="property-card">
+    <div class="section-eyebrow">Property</div>
+
+    <div class="property-address">
+      <div class="property-street">
+        {{ data().openHouse.property.street }}
+      </div>
+
+      @if (data().openHouse.property.street2) {
+        <div class="property-unit">
+          {{ data().openHouse.property.street2 }}
+        </div>
+      }
+
+      <div class="property-location">
+        {{ data().openHouse.property.city }},
+        {{ data().openHouse.property.state }}
+        {{ data().openHouse.property.zip }}
+      </div>
+    </div>
+  </section>
+
+  <section class="details-card">
+    <div class="detail-item">
+      <span class="detail-label"> Start </span>
+
+      <span class="detail-date">
+        {{ data().openHouse.startsAt | date: "EEEE, MMM d" }}
+      </span>
+
+      <span class="detail-time">
+        {{ data().openHouse.startsAt | date: "h:mm a" }}
+      </span>
+    </div>
+
+    <div class="detail-divider"></div>
+
+    <div class="detail-item">
+      <span class="detail-label"> End </span>
+
+      <span class="detail-date">
+        {{ data().openHouse.endsAt | date: "EEEE, MMM d" }}
+      </span>
+
+      <span class="detail-time">
+        {{ data().openHouse.endsAt | date: "h:mm a" }}
+      </span>
+    </div>
+  </section>
+
+  <section class="public-code-card">
+    <div>
+      <span class="detail-label"> Public Code </span>
+
+      <div class="public-code">
+        {{ data().openHouse.publicCode }}
+      </div>
+    </div>
+
+    <div class="public-code-description">
+      This code identifies the public open house page.
+    </div>
+  </section>
+
+  <div class="preview-actions">
+    <aa-button [config]="editButtonConfig" />
+    <aa-button [config]="confirmButtonConfig" />
+  </div>
+</div>
