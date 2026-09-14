@@ -1,6 +1,7 @@
 import { DynamicFormConfig } from '../../../shared/components/models/dynamic-form.model';
+import { Note } from '../models/note.model';
 
-export const NOTE_FORM_CONFIG: DynamicFormConfig = {
+export const NOTE_FORM_CONFIG: DynamicFormConfig<NoteFormValue> = {
   layout: {
     gap: 'md',
     labelPosition: 'top',
@@ -21,3 +22,7 @@ export const NOTE_FORM_CONFIG: DynamicFormConfig = {
     },
   ],
 };
+
+export interface NoteFormValue {
+  note: string;
+}

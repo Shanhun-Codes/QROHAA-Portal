@@ -1,17 +1,17 @@
 import { ButtonConfig } from '../../../shared/components/button/button.config';
 
 export const EDIT_PROFILE_BUTTON_CONFIG: ButtonConfig = {
-  label: 'Edit',
+  label: 'Update',
   variant: 'primary',
 };
 
 export const EDIT_BRANDING_BUTTON_CONFIG: ButtonConfig = {
-  label: 'Edit',
+  label: 'Change',
   variant: 'primary',
 };
 
 export const EDIT_QUESTIONS_BUTTON_CONFIG: ButtonConfig = {
-  label: 'Edit',
+  label: 'Choose New',
   variant: 'primary',
 };
 

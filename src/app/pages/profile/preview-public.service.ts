@@ -1,12 +1,120 @@
-import { Injectable } from '@angular/core';
-import { FeedbackQuestionSelection } from '../../shared/components/models/feedback-question-selector.model';
-import { ProfilePreviewConfig } from './preview-public.model';
+import {
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  Injectable,
+  signal,
+} from '@angular/core';
+
 import { AgentProfile } from '../../auth/auth.model';
+import { AuthService } from '../../auth/auth.service';
+
+import { FeedbackQuestionSelection } from '../../shared/components/models/feedback-question-selector.model';
+import { FeedbackQuestionsService } from '../../shared/services/feedback-questions.service';
+
+import { ProfilePreviewConfig } from './preview-public.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PublicPreviewService {
+  private readonly authService = inject(AuthService);
+
+  private readonly feedbackQuestionsService = inject(FeedbackQuestionsService);
+
+  private previewFrame?: HTMLIFrameElement;
+  readonly showPreview = signal(false);
+
+  readonly previewConfig = computed(() => {
+    const agent = this.authService.agent();
+
+    if (!agent) {
+      return null;
+    }
+
+    return this.buildPreviewConfig(
+      agent,
+      this.feedbackQuestionsService.agentDefaultQuestions(),
+    );
+  });
+
+  constructor() {
+    effect(() => {
+      const showPreview = this.showPreview();
+      const config = this.previewConfig();
+
+      if (!showPreview || !config) {
+        return;
+      }
+
+      this.sendPreviewConfig();
+    });
+  }
+
+  openPreview(): void {
+    this.showPreview.set(true);
+  }
+
+  closePreview(): void {
+    this.showPreview.set(false);
+    this.previewFrame = undefined;
+  }
+
+  registerFrame(frame: HTMLIFrameElement): void {
+    this.previewFrame = frame;
+  }
+
+  refreshPreview(): void {
+    const iframe = this.previewFrame;
+
+    if (!iframe) {
+      return;
+    }
+
+    iframe.addEventListener(
+      'load',
+      () => {
+        this.sendPreviewConfig();
+      },
+      { once: true },
+    );
+
+    iframe.src = iframe.src;
+  }
+  sendPreviewConfig(): void {
+    const config = this.previewConfig();
+    const frame = this.previewFrame;
+
+    if (!config || !frame?.contentWindow) {
+      return;
+    }
+
+    console.log('Sending preview config:', config);
+
+    frame.contentWindow.postMessage(
+      {
+        type: 'OPEN_HOUSE_PREVIEW_CONFIG',
+        config,
+      },
+      'http://localhost:4200',
+    );
+  }
+
+  readonly previewMessageHandler = (event: MessageEvent): void => {
+    if (event.origin !== 'http://localhost:4200') {
+      return;
+    }
+
+    if (event.data?.type !== 'OPEN_HOUSE_PREVIEW_READY') {
+      return;
+    }
+
+    console.log('Preview ready');
+
+    this.sendPreviewConfig();
+  };
+
   buildPreviewConfig(
     agent: AgentProfile,
     defaultQuestions: FeedbackQuestionSelection[],
@@ -25,9 +133,9 @@ export class PublicPreviewService {
       },
 
       branding: {
-        primaryColor: `#${agent.primaryColor ?? '111820'}`,
-        secondaryColor: `#${agent.secondaryColor ?? '7f1d1d'}`,
-        accentColor: `#${agent.accentColor ?? 'dc2626'}`,
+        primaryColor: `${agent.primaryColor ?? '111820'}`,
+        secondaryColor: `${agent.secondaryColor ?? '7f1d1d'}`,
+        accentColor: `${agent.accentColor ?? 'dc2626'}`,
       },
 
       openHouse: {

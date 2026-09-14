@@ -1,4 +1,5 @@
 import { PassedInitialConfig } from 'angular-auth-oidc-client';
+import { ButtonConfig } from '../shared/components/button/button.config';
 
 export const authConfig: PassedInitialConfig = {
   config: {
@@ -19,4 +20,9 @@ export const authConfig: PassedInitialConfig = {
 
     renewTimeBeforeTokenExpiresInSeconds: 30,
   },
+};
+
+export const LOGIN_BUTTON_CONFIG: ButtonConfig = {
+  variant: 'primary',
+  label: 'Log In',
 };

@@ -100,14 +100,14 @@
             <div class="branding-color">
               <div
                 class="branding-color-swatch"
-                [style]="`background-color: #${agent()?.primaryColor}`"
+                [style]="`background-color: ${agent()?.primaryColor}`"
               ></div>
 
               <div class="branding-color-info">
                 <span class="profile-field-label">Primary Color</span>
 
                 <span class="profile-field-value">
-                  #{{ agent()?.primaryColor?.toUpperCase() }}
+                  {{ agent()?.primaryColor?.toUpperCase() }}
                 </span>
               </div>
             </div>
@@ -115,14 +115,14 @@
             <div class="branding-color">
               <div
                 class="branding-color-swatch"
-                [style]="`background-color: #${agent()?.secondaryColor}`"
+                [style]="`background-color: ${agent()?.secondaryColor}`"
               ></div>
 
               <div class="branding-color-info">
                 <span class="profile-field-label">Secondary Color</span>
 
                 <span class="profile-field-value">
-                  #{{ agent()?.secondaryColor?.toUpperCase() }}
+                  {{ agent()?.secondaryColor?.toUpperCase() }}
                 </span>
               </div>
             </div>
@@ -130,14 +130,14 @@
             <div class="branding-color">
               <div
                 class="branding-color-swatch"
-                [style]="`background-color: #${agent()?.accentColor}`"
+                [style]="`background-color: ${agent()?.accentColor}`"
               ></div>
 
               <div class="branding-color-info">
                 <span class="profile-field-label">Accent Color</span>
 
                 <span class="profile-field-value">
-                  #{{ agent()?.accentColor?.toUpperCase() }}
+                  {{ agent()?.accentColor?.toUpperCase() }}
                 </span>
               </div>
             </div>
@@ -161,7 +161,7 @@
                 #publicPreviewFrame
                 class="public-preview-frame"
                 [src]="previewUrl"
-                title="Public open house preview"
+                (load)="onPreviewLoad(publicPreviewFrame)"
               ></iframe>
             } @else {
               <div class="preview-placeholder">

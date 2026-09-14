@@ -5,6 +5,8 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { AppLoaderService } from '../shared/components/app-loader/app-loader.service';
 import { DynamicFormConfig } from '../shared/components/models/dynamic-form.model';
+import { LOGIN_BUTTON_CONFIG } from './auth.config';
+import { ButtonConfig } from '../shared/components/button/button.config';
 
 @Component({
   selector: 'aa-auth',
@@ -16,6 +18,11 @@ export class AuthComponent implements OnInit {
   readonly auth = inject(OidcSecurityService);
 
   private readonly appLoaderService = inject(AppLoaderService);
+
+  readonly loginButtonConfig: ButtonConfig = {
+    ...LOGIN_BUTTON_CONFIG,
+    click: () => this.login(),
+  };
 
   readonly authFormConfig: DynamicFormConfig = {
     layout: {
