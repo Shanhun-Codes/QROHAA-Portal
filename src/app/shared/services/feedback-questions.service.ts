@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 import { FeedbackQuestionSelection } from '../components/models/feedback-question-selector.model';
 import { firstValueFrom } from 'rxjs';
 import { AgentFeedbackQuestionRequest } from '../../pages/profile/models/question.model';
+import { PublicPreviewService } from '../../pages/profile/preview-public.service';
+import { SnackbarService } from '../components/snackbar/snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,7 @@ import { AgentFeedbackQuestionRequest } from '../../pages/profile/models/questio
 export class FeedbackQuestionsService {
   private readonly http = inject(HttpClient);
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
+  private readonly snackbarService = inject(SnackbarService);
 
   readonly feedbackQuestions = signal<FeedbackQuestionSelection[]>([]);
   readonly agentDefaultQuestions = signal<FeedbackQuestionSelection[]>([]);
@@ -73,6 +76,17 @@ export class FeedbackQuestionsService {
   async updateAgentDefaultQuestions(
     values: AgentFeedbackQuestionRequest[],
   ): Promise<boolean> {
+    const deselectedQuestions = this.feedbackQuestions().filter(
+      (question) => !values.some((value) => value.questionId === question.id),
+    );
+
+    values = deselectedQuestions.map((question) => ({
+      questionId: question.id,
+      active: false,
+      required: false,
+      sortOrder: question.sortOrder ?? 0,
+    }));
+
     try {
       const response = await firstValueFrom(
         this.http.patch<FeedbackQuestionSelection[]>(
@@ -81,11 +95,14 @@ export class FeedbackQuestionsService {
         ),
       );
 
+      this.snackbarService.success(
+        'Agent default questions updated successfully',
+      );
       this.agentDefaultQuestions.set(response);
-
       return true;
     } catch (error) {
       console.error('Failed to update agent default questions', error);
+      this.snackbarService.error('Failed to update agent default questions');
       return false;
     }
   }
