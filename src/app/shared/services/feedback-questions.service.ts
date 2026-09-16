@@ -80,12 +80,14 @@ export class FeedbackQuestionsService {
       (question) => !values.some((value) => value.questionId === question.id),
     );
 
-    values = deselectedQuestions.map((question) => ({
-      questionId: question.id,
-      active: false,
-      required: false,
-      sortOrder: question.sortOrder ?? 0,
-    }));
+    values = values.concat(
+      deselectedQuestions.map((question) => ({
+        questionId: question.id,
+        active: false,
+        required: false,
+        sortOrder: question.sortOrder ?? 0,
+      })),
+    );
 
     try {
       const response = await firstValueFrom(
