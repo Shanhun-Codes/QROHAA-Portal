@@ -16,6 +16,7 @@ export class FeedbackQuestionSelectorComponent {
 
     if (!question.selected) {
       question.required = false;
+      question.printable = false;
     }
   }
 
@@ -25,6 +26,14 @@ export class FeedbackQuestionSelectorComponent {
     }
 
     question.required = !question.required;
+  }
+
+  togglePrintable(question: FeedbackQuestionSelection): void {
+    if (!question.selected) {
+      return;
+    }
+
+    question.printable = !question.printable;
   }
 
   getQuestionTypeLabel(type: string): string {

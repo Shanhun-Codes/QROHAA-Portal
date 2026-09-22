@@ -3,13 +3,12 @@ import { inject, Injectable, signal } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 
-import { CreateOpenHouseRequest, OpenHouse } from './models/open-house.model';
-
 import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { DialogType } from '../leads/models/note.model';
 import { OpenHouseDialogComponent } from './components/dialogs/open-house-dialog/open-house-dialog.component';
 import { firstValueFrom } from 'rxjs';
 import { OpenHousePreviewDialogComponent } from './components/dialogs/open-house-preview-dialog/open-house-preview-dialog.component';
+import { CreateOpenHouseRequest, OpenHouse } from './models/open-house.model';
 
 @Injectable({
   providedIn: 'root',

@@ -23,7 +23,7 @@
 
   <section class="details-card">
     <div class="detail-item">
-      <span class="detail-label"> Start </span>
+      <span class="detail-label">Start</span>
 
       <span class="detail-date">
         {{ data().openHouse.startsAt | date: "EEEE, MMM d" }}
@@ -37,7 +37,7 @@
     <div class="detail-divider"></div>
 
     <div class="detail-item">
-      <span class="detail-label"> End </span>
+      <span class="detail-label">End</span>
 
       <span class="detail-date">
         {{ data().openHouse.endsAt | date: "EEEE, MMM d" }}
@@ -49,17 +49,31 @@
     </div>
   </section>
 
-  <section class="public-code-card">
-    <div>
-      <span class="detail-label"> Public Code </span>
+  <section class="public-link-card">
+    <div class="public-link-content">
+      <div class="section-eyebrow">Public Open House</div>
 
-      <div class="public-code">
-        {{ data().openHouse.publicCode }}
-      </div>
+      <a
+        class="public-link"
+        href="{{
+          `${publicBaseUrl}/${agentSlug}/open-house/${data().openHouse.publicCode}`
+        }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{
+          `${publicBaseUrl}/${agentSlug}/open-house/${data().openHouse.publicCode}`
+        }}
+      </a>
     </div>
 
-    <div class="public-code-description">
-      This code identifies the public open house page.
+    <div class="qr-code">
+      <aa-qr-generator
+        [qrdata]="
+          `${publicBaseUrl}/${agentSlug}/open-house/${data().openHouse.publicCode}?source=qr`
+        "
+        [fileName]="`open-house-${data().openHouse.property.street}-qr.png`"
+      />
     </div>
   </section>
 

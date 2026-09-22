@@ -65,6 +65,7 @@ export class QuestionsDialogComponent implements OnInit {
         active: true,
         required: question.required,
         sortOrder: question.sortOrder,
+        printable: question.printable ?? false,
       }));
 
     console.log('1. SUBMIT START', values);

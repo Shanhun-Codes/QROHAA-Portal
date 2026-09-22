@@ -228,6 +228,13 @@
               >
                 {{ question.required ? "Required" : "Optional" }}
               </span>
+
+              <span
+                class="default-question-printable"
+                [class.printable]="question.printable"
+              >
+                {{ question.printable ? "Printable" : "Digital Only" }}
+              </span>
             </div>
           </div>
         }

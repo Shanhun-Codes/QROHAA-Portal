@@ -1,6 +1,7 @@
 <div class="feedback-question-selector">
   <div class="feedback-question-selector-header">
     <h4>Feedback Questions</h4>
+
     <p>Choose which questions visitors will be asked.</p>
   </div>
 
@@ -26,10 +27,12 @@
             </div>
 
             <div class="question-meta">
-              <span>{{ getCategoryLabel(question.category) }}</span>
+              <span>
+                {{ getCategoryLabel(question.category) }}
+              </span>
 
               @if (question.options.length) {
-                <span class="meta-divider">•</span>
+                <span class="meta-divider"> • </span>
 
                 <span class="question-options">
                   {{ getOptionPreview(question) }}
@@ -39,16 +42,33 @@
           </div>
         </label>
 
-        <label class="required-selection" [class.disabled]="!question.selected">
-          <input
-            type="checkbox"
-            [checked]="question.required"
-            [disabled]="!question.selected"
-            (change)="toggleRequired(question)"
-          />
+        <div class="question-settings">
+          <label class="question-setting" [class.disabled]="!question.selected">
+            <input
+              type="checkbox"
+              [checked]="question.required"
+              [disabled]="!question.selected"
+              (change)="toggleRequired(question)"
+            />
 
-          <span>Required</span>
-        </label>
+            <span> Required </span>
+          </label>
+
+          <label
+            class="question-setting"
+            [class.disabled]="!question.selected"
+            title="Include this question on the printable feedback form."
+          >
+            <input
+              type="checkbox"
+              [checked]="question.printable"
+              [disabled]="!question.selected"
+              (change)="togglePrintable(question)"
+            />
+
+            <span>Printable</span>
+          </label>
+        </div>
       </div>
     }
   </div>

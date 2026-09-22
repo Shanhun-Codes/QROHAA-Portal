@@ -44,6 +44,7 @@ export class FeedbackQuestionsService {
         ...feedbackQuestion,
         selected: !!defaultQuestion,
         required: defaultQuestion?.required ?? false,
+        printable: defaultQuestion?.printable ?? false,
         sortOrder:
           defaultQuestion?.sortOrder ?? feedbackQuestion.sortOrder ?? index,
       };
@@ -86,6 +87,7 @@ export class FeedbackQuestionsService {
         active: false,
         required: false,
         sortOrder: question.sortOrder ?? 0,
+        printable: question.printable ?? false,
       })),
     );
 

@@ -8,12 +8,18 @@ import { OPEN_HOUSE_TABLE_HEADER_CONFIG } from './config/open-houses-table-heade
 import { mapOpenHouseToTableRow } from './utils/open-house-table.util';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
+import { OpenHouseExpandedRowComponent } from './components/open-house-expanded-row/open-house-expanded-row.component';
 
 @Component({
-    selector: 'aa-open-houses',
-    imports: [PageTemplateComponent, TableComponent, ButtonComponent],
-    templateUrl: './open-houses.component.html',
-    styleUrl: './open-houses.component.scss'
+  selector: 'aa-open-houses',
+  imports: [
+    PageTemplateComponent,
+    TableComponent,
+    ButtonComponent,
+    OpenHouseExpandedRowComponent,
+  ],
+  templateUrl: './open-houses.component.html',
+  styleUrl: './open-houses.component.scss',
 })
 export class OpenHousesComponent implements OnInit {
   private readonly openHouseService = inject(OpenHousesService);

@@ -18,7 +18,9 @@
 
     <ng-template #expandedRowTemplate let-row>
       <div class="lead-expanded-row">
-        <!-- <h3>{{ row.property }}</h3> -->
+        <aa-open-house-expanded-row
+          [openHouseId]="row.id"
+        ></aa-open-house-expanded-row>
       </div>
     </ng-template>
   </div>

@@ -101,6 +101,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         category: this.getQuestionCategoryLabel(question.category),
         required: selection.required,
         optionCount: question.options?.length ?? 0,
+        printable: selection.printable,
       };
     }),
   );
