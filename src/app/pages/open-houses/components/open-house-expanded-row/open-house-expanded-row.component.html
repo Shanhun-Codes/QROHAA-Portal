@@ -6,7 +6,7 @@
 
     <div class="expanded-row-header">
       <div class="property">
-        <span class="section-label"> Property </span>
+        <span class="section-label">Property</span>
 
         <div class="property-address">
           <strong>
@@ -27,12 +27,19 @@
         </div>
       </div>
 
-      <div class="public-code">
-        <span class="section-label"> Public Code </span>
+      <div class="expanded-row-header-right">
+        <div class="public-code">
+          <span class="section-label">Public Code</span>
 
-        <strong>
-          {{ openHouse.publicCode }}
-        </strong>
+          <strong>
+            {{ openHouse.publicCode }}
+          </strong>
+        </div>
+
+        <aa-action-menu
+          ariaLabel="Open house actions"
+          [actions]="getOpenHouseActions(openHouse)"
+        />
       </div>
     </div>
 

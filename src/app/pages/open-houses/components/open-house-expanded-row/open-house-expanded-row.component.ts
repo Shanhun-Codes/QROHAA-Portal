@@ -22,6 +22,11 @@ import {
   DOWNLOAD_FLYER_BUTTON_CONFIG,
   DOWNLOAD_PRINTABLE_FORM_BUTTON_CONFIG,
 } from '../../config/button.config';
+import { OpenHousesService } from '../../open-houses.service';
+import { ActionMenuComponent } from '../../../../shared/components/action-menu/action-menu.component';
+import { ActionMenuItem } from '../../../../shared/components/models/action-menu.model';
+import { firstValueFrom } from 'rxjs';
+import { formatPhoneNumber } from '../../../../shared/utils/format-phone-number.util';
 
 @Component({
   selector: 'aa-open-house-expanded-row',
@@ -31,6 +36,7 @@ import {
     QrGeneratorComponent,
     OpenHouseFlyerPreviewComponent,
     OpenHouseFormPreviewComponent,
+    ActionMenuComponent,
   ],
   templateUrl: './open-house-expanded-row.component.html',
   styleUrl: './open-house-expanded-row.component.scss',
@@ -39,6 +45,7 @@ export class OpenHouseExpandedRowComponent {
   private readonly openHouseExpandedRowService = inject(
     OpenHouseExpandedRowService,
   );
+  private readonly openHouseService = inject(OpenHousesService);
 
   readonly showSignPreview = signal(false);
   readonly showFormPreview = signal(false);
@@ -111,27 +118,26 @@ export class OpenHouseExpandedRowComponent {
   }
 
   private loadOpenHouse(openHouseId: string): void {
-    this.openHouseExpandedRowService.getOpenHouse(openHouseId).subscribe({
+    this.openHouseExpandedRowService.getOpenHouseDetail(openHouseId).subscribe({
       next: (openHouse) => {
-        this.openHouse.set(openHouse);
+        this.openHouse.set({
+          ...openHouse,
+          agent: {
+            ...openHouse.agent,
+            phone: formatPhoneNumber(openHouse.agent.phone),
+          },
+        });
       },
 
       error: (error) => {
         console.error('Failed to load open house details:', error);
-
         this.openHouse.set(null);
       },
     });
   }
 
   private downloadFlyer(): void {
-    const openHouse = this.openHouse();
-
-    if (!openHouse) {
-      return;
-    }
-
-    this.openHouseExpandedRowService.generateFlyer(openHouse);
+    void this.openHouseService.downloadFlyer(this.openHouseId());
   }
 
   private downloadPrintableForm(): void {
@@ -141,6 +147,26 @@ export class OpenHouseExpandedRowComponent {
       return;
     }
 
-    this.openHouseExpandedRowService.generatePrintableForm(openHouse);
+    this.openHouseService.downloadFeedbackForm(this.openHouseId());
+  }
+
+  getOpenHouseActions(openHouse: OpenHouseDetail): ActionMenuItem[] {
+    return [
+      {
+        label: 'Edit Open House',
+        icon: 'edit',
+        action: () => this.onEditClick(openHouse.id),
+      },
+    ];
+  }
+
+  async onEditClick(openHouseId: string): Promise<void> {
+    const openHouse = await firstValueFrom(
+      this.openHouseExpandedRowService.getOpenHouseDetail(openHouseId),
+    );
+
+    await this.openHouseService.openOpenHouseDialog('EDIT', openHouse);
+
+    this.loadOpenHouse(openHouseId);
   }
 }

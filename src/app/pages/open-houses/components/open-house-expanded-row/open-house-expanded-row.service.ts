@@ -13,17 +13,9 @@ export class OpenHouseExpandedRowService {
   private readonly http = inject(HttpClient);
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
 
-  getOpenHouse(openHouseId: string): Observable<OpenHouseDetail> {
+  getOpenHouseDetail(openHouseId: string) {
     return this.http.get<OpenHouseDetail>(
       `${this.agentAppBaseUrl}/open-houses/${openHouseId}`,
     );
-  }
-
-  generateFlyer(openHouse: OpenHouseDetail): void {
-    console.log('Generate flyer:', openHouse);
-  }
-
-  generatePrintableForm(openHouse: OpenHouseDetail): void {
-    console.log('Generate printable form:', openHouse);
   }
 }

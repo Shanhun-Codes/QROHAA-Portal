@@ -37,6 +37,12 @@
   border-bottom: 1px solid $border-light;
 }
 
+.expanded-row-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .property-address {
   display: flex;
   flex-direction: column;

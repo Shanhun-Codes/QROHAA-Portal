@@ -12,6 +12,7 @@ import {
   CreateOpenHouseRequest,
   DeleteOpenHousesResponse,
   OpenHouse,
+  OpenHouseDetail,
 } from './models/open-house.model';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 
@@ -41,7 +42,7 @@ export class OpenHousesService {
 
   async openOpenHouseDialog(
     mode: DialogType,
-    openHouse?: OpenHouse,
+    openHouse?: OpenHouse | OpenHouseDetail,
   ): Promise<void> {
     const dialogRef = this.dialogService.open({
       title: mode === 'CREATE' ? 'Open House Details' : 'Edit Open House',
@@ -152,6 +153,64 @@ export class OpenHousesService {
       );
 
       return false;
+    }
+  }
+
+  async downloadFeedbackForm(openHouseId: string): Promise<void> {
+    try {
+      const pdf = await firstValueFrom(
+        this.http.get(
+          `${this.agentAppBaseUrl}/open-houses/${openHouseId}/feedback-form/pdf`,
+          {
+            responseType: 'blob',
+          },
+        ),
+      );
+
+      const url = URL.createObjectURL(pdf);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'open-house-feedback-form.pdf';
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    } catch {
+      this.snackbarService.error(
+        'Unable to download the feedback form. Please try again.',
+      );
+    }
+  }
+
+  async downloadFlyer(openHouseId: string): Promise<void> {
+    try {
+      const pdf = await firstValueFrom(
+        this.http.get(
+          `${this.agentAppBaseUrl}/open-houses/${openHouseId}/flyer/pdf`,
+          {
+            responseType: 'blob',
+          },
+        ),
+      );
+
+      const url = URL.createObjectURL(pdf);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'open-house-flyer.pdf';
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    } catch {
+      this.snackbarService.error(
+        'Unable to download the open house flyer. Please try again.',
+      );
     }
   }
 }
