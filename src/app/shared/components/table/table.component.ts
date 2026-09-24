@@ -1,4 +1,11 @@
-import { Component, input, output, signal, TemplateRef } from '@angular/core';
+import {
+  Component,
+  effect,
+  input,
+  output,
+  signal,
+  TemplateRef,
+} from '@angular/core';
 import { ITableHeaderConfig } from '../models/table.model';
 import { MatIcon } from '@angular/material/icon';
 import { StatusPillComponent } from '../status-pill/status-pill.component';
@@ -6,23 +13,22 @@ import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 import { ExpandableTableRowComponent } from './expandable-table-row/expandable-table-row.component';
 
 @Component({
-    selector: 'aa-table',
-    imports: [
-        MatIcon,
-        StatusPillComponent,
-        TimeAgoPipe,
-        ExpandableTableRowComponent,
-    ],
-    templateUrl: './table.component.html',
-    styleUrl: './table.component.scss'
+  selector: 'aa-table',
+  imports: [
+    MatIcon,
+    StatusPillComponent,
+    TimeAgoPipe,
+    ExpandableTableRowComponent,
+  ],
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.scss',
 })
 export class TableComponent<T extends { id: string }> {
   readonly tableHeaderConfig = input.required<ITableHeaderConfig<any>[]>();
 
   readonly tableDataConfig = input.required<any[]>();
 
-  readonly expandedRowTemplate = input.required<TemplateRef<any>>();
-
+  readonly expandedRowTemplate = input<TemplateRef<any> | null>(null);
   readonly rowExpanded = output<string>();
 
   readonly selectionChange = output<string[]>();
@@ -31,7 +37,23 @@ export class TableComponent<T extends { id: string }> {
 
   readonly selectedIds = signal<string[]>([]);
 
+  readonly selectedIdsInput = input<string[] | undefined>(undefined);
+
+  constructor() {
+    effect(() => {
+      const selectedIds = this.selectedIdsInput();
+
+      if (selectedIds !== undefined) {
+        this.selectedIds.set(selectedIds);
+      }
+    });
+  }
+
   onRowClick(id: string): void {
+    if (!this.expandedRowTemplate()) {
+      return;
+    }
+
     const isOpening = this.row() !== id;
 
     this.row.set(isOpening ? id : null);

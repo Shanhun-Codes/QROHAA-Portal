@@ -26,4 +26,6 @@ export interface FeedbackQuestionSelection {
   selected: boolean;
   required: boolean;
   sortOrder: number;
+  question: any;
+  printable: boolean;
 }

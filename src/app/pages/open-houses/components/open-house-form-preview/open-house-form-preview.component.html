@@ -1,0 +1,262 @@
+<div
+  class="feedback-form"
+  [style.--brand-primary]="openHouse().agent.primaryColor"
+  [style.--brand-secondary]="openHouse().agent.secondaryColor"
+>
+  <!-- ==================================================
+       HEADER
+  =================================================== -->
+
+  <header class="form-header">
+    <div>
+      <span class="form-eyebrow">OPEN HOUSE</span>
+
+      <h1>Property Feedback</h1>
+
+      <p>
+        {{ propertyAddress() }}
+      </p>
+    </div>
+
+    <div class="branding">
+      @if (openHouse().agent.logoUrl) {
+        <img
+          class="brokerage-logo"
+          [src]="openHouse().agent.logoUrl"
+          [alt]="openHouse().agent.brokerageName || 'Brokerage logo'"
+        />
+      } @else if (openHouse().agent.brokerageName) {
+        <strong>
+          {{ openHouse().agent.brokerageName }}
+        </strong>
+      }
+    </div>
+  </header>
+
+  <!-- ==================================================
+       VISITOR INFORMATION
+  =================================================== -->
+
+  <section class="visitor-section">
+    <div class="section-title">Visitor Information</div>
+
+    <div class="visitor-grid">
+      <div class="write-field">
+        <span>First Name</span>
+        <div class="write-line"></div>
+      </div>
+
+      <div class="write-field">
+        <span>Last Name</span>
+        <div class="write-line"></div>
+      </div>
+
+      <div class="write-field">
+        <span>Email</span>
+        <div class="write-line"></div>
+      </div>
+
+      <div class="write-field">
+        <span>Phone</span>
+        <div class="write-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       QUESTIONS
+  =================================================== -->
+
+  <section class="questions-section">
+    <div class="section-title">Your Feedback</div>
+
+    <div class="questions">
+      <!-- ==================================================
+           LEFT COLUMN
+      =================================================== -->
+
+      <div class="question-column">
+        @for (item of questionColumns().left; track item.selection.questionId) {
+          <div
+            class="question"
+            [class.rating-question]="isRatingQuestion(item.selection)"
+            [class.text-question]="isTextQuestion(item.selection.question)"
+            [class.long-text-question]="
+              isLongTextQuestion(item.selection.question)
+            "
+          >
+            <div class="question-heading">
+              <span class="question-number"> {{ item.number }}. </span>
+
+              <span class="question-label">
+                {{ item.selection.question.label }}
+              </span>
+            </div>
+
+            @if (isRatingQuestion(item.selection)) {
+              <div class="rating-options">
+                <span class="rating-edge">Poor</span>
+
+                @for (rating of [1, 2, 3, 4, 5]; track rating) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ rating }}
+                  </span>
+                }
+
+                <span class="rating-edge">Great</span>
+              </div>
+            } @else if (isBooleanQuestion(item.selection.question)) {
+              <div class="inline-options">
+                <span class="paper-option">
+                  <span class="circle"></span>
+                  Yes
+                </span>
+
+                <span class="paper-option">
+                  <span class="circle"></span>
+                  No
+                </span>
+              </div>
+            } @else if (isSingleSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isMultiSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="square"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isLongTextQuestion(item.selection.question)) {
+              <div class="answer-lines">
+                <div></div>
+                <div></div>
+              </div>
+            } @else {
+              <div class="single-answer-line"></div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- ==================================================
+           RIGHT COLUMN
+      =================================================== -->
+
+      <div class="question-column">
+        @for (
+          item of questionColumns().right;
+          track item.selection.questionId
+        ) {
+          <div
+            class="question"
+            [class.rating-question]="isRatingQuestion(item.selection)"
+            [class.text-question]="isTextQuestion(item.selection.question)"
+            [class.long-text-question]="
+              isLongTextQuestion(item.selection.question)
+            "
+          >
+            <div class="question-heading">
+              <span class="question-number"> {{ item.number }}. </span>
+
+              <span class="question-label">
+                {{ item.selection.question.label }}
+              </span>
+            </div>
+
+            @if (isRatingQuestion(item.selection)) {
+              <div class="rating-options">
+                <span class="rating-edge">Poor</span>
+
+                @for (rating of [1, 2, 3, 4, 5]; track rating) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ rating }}
+                  </span>
+                }
+
+                <span class="rating-edge">Great</span>
+              </div>
+            } @else if (isBooleanQuestion(item.selection.question)) {
+              <div class="inline-options">
+                <span class="paper-option">
+                  <span class="circle"></span>
+                  Yes
+                </span>
+
+                <span class="paper-option">
+                  <span class="circle"></span>
+                  No
+                </span>
+              </div>
+            } @else if (isSingleSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isMultiSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="square"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isLongTextQuestion(item.selection.question)) {
+              <div class="answer-lines">
+                <div></div>
+                <div></div>
+              </div>
+            } @else {
+              <div class="single-answer-line"></div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       FOOTER
+  =================================================== -->
+
+  <footer class="form-footer">
+    <div>
+      <strong>
+        {{ agentName() }}
+      </strong>
+
+      @if (openHouse().agent.brokerageName) {
+        <span>
+          {{ openHouse().agent.brokerageName }}
+        </span>
+      }
+    </div>
+  </footer>
+</div>

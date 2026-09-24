@@ -134,6 +134,17 @@
     color: $primary;
   }
 }
+
+.search-bar-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+
+  input,
+  button {
+    cursor: not-allowed;
+  }
+}
+
 .user-info-settings-container {
   display: flex;
   align-items: center;

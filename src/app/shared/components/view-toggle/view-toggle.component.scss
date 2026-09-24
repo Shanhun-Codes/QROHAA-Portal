@@ -1,0 +1,52 @@
+@use "styles/theme" as *;
+@use "styles/sizing" as *;
+@use "styles/spacing" as *;
+
+:host {
+  display: inline-flex;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+
+  padding: 0.2rem;
+
+  border: 1px solid $border;
+  border-radius: 8px;
+
+  background: $surface;
+}
+
+.view-toggle-button {
+  min-width: 78px;
+  height: 34px;
+
+  padding: 0 0.85rem;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: $text-secondary;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    color: $text-primary;
+    background: $surface-elevated;
+  }
+
+  &.active {
+    color: $text-primary;
+    background: $surface-active;
+  }
+}

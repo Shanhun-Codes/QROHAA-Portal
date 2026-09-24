@@ -1,24 +1,10 @@
 <ng-template #headerActions>
   <div class="leads-header-actions">
-    <div class="lead-view-toggle">
-      <button
-        type="button"
-        class="lead-view-toggle-button"
-        [class.active]="leadView() === 'ACTIVE'"
-        (click)="leadView.set('ACTIVE')"
-      >
-        Active
-      </button>
-
-      <button
-        type="button"
-        class="lead-view-toggle-button"
-        [class.active]="leadView() === 'CLOSED'"
-        (click)="leadView.set('CLOSED')"
-      >
-        Closed
-      </button>
-    </div>
+    <aa-view-toggle
+      [options]="leadViewOptions"
+      [value]="leadView()"
+      (valueChange)="onLeadViewChange($event)"
+    />
 
     <aa-button [config]="addLeadButtonConfig" />
   </div>
@@ -31,36 +17,20 @@
 >
   <div class="table-container">
     @if (selectedLeadIds().length > 0) {
-      <div class="table-actions-bar">
-        <div class="table-actions-selection">
-          <div class="table-actions-selection-text">
-            <strong>{{ selectedLeadIds().length }}</strong>
+      <aa-bulk-actions-bar
+        itemName="lead"
+        [selectedCount]="selectedLeadIds().length"
+        (clearSelection)="onClearSelectionClick()"
+      >
+        <aa-select
+          placeholder="Change Status"
+          [options]="statusOptions"
+          [value]="selectedStatus()"
+          (valueChange)="onStatusChange($event)"
+        />
 
-            <span>
-              {{ selectedLeadIds().length === 1 ? "lead" : "leads" }} selected
-            </span>
-          </div>
-
-          <button
-            type="button"
-            class="clear-selection-button"
-            (click)="onClearSelectionClick()"
-          >
-            Clear All
-          </button>
-        </div>
-
-        <div class="table-actions">
-          <aa-select
-            placeholder="Change Status"
-            [options]="statusOptions"
-            [value]="selectedStatus()"
-            (valueChange)="onStatusChange($event)"
-          />
-
-          <aa-button [config]="updateStatusButtonConfig" />
-        </div>
-      </div>
+        <aa-button [config]="updateStatusButtonConfig" />
+      </aa-bulk-actions-bar>
     }
 
     <aa-table

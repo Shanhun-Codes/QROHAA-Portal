@@ -1,0 +1,276 @@
+@if (openHouse(); as openHouse) {
+  <div class="open-house-expanded-row">
+    <!-- ==================================================
+         PROPERTY / CODE
+    =================================================== -->
+
+    <div class="expanded-row-header">
+      <div class="property">
+        <span class="section-label">Property</span>
+
+        <div class="property-address">
+          <strong>
+            {{ openHouse.property.street }}
+          </strong>
+
+          @if (openHouse.property.street2) {
+            <span>
+              {{ openHouse.property.street2 }}
+            </span>
+          }
+
+          <span class="property-location">
+            {{ openHouse.property.city }},
+            {{ openHouse.property.state }}
+            {{ openHouse.property.zip }}
+          </span>
+        </div>
+      </div>
+
+      <div class="expanded-row-header-right">
+        <div class="public-code">
+          <span class="section-label">Public Code</span>
+
+          <strong>
+            {{ openHouse.publicCode }}
+          </strong>
+        </div>
+
+        <aa-action-menu
+          ariaLabel="Open house actions"
+          [actions]="getOpenHouseActions(openHouse)"
+        />
+      </div>
+    </div>
+
+    <!-- ==================================================
+         SCHEDULE
+    =================================================== -->
+
+    <section class="schedule-section">
+      <div class="schedule-item">
+        <span class="section-label"> Starts </span>
+
+        <strong>
+          {{ openHouse.startsAt | date: "EEEE, MMM d, y" }}
+        </strong>
+
+        <span>
+          {{ openHouse.startsAt | date: "h:mm a" }}
+        </span>
+      </div>
+
+      <div class="schedule-divider"></div>
+
+      <div class="schedule-item">
+        <span class="section-label"> Ends </span>
+
+        <strong>
+          {{ openHouse.endsAt | date: "EEEE, MMM d, y" }}
+        </strong>
+
+        <span>
+          {{ openHouse.endsAt | date: "h:mm a" }}
+        </span>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         STATS
+    =================================================== -->
+
+    <section class="stats-section">
+      <div class="stat">
+        <strong>
+          {{ openHouse.openHouseFeedbackQuestions.length }}
+        </strong>
+
+        <span> Questions </span>
+      </div>
+
+      <div class="stat">
+        <strong>
+          {{ requiredQuestionCount() }}
+        </strong>
+
+        <span> Required </span>
+      </div>
+
+      <div class="stat">
+        <strong>
+          {{ feedbackResponseCount() }}
+        </strong>
+
+        <span> Feedback Responses </span>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         FEEDBACK QUESTIONS
+    =================================================== -->
+
+    <section class="questions-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">Feedback Form</span>
+
+          <h4>Questions</h4>
+        </div>
+      </div>
+
+      <div class="questions-list">
+        @for (
+          selection of openHouse.openHouseFeedbackQuestions;
+          track selection.questionId
+        ) {
+          <div class="question-row">
+            <div class="question-content">
+              <span class="question-label">
+                {{ selection.question.label }}
+              </span>
+
+              <span class="question-type">
+                {{ selection.question.type.replace("_", " ") }}
+              </span>
+            </div>
+
+            <div class="question-meta">
+              <span
+                class="question-requirement"
+                [class.required]="selection.required"
+              >
+                {{ selection.required ? "Required" : "Optional" }}
+              </span>
+
+              <span
+                class="question-printable"
+                [class.printable]="selection.printable"
+              >
+                {{ selection.printable ? "Printable" : "Digital Only" }}
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- ==================================================
+     PUBLIC OPEN HOUSE
+=================================================== -->
+
+    <section class="public-open-house-section">
+      <div class="public-open-house-content">
+        <span class="section-label"> Public Open House </span>
+
+        <h4>Visitor Page</h4>
+
+        <p>
+          Share this link with visitors or use the QR code for printed open
+          house materials.
+        </p>
+
+        <a
+          class="public-url"
+          [href]="publicUrl()"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ publicUrl() }}
+        </a>
+      </div>
+
+      <div class="public-qr">
+        <aa-qr-generator
+          [qrdata]="qrUrl()"
+          [fileName]="'open-house-' + openHouse.property.street"
+        />
+      </div>
+    </section>
+    <section class="flyer-section">
+      <!-- ==================================================
+     PRINTABLE MATERIALS
+=================================================== -->
+
+      <section class="printable-section">
+        <div class="printable-section-header">
+          <span class="section-label"> Printable Materials </span>
+
+          <h4>Open House Materials</h4>
+
+          <p>Print a visitor QR sign or paper feedback form.</p>
+        </div>
+
+        <!-- QR SIGN -->
+
+        <div class="printable-item">
+          <button
+            type="button"
+            class="printable-item-header"
+            (click)="toggleSignPreview()"
+          >
+            <div class="printable-item-info">
+              <strong> Open House QR Sign </strong>
+
+              <span> Property sign with visitor QR code. </span>
+            </div>
+
+            <span class="preview-caret" [class.expanded]="showSignPreview()">
+              ›
+            </span>
+          </button>
+
+          @if (showSignPreview()) {
+            <div class="printable-preview">
+              <div class="preview-toolbar">
+                <span> US Letter · 8.5 × 11 </span>
+
+                <aa-button [config]="downloadFlyerButtonConfig" />
+              </div>
+
+              <div class="preview-page">
+                <aa-open-house-flyer-preview
+                  [openHouse]="openHouse"
+                  [publicUrl]="publicUrl()"
+                />
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- FEEDBACK FORM -->
+
+        <div class="printable-item">
+          <button
+            type="button"
+            class="printable-item-header"
+            (click)="toggleFormPreview()"
+          >
+            <div class="printable-item-info">
+              <strong> Printable Feedback Form </strong>
+
+              <span> One-page form using the configured questions. </span>
+            </div>
+
+            <span class="preview-caret" [class.expanded]="showFormPreview()">
+              ›
+            </span>
+          </button>
+
+          @if (showFormPreview()) {
+            <div class="printable-preview">
+              <div class="preview-toolbar">
+                <span> US Letter · 8.5 × 11 </span>
+
+                <aa-button [config]="downloadPrintableFormButtonConfig" />
+              </div>
+
+              <div class="preview-page">
+                <aa-open-house-form-preview [openHouse]="openHouse" />
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    </section>
+  </div>
+}

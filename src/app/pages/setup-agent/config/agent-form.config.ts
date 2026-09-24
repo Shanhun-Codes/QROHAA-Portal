@@ -1,7 +1,8 @@
+import { AgentProfile } from '../../../auth/auth.model';
 import { ButtonConfig } from '../../../shared/components/button/button.config';
 import { DynamicFormConfig } from '../../../shared/components/models/dynamic-form.model';
 
-export const USER_FORM_CONFIG: DynamicFormConfig = {
+export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
   layout: {
     gap: 'md',
     labelPosition: 'top',

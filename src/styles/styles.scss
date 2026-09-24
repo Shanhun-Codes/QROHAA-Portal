@@ -172,3 +172,23 @@ mat-icon {
     cursor: pointer;
   }
 }
+
+// Firefox
+* {
+  scrollbar-width: thin;
+}
+
+// Chrome, Edge, Safari
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}

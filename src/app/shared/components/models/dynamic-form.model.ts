@@ -1,5 +1,5 @@
-export interface DynamicFormConfig {
-  fields: DynamicFormField[];
+export interface DynamicFormConfig<T extends object = any> {
+  fields: DynamicFormField<T>[];
 
   layout?: {
     gap?: 'sm' | 'md' | 'lg';
@@ -7,8 +7,8 @@ export interface DynamicFormConfig {
   };
 }
 
-export interface DynamicFormField {
-  key: string;
+export interface DynamicFormField<T extends object> {
+  key: Extract<keyof T, string>;
   label: string;
   type: DynamicFormFieldType;
 

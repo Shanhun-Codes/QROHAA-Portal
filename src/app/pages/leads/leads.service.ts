@@ -8,7 +8,6 @@ import { LeadDialogComponent } from './components/dialogs/lead-dialog/lead-dialo
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { firstValueFrom } from 'rxjs';
 import { DialogType } from './models/note.model';
-import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +17,11 @@ export class LeadsService {
   private readonly dialogService = inject(DialogService);
   private readonly snackbarService = inject(SnackbarService);
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
-  private readonly basUrl = environment.apiBaseUrl;
 
   public leads = signal<Lead[] | []>([]);
 
   public getLeads() {
     return this.http.get<Lead[]>(`${this.agentAppBaseUrl}/leads`);
-  }
-
-  on() {
-    return this.http.get<any>(`${this.basUrl}/onboarding/me`);
   }
 
   async createLead(data: AddLeadFormValue): Promise<boolean> {

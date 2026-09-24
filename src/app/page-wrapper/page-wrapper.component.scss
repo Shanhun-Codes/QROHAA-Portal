@@ -4,7 +4,7 @@
 
 .flex-center-page {
   display: flex;
-  height: calc(100vh - $header-height - 2rem);
+  // height: calc(100vh - $header-height - 2rem);
 }
 
 main {
@@ -18,4 +18,9 @@ main {
   border-radius: $radius-sm;
 
   overflow-y: auto;
+}
+
+nav {
+  margin: 0;
+  height: 100%;
 }

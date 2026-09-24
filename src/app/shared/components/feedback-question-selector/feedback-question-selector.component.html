@@ -1,6 +1,7 @@
 <div class="feedback-question-selector">
   <div class="feedback-question-selector-header">
     <h4>Feedback Questions</h4>
+
     <p>Choose which questions visitors will be asked.</p>
   </div>
 
@@ -14,21 +15,64 @@
             (change)="toggleQuestion(question)"
           />
 
-          <span class="question-label">
-            {{ question.label }}
-          </span>
+          <div class="question-content">
+            <div class="question-main">
+              <span class="question-label">
+                {{ question.label }}
+              </span>
+
+              <span class="question-type">
+                {{ getQuestionTypeLabel(question.type) }}
+              </span>
+            </div>
+
+            <div class="question-meta">
+              <span>
+                {{ getCategoryLabel(question.category) }}
+              </span>
+
+              @if (question.options.length) {
+                <span class="meta-divider">•</span>
+
+                <span class="question-options">
+                  {{ getOptionPreview(question) }}
+                </span>
+              }
+            </div>
+          </div>
         </label>
 
-        <label class="required-selection" [class.disabled]="!question.selected">
-          <input
-            type="checkbox"
-            [checked]="question.required"
-            [disabled]="!question.selected"
-            (change)="toggleRequired(question)"
-          />
+        <div class="question-settings">
+          <label class="question-setting" [class.disabled]="!question.selected">
+            <input
+              type="checkbox"
+              [checked]="question.required"
+              [disabled]="!question.selected"
+              (change)="toggleRequired(question)"
+            />
 
-          <span>Required</span>
-        </label>
+            <span>Required</span>
+          </label>
+
+          <label
+            class="question-setting"
+            [class.disabled]="!canMakePrintable(question)"
+            [title]="
+              canMakePrintable(question)
+                ? 'Include this question on the printable feedback form.'
+                : 'There is not enough space remaining on the printable feedback form.'
+            "
+          >
+            <input
+              type="checkbox"
+              [checked]="question.printable"
+              [disabled]="!canMakePrintable(question)"
+              (change)="togglePrintable(question)"
+            />
+
+            <span>Printable</span>
+          </label>
+        </div>
       </div>
     }
   </div>

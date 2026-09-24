@@ -1,93 +1,118 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
 import { DialogService } from '../../shared/components/dialog/dialog.service';
+import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { DialogType } from '../leads/models/note.model';
 import { PropertyDialogComponent } from './components/property-dialog/property-dialog.component';
-import { firstValueFrom } from 'rxjs';
-import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
-import { Property, PropertyFormValue } from './models/property.model';
-import { AuthService } from '../../auth/auth.service';
+import {
+  Property,
+  PropertyFormValue,
+  PropertyStatus,
+} from './models/property.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PropertiesService {
   private readonly http = inject(HttpClient);
-  private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
   private readonly snackbarService = inject(SnackbarService);
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
 
-  public tableData = signal<Property[]>([]);
+  readonly tableData = signal<Property[]>([]);
 
-  public getProperties() {
-    return this.http.get<any>(`${this.agentAppBaseUrl}/properties`);
+  getProperties() {
+    return this.http.get<Property[]>(`${this.agentAppBaseUrl}/properties`);
+  }
+
+  async refreshProperties(): Promise<void> {
+    const properties = await firstValueFrom(this.getProperties());
+    this.tableData.set(properties);
+  }
+
+  async createProperty(data: PropertyFormValue): Promise<Property | null> {
+    const payload = this.buildPropertyPayload(data);
+
+    try {
+      const property = await firstValueFrom(
+        this.http.post<Property>(`${this.agentAppBaseUrl}/properties`, payload),
+      );
+
+      this.tableData.update((properties) => [property, ...properties]);
+
+      this.snackbarService.success('Property successfully created');
+
+      return property;
+    } catch (error) {
+      console.error('Failed to create property:', error);
+
+      this.snackbarService.error('An error occurred, please try again');
+
+      return null;
+    }
   }
 
   async updateProperty(
     propertyId: string,
     data: PropertyFormValue,
   ): Promise<boolean> {
-    const payload = {
-      ...data,
-      listingPriceCents: data.listingPrice
-        ? Math.round(Number(data.listingPrice) * 100)
-        : null,
-    };
+    const payload = this.buildPropertyPayload(data);
 
     try {
-      await firstValueFrom(
+      const updatedProperty = await firstValueFrom(
         this.http.patch<Property>(
           `${this.agentAppBaseUrl}/properties/${propertyId}`,
           payload,
         ),
       );
 
+      this.tableData.update((properties) =>
+        properties.map((property) =>
+          property.id === updatedProperty.id ? updatedProperty : property,
+        ),
+      );
+
       this.snackbarService.success('Property successfully updated');
 
-      this.getProperties()?.subscribe((response) => {
-        this.tableData.set(
-          response.map((Property: Property) => ({
-            ...Property,
-          })),
-        );
-      });
-
       return true;
-    } catch {
+    } catch (error) {
+      console.error('Failed to update property:', error);
+
       this.snackbarService.error('An error occurred, please try again');
 
       return false;
     }
   }
 
-  async createProperty(data: PropertyFormValue): Promise<boolean> {
-    const payload = {
-      ...data,
-      listingPriceCents: data.listingPrice
-        ? Math.round(Number(data.listingPrice) * 100)
-        : null,
-    };
-
+  async updatePropertyStatus(
+    propertyId: string,
+    status: PropertyStatus,
+  ): Promise<boolean> {
     try {
-      await firstValueFrom(
-        this.http.post<Property>(`${this.agentAppBaseUrl}/properties`, payload),
+      const updatedProperty = await firstValueFrom(
+        this.http.patch<Property>(
+          `${this.agentAppBaseUrl}/properties/${propertyId}`,
+          { status },
+        ),
       );
 
-      this.snackbarService.success('Property successfully created');
+      this.tableData.update((properties) =>
+        properties.map((property) =>
+          property.id === updatedProperty.id ? updatedProperty : property,
+        ),
+      );
 
-      this.getProperties()?.subscribe((response) => {
-        this.tableData.set(
-          response.map((Property: Property) => ({
-            ...Property,
-          })),
-        );
-      });
-      console.log('AFTER HTTP', payload);
+      this.snackbarService.success(
+        status === 'ARCHIVED' ? 'Property archived' : 'Property restored',
+      );
 
       return true;
-    } catch {
+    } catch (error) {
+      console.error('Failed to update property status:', error);
+
       this.snackbarService.error('An error occurred, please try again');
 
       return false;
@@ -96,13 +121,20 @@ export class PropertiesService {
 
   async openPropertyDialog(
     mode: DialogType,
-    propertyId?: string,
+    property?: Property,
   ): Promise<void> {
     this.dialogService.open({
-      title: 'Property Details',
+      title: mode === 'CREATE' ? 'Create Property' : 'Property Details',
       contentComponent: PropertyDialogComponent,
       data: {
-        onSubmit: (values: PropertyFormValue) => this.createProperty(values),
+        property,
+        onSubmit: (values: PropertyFormValue) => {
+          if (mode === 'EDIT' && property) {
+            return this.updateProperty(property.id, values);
+          }
+
+          return this.createProperty(values);
+        },
       },
       actions: [
         {
@@ -116,5 +148,54 @@ export class PropertiesService {
         },
       ],
     });
+  }
+
+  private buildPropertyPayload(data: PropertyFormValue) {
+    return {
+      ...data,
+      listingPriceCents: data.listingPrice
+        ? Math.round(Number(data.listingPrice) * 100)
+        : null,
+    };
+  }
+
+  async updatePropertyStatuses(
+    propertyIds: string[],
+    status: PropertyStatus,
+  ): Promise<boolean> {
+    try {
+      await Promise.all(
+        propertyIds.map((propertyId) =>
+          firstValueFrom(
+            this.http.patch<Property>(
+              `${this.agentAppBaseUrl}/properties/${propertyId}`,
+              { status },
+            ),
+          ),
+        ),
+      );
+
+      this.tableData.update((properties) =>
+        properties.map((property) =>
+          propertyIds.includes(property.id)
+            ? { ...property, status }
+            : property,
+        ),
+      );
+
+      this.snackbarService.success(
+        status === 'ARCHIVED'
+          ? 'Properties successfully archived'
+          : 'Properties successfully restored',
+      );
+
+      return true;
+    } catch (error) {
+      console.error('Failed to update properties:', error);
+
+      this.snackbarService.error('An error occurred, please try again');
+
+      return false;
+    }
   }
 }

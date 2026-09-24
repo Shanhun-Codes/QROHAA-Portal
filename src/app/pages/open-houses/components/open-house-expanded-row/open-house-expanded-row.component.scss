@@ -1,0 +1,645 @@
+@use "styles/theme" as *;
+
+// ======================================================
+// EXPANDED ROW
+// ======================================================
+
+.open-house-expanded-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.section-label {
+  color: $text-secondary;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// ======================================================
+// HEADER
+// ======================================================
+
+.expanded-row-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding-bottom: 1.5rem;
+
+  border-bottom: 1px solid $border-light;
+}
+
+.expanded-row-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.property-address {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  margin-top: 0.5rem;
+
+  strong {
+    color: $text-primary;
+
+    font-size: 1.2rem;
+  }
+}
+
+.property-location {
+  color: $text-secondary;
+}
+
+.public-code {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  strong {
+    color: $text-primary;
+
+    font-family: monospace;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+// ======================================================
+// SCHEDULE
+// ======================================================
+
+.schedule-section {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+
+  padding: 1.25rem;
+
+  background: $surface;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.schedule-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  strong {
+    margin-top: 0.25rem;
+
+    color: $text-primary;
+  }
+
+  > span:last-child {
+    color: $text-secondary;
+  }
+}
+
+.schedule-divider {
+  width: 1px;
+  margin: 0 2rem;
+
+  background: $border-light;
+}
+
+// ======================================================
+// STATS
+// ======================================================
+
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  overflow: hidden;
+
+  background: $surface;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  padding: 1.25rem;
+
+  &:not(:last-child) {
+    border-right: 1px solid $border-light;
+  }
+
+  strong {
+    color: $text-primary;
+
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  span {
+    color: $text-secondary;
+
+    font-size: 0.85rem;
+  }
+}
+
+// ======================================================
+// QUESTIONS
+// ======================================================
+
+.questions-section {
+  overflow: hidden;
+
+  background: $surface;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.section-header {
+  padding: 1.25rem 1.5rem;
+
+  border-bottom: 1px solid $border-light;
+
+  h4 {
+    margin: 0.35rem 0 0;
+
+    color: $text-primary;
+
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
+
+.questions-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.question-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  min-width: 0;
+  padding: 1rem 1.5rem;
+
+  border-bottom: 1px solid $border-light;
+
+  &:nth-child(odd) {
+    border-right: 1px solid $border-light;
+  }
+}
+
+.question-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  min-width: 0;
+}
+
+.question-label {
+  overflow: hidden;
+
+  color: $text-primary;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.question-type {
+  color: $text-secondary;
+
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+// ======================================================
+// QUESTION META
+// ======================================================
+
+.question-meta {
+  display: grid;
+  grid-template-columns: 80px 95px;
+  gap: 0.5rem;
+
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.question-requirement,
+.question-printable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 0.3rem 0.55rem;
+
+  color: $text-secondary;
+  background: $background;
+
+  border: 1px solid $border-light;
+  border-radius: 999px;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.question-requirement {
+  &.required {
+    color: $success;
+  }
+}
+
+.question-printable {
+  &.printable {
+    color: $primary;
+  }
+}
+
+// ======================================================
+// PUBLIC OPEN HOUSE
+// ======================================================
+
+.public-open-house-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding: 1.5rem;
+
+  background: $surface;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.public-open-house-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-width: 0;
+
+  h4 {
+    margin: 0.35rem 0 0;
+
+    color: $text-primary;
+
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    max-width: 36rem;
+    margin: 0.4rem 0 0;
+
+    color: $text-secondary;
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+}
+
+.public-url {
+  display: block;
+
+  max-width: 100%;
+  margin-top: 1rem;
+
+  overflow: hidden;
+
+  color: $text-primary;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.open-public-page {
+  display: inline-flex;
+  align-items: center;
+
+  margin-top: 0.75rem;
+
+  color: $text-secondary;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  &:hover {
+    color: $text-primary;
+    text-decoration: underline;
+  }
+}
+
+.public-qr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding-left: 2rem;
+
+  border-left: 1px solid $border-light;
+}
+
+// ======================================================
+// PRINTABLE MATERIALS
+// ======================================================
+
+.printable-section {
+  overflow: hidden;
+
+  background: $surface;
+
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+}
+
+.printable-section-header {
+  padding: 1.25rem 1.5rem;
+
+  border-bottom: 1px solid $border-light;
+
+  h4 {
+    margin: 0.35rem 0 0;
+
+    color: $text-primary;
+
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0.35rem 0 0;
+
+    color: $text-secondary;
+
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+
+// ======================================================
+// PRINTABLE ITEMS
+// ======================================================
+
+.printable-item {
+  &:not(:last-child) {
+    border-bottom: 1px solid $border-light;
+  }
+}
+
+.printable-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  width: 100%;
+  padding: 1rem 1.5rem;
+
+  color: inherit;
+  background: transparent;
+
+  border: 0;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $text-primary;
+    outline-offset: -2px;
+  }
+}
+
+.printable-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  min-width: 0;
+
+  strong {
+    color: $text-primary;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  span {
+    color: $text-secondary;
+
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+}
+
+// ======================================================
+// CARET
+// ======================================================
+
+.preview-caret {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  color: $text-secondary;
+
+  font-size: 1.25rem;
+  line-height: 1;
+
+  transform: rotate(90deg);
+
+  transition:
+    color 0.15s ease,
+    transform 0.2s ease;
+
+  &.expanded {
+    color: $text-primary;
+
+    transform: rotate(-90deg);
+  }
+}
+
+// ======================================================
+// EXPANDED PREVIEW
+// ======================================================
+
+.printable-preview {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.75rem 0;
+
+  border-top: 1px solid $border-light;
+
+  > span {
+    color: $text-secondary;
+
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+}
+
+.preview-page {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  padding: 1.5rem;
+
+  overflow: hidden;
+
+  background: rgba(0, 0, 0, 0.12);
+
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+
+  aa-open-house-flyer-preview,
+  aa-open-house-form-preview {
+    display: block;
+
+    width: min(100%, 34rem);
+  }
+}
+
+// ======================================================
+// RESPONSIVE
+// ======================================================
+
+@media (max-width: 1000px) {
+  .questions-list {
+    grid-template-columns: 1fr;
+  }
+
+  .question-row {
+    &:nth-child(odd) {
+      border-right: 0;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .question-row {
+    align-items: flex-start;
+  }
+
+  .question-meta {
+    grid-template-columns: 80px 95px;
+  }
+
+  .printable-item-header {
+    gap: 1rem;
+
+    padding: 1rem;
+  }
+
+  .printable-preview {
+    padding: 0 1rem 1rem;
+  }
+
+  .preview-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .preview-page {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .question-row {
+    flex-direction: column;
+  }
+
+  .question-meta {
+    align-self: flex-end;
+  }
+
+  .schedule-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .schedule-divider {
+    width: 100%;
+    height: 1px;
+    margin: 0;
+  }
+
+  .stats-section {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    &:not(:last-child) {
+      border-right: 0;
+      border-bottom: 1px solid $border-light;
+    }
+  }
+
+  .public-open-house-section {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .public-qr {
+    padding-top: 1.5rem;
+    padding-left: 0;
+
+    border-top: 1px solid $border-light;
+    border-left: 0;
+  }
+}

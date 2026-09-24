@@ -7,19 +7,26 @@
     </div>
   </div>
 
-  <div class="search-bar">
-    <button class="search-button" type="button" aria-label="Search">
+  <div class="search-bar search-bar-disabled">
+    <button
+      class="search-button"
+      type="button"
+      aria-label="Search coming soon"
+      disabled
+    >
       <mat-icon>search</mat-icon>
     </button>
 
-    <input
-      type="search"
-      placeholder="Search leads by name, email, or number..."
-    />
+    <input type="search" placeholder="Global search coming soon..." disabled />
   </div>
 
   <div class="user-info-settings-container">
-    <button class="settings-button" type="button" aria-label="Settings">
+    <button
+      [routerLink]="'/settings'"
+      class="settings-button"
+      type="button"
+      aria-label="Settings"
+    >
       <mat-icon>settings</mat-icon>
     </button>
 
@@ -35,12 +42,10 @@
       <p>{{ userEmail() }}</p>
     </div>
 
-    <button
-      class="user-dropdown-button"
-      type="button"
-      aria-label="Open user menu"
-    >
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
+    <aa-action-menu
+      ariaLabel="User menu"
+      triggerIcon="keyboard_arrow_down"
+      [actions]="userActions"
+    />
   </div>
 </div>

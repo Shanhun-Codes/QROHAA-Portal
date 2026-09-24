@@ -1,0 +1,129 @@
+<div
+  class="open-house-sign"
+  [style.--brand-primary]="openHouse().agent.primaryColor"
+  [style.--brand-secondary]="openHouse().agent.secondaryColor"
+>
+  <!-- ==================================================
+       BRANDING
+  =================================================== -->
+
+  <header class="sign-header">
+    @if (openHouse().agent.logoUrl) {
+      <img
+        class="brokerage-logo"
+        [src]="openHouse().agent.logoUrl"
+        [alt]="openHouse().agent.brokerageName || 'Brokerage logo'"
+      />
+    } @else if (openHouse().agent.brokerageName) {
+      <div class="brokerage-name">
+        {{ openHouse().agent.brokerageName }}
+      </div>
+    }
+
+    <div class="open-house-label">OPEN HOUSE</div>
+  </header>
+
+  <!-- ==================================================
+       PROPERTY
+  =================================================== -->
+
+  <section class="property-section">
+    <div class="property-eyebrow">WELCOME</div>
+
+    <h1>
+      {{ openHouse().property.street }}
+    </h1>
+
+    @if (openHouse().property.street2) {
+      <div class="property-unit">
+        {{ openHouse().property.street2 }}
+      </div>
+    }
+
+    <div class="property-location">
+      {{ openHouse().property.city }},
+      {{ openHouse().property.state }}
+      {{ openHouse().property.zip }}
+    </div>
+
+    <div class="open-house-time">
+      {{ openHouse().startsAt | date: "EEEE, MMMM d" }}
+
+      <span class="time-divider"> • </span>
+
+      {{ openHouse().startsAt | date: "h:mm a" }}
+
+      –
+
+      {{ openHouse().endsAt | date: "h:mm a" }}
+    </div>
+  </section>
+
+  <!-- ==================================================
+       QR CODE
+  =================================================== -->
+
+  <section class="qr-section">
+    <div class="qr-wrapper">
+      <aa-qr-generator
+        [qrdata]="qrUrl()"
+        [width]="175"
+        [showDownload]="false"
+      />
+    </div>
+
+    <h2>Scan to Sign In</h2>
+
+    <p>Scan the QR code with your phone to sign in and provide feedback.</p>
+  </section>
+
+  <!-- ==================================================
+       AGENT
+  =================================================== -->
+
+  <footer class="agent-section">
+    <div class="agent">
+      @if (openHouse().agent.headshotUrl) {
+        <img
+          class="agent-headshot"
+          [src]="openHouse().agent.headshotUrl"
+          [alt]="agentName()"
+        />
+      }
+
+      <div class="agent-information">
+        <span class="hosted-by"> HOSTED BY </span>
+
+        <strong class="agent-name">
+          {{ agentName() }}
+        </strong>
+
+        @if (openHouse().agent.brokerageName) {
+          <span class="agent-brokerage">
+            {{ openHouse().agent.brokerageName }}
+          </span>
+        }
+
+        <span class="agent-contact">
+          {{ openHouse().agent.phone }}
+        </span>
+
+        <span class="agent-contact">
+          {{ openHouse().agent.email }}
+        </span>
+      </div>
+    </div>
+
+    <div class="property-reference">
+      <span> PROPERTY </span>
+
+      <strong>
+        {{ openHouse().property.street }}
+      </strong>
+
+      <small>
+        {{ openHouse().publicCode }}
+      </small>
+    </div>
+  </footer>
+</div>

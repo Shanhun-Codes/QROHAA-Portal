@@ -1,0 +1,23 @@
+<div class="qr-generator">
+  <div class="qrcode-image">
+    <qrcode
+      [qrdata]="qrdata()"
+      [allowEmptyString]="false"
+      [ariaLabel]="'Open house QR code'"
+      [cssClass]="'center'"
+      [elementType]="'canvas'"
+      [errorCorrectionLevel]="'M'"
+      [margin]="1"
+      [scale]="1"
+      [title]="qrdata()"
+      [width]="width()"
+      (qrCodeURL)="onChangeURL($event)"
+    />
+  </div>
+
+  @if (showDownload() && qrCodeDownloadLink) {
+    <a class="qr-download" [href]="qrCodeDownloadLink" [download]="fileName()">
+      Download QR Code
+    </a>
+  }
+</div>

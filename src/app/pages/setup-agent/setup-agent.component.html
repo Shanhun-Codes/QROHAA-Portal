@@ -22,6 +22,17 @@
     </div>
 
     <aa-dynamic-form [config]="formConfig" (formSubmit)="onSubmit($event)" />
+
+    <div class="setup-agent-note">
+      <span class="material-symbols-outlined">info</span>
+
+      <p>
+        After setup, you can add your <strong>headshot</strong> and
+        <strong>brokerage logo</strong> from Settings to complete your public
+        profile.
+      </p>
+    </div>
+
     <div class="button-container">
       <aa-button [config]="resetButtonConfig">Reset</aa-button>
       <aa-button [config]="saveButtonConfig">Save</aa-button>

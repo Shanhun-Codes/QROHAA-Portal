@@ -8,10 +8,11 @@ import { finalize } from 'rxjs';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { ButtonConfig } from '../../shared/components/button/button.config';
 import {
+  AGENT_FORM_CONFIG,
   RESET_BUTTON_CONFIG,
   SAVE_BUTTON_CONFIG,
-  USER_FORM_CONFIG,
 } from './config/agent-form.config';
+import { AgentProfile } from '../../auth/auth.model';
 
 @Component({
   selector: 'app-setup-agent',
@@ -25,7 +26,7 @@ export class SetupAgentComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly appLoaderService = inject(AppLoaderService);
   readonly dynamicForm = viewChild(DynamicFormComponent);
-  readonly formConfig: DynamicFormConfig = USER_FORM_CONFIG;
+  readonly formConfig: DynamicFormConfig<any> = AGENT_FORM_CONFIG;
   readonly saveButtonConfig: ButtonConfig = {
     ...SAVE_BUTTON_CONFIG,
     click: () => this.dynamicForm()?.submit(),
