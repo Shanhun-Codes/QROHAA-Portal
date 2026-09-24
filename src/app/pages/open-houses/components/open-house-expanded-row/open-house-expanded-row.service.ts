@@ -22,4 +22,8 @@ export class OpenHouseExpandedRowService {
   generateFlyer(openHouse: OpenHouseDetail): void {
     console.log('Generate flyer:', openHouse);
   }
+
+  generatePrintableForm(openHouse: OpenHouseDetail): void {
+    console.log('Generate printable form:', openHouse);
+  }
 }

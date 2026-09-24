@@ -18,6 +18,10 @@ import { OpenHouseDetail } from '../../models/open-house.model';
 import { OpenHouseExpandedRowService } from './open-house-expanded-row.service';
 import { OpenHouseFlyerPreviewComponent } from '../open-house-flyer-preview/open-house-flyer-preview.component';
 import { OpenHouseFormPreviewComponent } from '../open-house-form-preview/open-house-form-preview.component';
+import {
+  DOWNLOAD_FLYER_BUTTON_CONFIG,
+  DOWNLOAD_PRINTABLE_FORM_BUTTON_CONFIG,
+} from '../../config/button.config';
 
 @Component({
   selector: 'aa-open-house-expanded-row',
@@ -89,11 +93,13 @@ export class OpenHouseExpandedRowComponent {
   });
 
   readonly downloadFlyerButtonConfig = {
-    label: 'Download Flyer',
-    icon: 'download',
-    variant: 'secondary' as const,
-    size: 'sm' as const,
+    ...DOWNLOAD_FLYER_BUTTON_CONFIG,
     click: () => this.downloadFlyer(),
+  };
+
+  readonly downloadPrintableFormButtonConfig = {
+    ...DOWNLOAD_PRINTABLE_FORM_BUTTON_CONFIG,
+    click: () => this.downloadPrintableForm(),
   };
 
   constructor() {
@@ -126,5 +132,15 @@ export class OpenHouseExpandedRowComponent {
     }
 
     this.openHouseExpandedRowService.generateFlyer(openHouse);
+  }
+
+  private downloadPrintableForm(): void {
+    const openHouse = this.openHouse();
+
+    if (!openHouse) {
+      return;
+    }
+
+    this.openHouseExpandedRowService.generatePrintableForm(openHouse);
   }
 }

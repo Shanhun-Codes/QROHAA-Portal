@@ -12,7 +12,6 @@
   display: flex;
   flex-direction: column;
 
-  // height: 1500px;
   width: min(100%, 700px);
   aspect-ratio: 8.5 / 11;
 
@@ -156,29 +155,38 @@
 // QUESTIONS
 // ======================================================
 
+.questions-section {
+  padding-top: 0.55rem;
+}
+
 .questions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-flow: column;
-  grid-template-rows: repeat(7, auto);
-
-  column-gap: 1.5rem;
+  column-gap: 2rem;
 
   min-height: 0;
+}
+
+.question-column {
+  min-width: 0;
 }
 
 .question {
   min-width: 0;
 
-  padding: 0.4rem 0;
+  padding: 0.25rem 0;
 
   border-bottom: 1px solid #e1e3e5;
+
+  &:first-child {
+    padding-top: 0.25rem;
+  }
 }
 
 .question-heading {
   display: flex;
   align-items: baseline;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .question-number {
@@ -197,7 +205,7 @@
   font-size: clamp(0.55rem, 1.15vw, 0.76rem);
 
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 // ======================================================
@@ -208,16 +216,19 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.25rem 0.65rem;
+  gap: 0.35rem 0.75rem;
 
-  margin-top: 0.25rem;
-  padding-left: 1.15rem;
+  margin-top: 0.35rem;
+  padding-left: 1.35rem;
 }
 
 .paper-option {
-  gap: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 
   font-size: 0.64rem;
+  line-height: 1.2;
 }
 
 .circle,
@@ -248,11 +259,12 @@
 .rating-options {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
 
-  margin-top: 0.25rem;
-  padding-left: 1.15rem;
+  margin-top: 0.35rem;
+  padding-left: 1.35rem;
 }
+
 .rating-edge {
   font-size: 0.58rem;
 }
@@ -262,7 +274,7 @@
 // ======================================================
 
 .answer-lines {
-  margin: 0.2rem 0 0 1.15rem;
+  margin: 0.35rem 0 0 1.35rem;
 
   div {
     display: none;
@@ -270,7 +282,7 @@
     &:first-child {
       display: block;
 
-      height: 0.8rem;
+      height: 1rem;
 
       border-bottom: 1px solid #858b90;
     }
@@ -278,9 +290,9 @@
 }
 
 .single-answer-line {
-  height: 0.8rem;
+  height: 1rem;
 
-  margin: 0.2rem 0 0 1.15rem;
+  margin: 0.35rem 0 0 1.35rem;
 
   border-bottom: 1px solid #858b90;
 }
@@ -295,6 +307,7 @@
   justify-content: space-between;
   gap: 2rem;
 
+  margin-top: auto;
   padding-top: 2%;
 
   border-top: 2px solid var(--brand-primary);

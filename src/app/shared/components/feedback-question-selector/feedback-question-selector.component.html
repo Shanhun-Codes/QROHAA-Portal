@@ -32,7 +32,7 @@
               </span>
 
               @if (question.options.length) {
-                <span class="meta-divider"> • </span>
+                <span class="meta-divider">•</span>
 
                 <span class="question-options">
                   {{ getOptionPreview(question) }}
@@ -51,18 +51,22 @@
               (change)="toggleRequired(question)"
             />
 
-            <span> Required </span>
+            <span>Required</span>
           </label>
 
           <label
             class="question-setting"
-            [class.disabled]="!question.selected"
-            title="Include this question on the printable feedback form."
+            [class.disabled]="!canMakePrintable(question)"
+            [title]="
+              canMakePrintable(question)
+                ? 'Include this question on the printable feedback form.'
+                : 'There is not enough space remaining on the printable feedback form.'
+            "
           >
             <input
               type="checkbox"
               [checked]="question.printable"
-              [disabled]="!question.selected"
+              [disabled]="!canMakePrintable(question)"
               (change)="togglePrintable(question)"
             />
 

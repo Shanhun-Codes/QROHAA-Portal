@@ -9,7 +9,7 @@
 
   <header class="form-header">
     <div>
-      <span class="form-eyebrow"> OPEN HOUSE </span>
+      <span class="form-eyebrow">OPEN HOUSE</span>
 
       <h1>Property Feedback</h1>
 
@@ -34,7 +34,7 @@
   </header>
 
   <!-- ==================================================
-       VISITOR
+       VISITOR INFORMATION
   =================================================== -->
 
   <section class="visitor-section">
@@ -71,114 +71,174 @@
     <div class="section-title">Your Feedback</div>
 
     <div class="questions">
-      @for (
-        selection of questions();
-        track selection.questionId;
-        let index = $index
-      ) {
-        <div
-          class="question"
-          [class.rating-question]="isRatingQuestion(selection)"
-          [class.text-question]="isTextQuestion(selection.question)"
-          [class.long-text-question]="isLongTextQuestion(selection.question)"
-        >
-          <div class="question-heading">
-            <span class="question-number"> {{ index + 1 }}. </span>
+      <!-- ==================================================
+           LEFT COLUMN
+      =================================================== -->
 
-            <span class="question-label">
-              {{ selection.question.label }}
-            </span>
+      <div class="question-column">
+        @for (item of questionColumns().left; track item.selection.questionId) {
+          <div
+            class="question"
+            [class.rating-question]="isRatingQuestion(item.selection)"
+            [class.text-question]="isTextQuestion(item.selection.question)"
+            [class.long-text-question]="
+              isLongTextQuestion(item.selection.question)
+            "
+          >
+            <div class="question-heading">
+              <span class="question-number"> {{ item.number }}. </span>
+
+              <span class="question-label">
+                {{ item.selection.question.label }}
+              </span>
+            </div>
+
+            @if (isRatingQuestion(item.selection)) {
+              <div class="rating-options">
+                <span class="rating-edge">Poor</span>
+
+                @for (rating of [1, 2, 3, 4, 5]; track rating) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ rating }}
+                  </span>
+                }
+
+                <span class="rating-edge">Great</span>
+              </div>
+            } @else if (isBooleanQuestion(item.selection.question)) {
+              <div class="inline-options">
+                <span class="paper-option">
+                  <span class="circle"></span>
+                  Yes
+                </span>
+
+                <span class="paper-option">
+                  <span class="circle"></span>
+                  No
+                </span>
+              </div>
+            } @else if (isSingleSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isMultiSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="square"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isLongTextQuestion(item.selection.question)) {
+              <div class="answer-lines">
+                <div></div>
+                <div></div>
+              </div>
+            } @else {
+              <div class="single-answer-line"></div>
+            }
           </div>
+        }
+      </div>
 
-          <!-- ==============================
-               RATING
-          =============================== -->
+      <!-- ==================================================
+           RIGHT COLUMN
+      =================================================== -->
 
-          @if (isRatingQuestion(selection)) {
-            <div class="rating-options">
-              <span class="rating-edge"> Poor </span>
+      <div class="question-column">
+        @for (
+          item of questionColumns().right;
+          track item.selection.questionId
+        ) {
+          <div
+            class="question"
+            [class.rating-question]="isRatingQuestion(item.selection)"
+            [class.text-question]="isTextQuestion(item.selection.question)"
+            [class.long-text-question]="
+              isLongTextQuestion(item.selection.question)
+            "
+          >
+            <div class="question-heading">
+              <span class="question-number"> {{ item.number }}. </span>
 
-              @for (rating of [1, 2, 3, 4, 5]; track rating) {
-                <span class="paper-option">
-                  <span class="circle"></span>
-                  {{ rating }}
-                </span>
-              }
-
-              <span class="rating-edge"> Great </span>
-            </div>
-          }
-
-          <!-- ==============================
-               BOOLEAN
-          =============================== -->
-
-          @else if (isBooleanQuestion(selection.question)) {
-            <div class="inline-options">
-              <span class="paper-option">
-                <span class="circle"></span>
-                Yes
-              </span>
-
-              <span class="paper-option">
-                <span class="circle"></span>
-                No
+              <span class="question-label">
+                {{ item.selection.question.label }}
               </span>
             </div>
-          }
 
-          <!-- ==============================
-               SINGLE SELECT
-          =============================== -->
+            @if (isRatingQuestion(item.selection)) {
+              <div class="rating-options">
+                <span class="rating-edge">Poor</span>
 
-          @else if (isSingleSelectQuestion(selection.question)) {
-            <div class="inline-options">
-              @for (option of selection.question.options; track option.id) {
+                @for (rating of [1, 2, 3, 4, 5]; track rating) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ rating }}
+                  </span>
+                }
+
+                <span class="rating-edge">Great</span>
+              </div>
+            } @else if (isBooleanQuestion(item.selection.question)) {
+              <div class="inline-options">
                 <span class="paper-option">
                   <span class="circle"></span>
-
-                  {{ option.label }}
+                  Yes
                 </span>
-              }
-            </div>
-          }
 
-          <!-- ==============================
-               MULTI SELECT
-          =============================== -->
-
-          @else if (isMultiSelectQuestion(selection.question)) {
-            <div class="inline-options">
-              @for (option of selection.question.options; track option.id) {
                 <span class="paper-option">
-                  <span class="square"></span>
-
-                  {{ option.label }}
+                  <span class="circle"></span>
+                  No
                 </span>
-              }
-            </div>
-          }
-
-          <!-- ==============================
-               LONG TEXT
-          =============================== -->
-
-          @else if (isLongTextQuestion(selection.question)) {
-            <div class="answer-lines">
-              <div></div>
-              <div></div>
-            </div>
-          }
-
-          <!-- ==============================
-               SHORT TEXT / FALLBACK
-          =============================== -->
-
-          @else {
-            <div class="single-answer-line"></div>
-          }
-        </div>
-      }
+              </div>
+            } @else if (isSingleSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="circle"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isMultiSelectQuestion(item.selection.question)) {
+              <div class="inline-options">
+                @for (
+                  option of item.selection.question.options;
+                  track option.id
+                ) {
+                  <span class="paper-option">
+                    <span class="square"></span>
+                    {{ option.label }}
+                  </span>
+                }
+              </div>
+            } @else if (isLongTextQuestion(item.selection.question)) {
+              <div class="answer-lines">
+                <div></div>
+                <div></div>
+              </div>
+            } @else {
+              <div class="single-answer-line"></div>
+            }
+          </div>
+        }
+      </div>
     </div>
   </section>
 
