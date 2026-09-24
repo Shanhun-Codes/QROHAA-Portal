@@ -82,17 +82,64 @@
             <div class="branding-image-group">
               <span class="profile-field-label">Headshot</span>
 
-              <div class="headshot-preview">
-                <div class="headshot-placeholder">TS</div>
-              </div>
+              <button
+                type="button"
+                class="headshot-preview branding-image-upload"
+                (click)="headshotInput.click()"
+              >
+                @if (agent()?.headshotUrl) {
+                  <img
+                    class="headshot-image"
+                    [src]="agent()?.headshotUrl"
+                    [alt]="`${agent()?.firstName} ${agent()?.lastName}`"
+                  />
+                } @else {
+                  <div class="headshot-placeholder">
+                    {{ agent()?.firstName?.charAt(0) }}
+                    {{ agent()?.lastName?.charAt(0) }}
+                  </div>
+                }
+
+                <span class="image-upload-overlay">Change</span>
+              </button>
+
+              <input
+                #headshotInput
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
+                (change)="onAssetSelected($event, 'headshot')"
+              />
             </div>
 
             <div class="branding-image-group branding-logo-group">
               <span class="profile-field-label">Logo</span>
 
-              <div class="logo-preview">
-                <span>Brokerage / Agent Logo</span>
-              </div>
+              <button
+                type="button"
+                class="logo-preview branding-image-upload"
+                (click)="logoInput.click()"
+              >
+                @if (agent()?.logoUrl) {
+                  <img
+                    class="logo-image"
+                    [src]="agent()?.logoUrl"
+                    [alt]="agent()?.brokerageName || 'Brokerage logo'"
+                  />
+                } @else {
+                  <span>Brokerage / Agent Logo</span>
+                }
+
+                <span class="image-upload-overlay">Change</span>
+              </button>
+
+              <input
+                #logoInput
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
+                (change)="onAssetSelected($event, 'logo')"
+              />
             </div>
           </div>
 

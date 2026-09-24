@@ -168,4 +168,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     return labels[category] ?? category;
   }
+
+  async onAssetSelected(
+    event: Event,
+    type: 'headshot' | 'logo',
+  ): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    await this.profileService.uploadAgentAsset(file, type);
+
+    input.value = '';
+  }
 }

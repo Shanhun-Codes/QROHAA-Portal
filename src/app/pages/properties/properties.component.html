@@ -1,5 +1,13 @@
 <ng-template #headerActions>
-  <aa-button [config]="addPropertyButtonConfig"></aa-button>
+  <div class="properties-header-actions">
+    <aa-view-toggle
+      [options]="viewOptions"
+      [value]="selectedView()"
+      (valueChange)="onViewChange($event)"
+    />
+
+    <aa-button [config]="addPropertyButtonConfig" />
+  </div>
 </ng-template>
 
 <aa-page-template
@@ -8,17 +16,20 @@
   [headerActions]="headerActions"
 >
   <div class="table-container">
+    @if (selectedPropertyIds().length > 0) {
+      <aa-bulk-actions-bar
+        itemName="property"
+        [selectedCount]="selectedPropertyIds().length"
+        (clearSelection)="clearSelection()"
+      >
+        <aa-button [config]="bulkStatusButtonConfig()" />
+      </aa-bulk-actions-bar>
+    }
+
     <aa-table
       [tableDataConfig]="tableData()"
       [tableHeaderConfig]="tableHeaderConfig"
-      [expandedRowTemplate]="expandedRowTemplate"
-      (rowExpanded)="onLeadExpanded($event)"
+      (selectionChange)="onSelectionChange($event)"
     />
-
-    <ng-template #expandedRowTemplate let-row>
-      <div class="lead-expanded-row">
-        <h3>{{ row.street }}</h3>
-      </div>
-    </ng-template>
   </div>
 </aa-page-template>

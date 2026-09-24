@@ -28,8 +28,7 @@ export class TableComponent<T extends { id: string }> {
 
   readonly tableDataConfig = input.required<any[]>();
 
-  readonly expandedRowTemplate = input.required<TemplateRef<any>>();
-
+  readonly expandedRowTemplate = input<TemplateRef<any> | null>(null);
   readonly rowExpanded = output<string>();
 
   readonly selectionChange = output<string[]>();
@@ -51,6 +50,10 @@ export class TableComponent<T extends { id: string }> {
   }
 
   onRowClick(id: string): void {
+    if (!this.expandedRowTemplate()) {
+      return;
+    }
+
     const isOpening = this.row() !== id;
 
     this.row.set(isOpening ? id : null);

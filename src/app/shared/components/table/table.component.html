@@ -92,14 +92,14 @@
           }
         </tr>
 
-        @if (row() === data.id) {
+        @if (expandedRowTemplate() && row() === data.id) {
           <tr class="expanded-row no-hover">
             <td [attr.colspan]="tableHeaderConfig().length + 1">
               <div class="expanded-row-shell">
                 <div class="expanded-row-content">
                   <aa-expandable-table-row
                     [rowData]="data"
-                    [expandedRowTemplate]="expandedRowTemplate()"
+                    [expandedRowTemplate]="expandedRowTemplate()!"
                   />
                 </div>
               </div>
