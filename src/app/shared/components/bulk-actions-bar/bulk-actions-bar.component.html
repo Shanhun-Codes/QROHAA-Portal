@@ -1,0 +1,21 @@
+<div class="bulk-actions-bar">
+  <div class="bulk-actions-selection">
+    <div class="bulk-actions-selection-text">
+      <strong>{{ selectedCount() }}</strong>
+
+      <span> {{ selectionLabel }} selected </span>
+    </div>
+
+    <button
+      type="button"
+      class="clear-selection-button"
+      (click)="onClearSelection()"
+    >
+      Clear All
+    </button>
+  </div>
+
+  <div class="bulk-actions">
+    <ng-content />
+  </div>
+</div>

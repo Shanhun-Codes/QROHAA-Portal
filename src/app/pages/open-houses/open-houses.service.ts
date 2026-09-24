@@ -8,7 +8,12 @@ import { DialogType } from '../leads/models/note.model';
 import { OpenHouseDialogComponent } from './components/dialogs/open-house-dialog/open-house-dialog.component';
 import { firstValueFrom } from 'rxjs';
 import { OpenHousePreviewDialogComponent } from './components/dialogs/open-house-preview-dialog/open-house-preview-dialog.component';
-import { CreateOpenHouseRequest, OpenHouse } from './models/open-house.model';
+import {
+  CreateOpenHouseRequest,
+  DeleteOpenHousesResponse,
+  OpenHouse,
+} from './models/open-house.model';
+import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +21,12 @@ import { CreateOpenHouseRequest, OpenHouse } from './models/open-house.model';
 export class OpenHousesService {
   private readonly http = inject(HttpClient);
   private readonly dialogService = inject(DialogService);
+  private readonly snackbarService = inject(SnackbarService);
 
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
 
   public tableData = signal<OpenHouse[]>([]);
+  readonly selectedOpenHouseIds = signal<string[]>([]);
 
   getOpenHouses() {
     return this.http.get<OpenHouse[]>(`${this.agentAppBaseUrl}/open-houses`);
@@ -105,5 +112,46 @@ export class OpenHousesService {
       `${this.agentAppBaseUrl}/open-houses/${openHouseId}`,
       values,
     );
+  }
+
+  async removeBulkOpenHouses(openHouseIds: string[]): Promise<boolean> {
+    try {
+      const response = await firstValueFrom(
+        this.http.delete<DeleteOpenHousesResponse>(
+          `${this.agentAppBaseUrl}/open-houses`,
+          {
+            body: openHouseIds,
+          },
+        ),
+      );
+
+      this.tableData.set(response.openHouses);
+
+      if (response.skippedCount > 0) {
+        this.snackbarService.success(
+          `${response.deletedCount} ${
+            response.deletedCount === 1 ? 'open house' : 'open houses'
+          } deleted. ${response.skippedCount} ${
+            response.skippedCount === 1 ? 'was' : 'were'
+          } preserved because ${
+            response.skippedCount === 1 ? 'it contains' : 'they contain'
+          } feedback.`,
+        );
+      } else {
+        this.snackbarService.success(
+          `${response.deletedCount} ${
+            response.deletedCount === 1 ? 'open house' : 'open houses'
+          } successfully deleted`,
+        );
+      }
+
+      return true;
+    } catch {
+      this.snackbarService.error(
+        'Unable to delete the selected open houses. Open houses containing feedback cannot be deleted.',
+      );
+
+      return false;
+    }
   }
 }

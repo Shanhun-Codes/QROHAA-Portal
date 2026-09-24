@@ -110,3 +110,11 @@ export interface CreateOpenHouseRequest {
   endsAt: string | Date;
   feedbackQuestions?: AgentFeedbackQuestionRequest[];
 }
+
+export interface DeleteOpenHousesResponse {
+  deletedCount: number;
+  skippedCount: number;
+  openHouses: OpenHouse[];
+}
+
+export type OpenHouseView = 'UPCOMING' | 'PAST';

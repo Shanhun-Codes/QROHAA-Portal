@@ -32,3 +32,8 @@ export const DOWNLOAD_PRINTABLE_FORM_BUTTON_CONFIG: ButtonConfig = {
   variant: 'secondary',
   size: 'sm',
 };
+
+export const DELETE_OPEN_HOUSE_BUTTON_CONFIG: ButtonConfig = {
+  label: 'Delete',
+  variant: 'danger',
+};

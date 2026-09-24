@@ -1,5 +1,13 @@
 <ng-template #headerActions>
-  <aa-button [config]="addOpenHouseButtonConfig"></aa-button>
+  <div class="open-houses-header-actions">
+    <aa-view-toggle
+      [options]="openHouseViewOptions"
+      [value]="openHouseView()"
+      (valueChange)="onOpenHouseViewChange($event)"
+    />
+
+    <aa-button [config]="addOpenHouseButtonConfig" />
+  </div>
 </ng-template>
 
 <aa-page-template
@@ -9,18 +17,29 @@
   [headerActions]="headerActions"
 >
   <div class="table-container">
+    @if (selectedOpenHouseIds().length > 0) {
+      <aa-bulk-actions-bar
+        itemName="open house"
+        pluralItemName="open houses"
+        [selectedCount]="selectedOpenHouseIds().length"
+        (clearSelection)="onClearSelectionClick()"
+      >
+        <aa-button [config]="bulkDeleteButtonConfig" />
+      </aa-bulk-actions-bar>
+    }
+
     <aa-table
       [tableDataConfig]="tableData()"
       [tableHeaderConfig]="tableHeaderConfig"
       [expandedRowTemplate]="expandedRowTemplate"
-      (rowExpanded)="onLeadExpanded($event)"
+      [selectedIdsInput]="selectedOpenHouseIds()"
+      (rowExpanded)="onOpenHouseExpanded($event)"
+      (selectionChange)="onSelectionChange($event)"
     />
 
     <ng-template #expandedRowTemplate let-row>
-      <div class="lead-expanded-row">
-        <aa-open-house-expanded-row
-          [openHouseId]="row.id"
-        ></aa-open-house-expanded-row>
+      <div class="open-house-expanded-row">
+        <aa-open-house-expanded-row [openHouseId]="row.id" />
       </div>
     </ng-template>
   </div>

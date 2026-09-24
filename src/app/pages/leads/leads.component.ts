@@ -22,10 +22,15 @@ import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import { LeadExpandedRowComponent } from './components/lead-expanded-row/lead-expanded-row.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import {
-  SelectComponent,
   SelectOption,
+  SelectComponent,
 } from '../../shared/components/inputs/select/select.component';
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
+import { BulkActionsBarComponent } from '../../shared/components/bulk-actions-bar/bulk-actions-bar.component';
+import {
+  ViewToggleComponent,
+  ViewToggleOption,
+} from '../../shared/components/view-toggle/view-toggle.component';
 
 @Component({
   selector: 'aa-leads',
@@ -34,7 +39,9 @@ import { AppLoaderService } from '../../shared/components/app-loader/app-loader.
     PageTemplateComponent,
     LeadExpandedRowComponent,
     ButtonComponent,
+    BulkActionsBarComponent,
     SelectComponent,
+    ViewToggleComponent,
   ],
   templateUrl: './leads.component.html',
   styleUrl: './leads.component.scss',
@@ -53,6 +60,27 @@ export class LeadsComponent implements OnInit {
 
   readonly selectedLeadIds = signal<string[]>([]);
   readonly selectedStatus = signal<LeadStatusType | null>(null);
+
+  readonly leadViewOptions: ViewToggleOption[] = [
+    {
+      label: 'Active',
+      value: 'ACTIVE',
+    },
+    {
+      label: 'Closed',
+      value: 'CLOSED',
+    },
+  ];
+
+  onLeadViewChange(value: string): void {
+    if (value !== 'ACTIVE' && value !== 'CLOSED') {
+      return;
+    }
+
+    this.leadView.set(value);
+    this.table()?.clearSelection();
+    this.selectedStatus.set(null);
+  }
 
   readonly statusOptions: SelectOption<LeadStatusType>[] = [
     {
@@ -89,12 +117,21 @@ export class LeadsComponent implements OnInit {
 
   readonly tableHeaderConfig = LEADS_TABLE_HEADER_CONFIG;
 
-  readonly tableData = computed(() =>
-    this.leadsService.leads().map((lead) => ({
-      ...lead,
-      status: mapLeadStatusToPill(lead.status as LeadStatusType),
-    })),
-  );
+  readonly tableData = computed(() => {
+    const view = this.leadView();
+
+    return this.leadsService
+      .leads()
+      .filter((lead) => {
+        const isClosed = lead.status === LeadStatusType.CLOSED;
+
+        return view === 'CLOSED' ? isClosed : !isClosed;
+      })
+      .map((lead) => ({
+        ...lead,
+        status: mapLeadStatusToPill(lead.status as LeadStatusType),
+      }));
+  });
 
   ngOnInit(): void {
     this.appLoaderService.runInitialLoad(
