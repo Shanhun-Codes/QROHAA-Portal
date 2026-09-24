@@ -85,7 +85,7 @@ export class AuthService {
 
     window.location.href =
       `https://auth.open-house.studio/logout` +
-      `?client_id=27aqgqq5fiqak5bubmql7nifdu` +
+      `?client_id=${environment.cognito.clientId}` +
       `&logout_uri=${encodeURIComponent(logoutUri)}`;
   }
 }

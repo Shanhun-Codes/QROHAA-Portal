@@ -1,5 +1,6 @@
 import { PassedInitialConfig } from 'angular-auth-oidc-client';
 import { ButtonConfig } from '../shared/components/button/button.config';
+import { environment } from '../../environments/environment';
 
 export const authConfig: PassedInitialConfig = {
   config: {
@@ -9,7 +10,7 @@ export const authConfig: PassedInitialConfig = {
     redirectUrl: window.location.origin,
     postLogoutRedirectUri: `${window.location.origin}/auth`,
 
-    clientId: '27aqgqq5fiqak5bubmql7nifdu',
+    clientId: environment.cognito.clientId,
 
     scope: 'openid profile email',
 
