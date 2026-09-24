@@ -8,10 +8,10 @@ import { MatIcon } from '@angular/material/icon';
 import { ActionMenuItem } from '../models/action-menu.model';
 
 @Component({
-    selector: 'aa-action-menu',
-    imports: [CdkConnectedOverlay, CdkOverlayOrigin, MatIcon],
-    templateUrl: './action-menu.component.html',
-    styleUrl: './action-menu.component.scss'
+  selector: 'aa-action-menu',
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, MatIcon],
+  templateUrl: './action-menu.component.html',
+  styleUrl: './action-menu.component.scss',
 })
 export class ActionMenuComponent {
   readonly actions = input.required<ActionMenuItem[]>();
@@ -19,6 +19,8 @@ export class ActionMenuComponent {
   readonly ariaLabel = input<string>('Actions');
 
   readonly isOpen = signal(false);
+
+  readonly triggerIcon = input<string>('more_vert');
 
   readonly positions: ConnectedPosition[] = [
     {

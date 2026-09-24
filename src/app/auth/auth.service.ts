@@ -5,6 +5,8 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AgentProfile, AgentResponse } from './auth.model';
 import { SnackbarService } from '../shared/components/snackbar/snackbar.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,8 @@ import { SnackbarService } from '../shared/components/snackbar/snackbar.service'
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly oidcSecurityService = inject(OidcSecurityService);
+  private readonly router = inject(Router);
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
   readonly agent = signal<AgentProfile | null>(null);
@@ -70,5 +74,18 @@ export class AuthService {
     } finally {
       this.currentAgentRequest = null;
     }
+  }
+
+  logout(): void {
+    this.agent.set(null);
+
+    this.oidcSecurityService.logoffLocal();
+
+    const logoutUri = `${window.location.origin}/auth`;
+
+    window.location.href =
+      `https://auth.open-house.studio/logout` +
+      `?client_id=27aqgqq5fiqak5bubmql7nifdu` +
+      `&logout_uri=${encodeURIComponent(logoutUri)}`;
   }
 }

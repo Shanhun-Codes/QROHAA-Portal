@@ -7,7 +7,7 @@ export const authConfig: PassedInitialConfig = {
       'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_KeUrBrdKN',
 
     redirectUrl: window.location.origin,
-    postLogoutRedirectUri: window.location.origin,
+    postLogoutRedirectUri: `${window.location.origin}/auth`,
 
     clientId: '27aqgqq5fiqak5bubmql7nifdu',
 
