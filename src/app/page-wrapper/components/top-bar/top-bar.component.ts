@@ -38,8 +38,8 @@ export class TopBarComponent implements OnInit {
     {
       label: 'My Profile',
       icon: 'person',
-      action: () => {
-        this.router.navigate(['/profile']);
+      action: async () => {
+        const result = await this.router.navigateByUrl('/settings');
       },
     },
     {
