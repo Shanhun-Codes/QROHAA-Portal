@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { switchMap, map, take } from 'rxjs';
+
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { switchMap, map } from 'rxjs';
 import { OnboardingService } from '../pages/setup-agent/setup-agent.service';
 
 export const onboardingGuard: CanActivateFn = () => {
@@ -9,21 +10,20 @@ export const onboardingGuard: CanActivateFn = () => {
   const onboardingService = inject(OnboardingService);
   const router = inject(Router);
 
-  return auth.checkAuth().pipe(
-    switchMap((authResult) => {
-      if (!authResult.isAuthenticated) {
+  return auth.isAuthenticated$.pipe(
+    take(1),
+    switchMap(({ isAuthenticated }) => {
+      if (!isAuthenticated) {
         return [router.createUrlTree(['/auth'])];
       }
 
-      return onboardingService.getMe().pipe(
-        map((response: any) => {
-          if (response.hasAgent) {
-            return true;
-          }
-
-          return router.createUrlTree(['/setup-agent']);
-        }),
-      );
+      return onboardingService
+        .getMe()
+        .pipe(
+          map((response: any) =>
+            response.hasAgent ? true : router.createUrlTree(['/setup-agent']),
+          ),
+        );
     }),
   );
 };
