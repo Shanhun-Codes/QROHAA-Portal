@@ -7,16 +7,19 @@ import { FeedbackQuestionSelection } from '../../shared/components/models/feedba
 import { FeedbackQuestionsService } from '../../shared/services/feedback-questions.service';
 
 import { ProfilePreviewConfig } from './preview-public.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PublicPreviewService {
   private readonly authService = inject(AuthService);
-
   private readonly feedbackQuestionsService = inject(FeedbackQuestionsService);
 
+  private readonly publicBaseUrl = environment.publicBaseUrl;
+
   private previewFrame?: HTMLIFrameElement;
+
   readonly showPreview = signal(false);
 
   readonly previewConfig = computed(() => {
@@ -91,12 +94,12 @@ export class PublicPreviewService {
         type: 'OPEN_HOUSE_PREVIEW_CONFIG',
         config,
       },
-      'http://localhost:4200',
+      this.publicBaseUrl,
     );
   }
 
   readonly previewMessageHandler = (event: MessageEvent): void => {
-    if (event.origin !== 'http://localhost:4200') {
+    if (event.origin !== this.publicBaseUrl) {
       return;
     }
 
