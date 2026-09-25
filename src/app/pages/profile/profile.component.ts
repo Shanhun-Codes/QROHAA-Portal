@@ -21,6 +21,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { QuestionsDialogService } from './components/dialogs/questions-dialog/questions-dialog.service';
 import { DefaultQuestionDisplay } from './models/question.model';
 import { BidiModule } from '@angular/cdk/bidi';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'aa-profile',
@@ -45,7 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   readonly previewUrl: SafeResourceUrl =
     this.sanitizer.bypassSecurityTrustResourceUrl(
-      'http://localhost:4200/preview',
+      `${environment.publicBaseUrl}/preview`,
     );
   readonly previewConfig = computed(() => {
     const agent = this.authService.agent();
