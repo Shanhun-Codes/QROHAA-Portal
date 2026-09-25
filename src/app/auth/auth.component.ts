@@ -42,25 +42,7 @@ export class AuthComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.appLoaderService.runInitialLoad(
-      () =>
-        new Promise<void>((resolve) => {
-          this.auth.checkAuth().subscribe({
-            next: (result) => {
-              console.log('AUTH RESULT:', result);
-
-              this.auth.getAccessToken().subscribe((token) => {
-                console.log('ACCESS TOKEN:', token);
-              });
-
-              resolve();
-            },
-            error: () => {
-              resolve();
-            },
-          });
-        }),
-    );
+    this.appLoaderService.runInitialLoad(() => Promise.resolve());
   }
 
   login(): void {
