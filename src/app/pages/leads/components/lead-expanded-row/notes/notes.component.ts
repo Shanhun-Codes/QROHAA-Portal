@@ -7,19 +7,19 @@ import { ButtonComponent } from '../../../../../shared/components/button/button.
 import { SpinnerComponent } from '../../../../../shared/components/spinner/spinner.component';
 import { ActionMenuComponent } from '../../../../../shared/components/action-menu/action-menu.component';
 import { Note } from '../../../models/note.model';
-import { ActionMenuItem } from '../../../../../shared/components/models/action-menu.model';
+import { ActionMenuItem } from '../../../../../shared/components/action-menu/action-menu.model';
 
 @Component({
-    selector: 'aa-notes',
-    imports: [
-        MatIcon,
-        DatePipe,
-        ButtonComponent,
-        SpinnerComponent,
-        ActionMenuComponent,
-    ],
-    templateUrl: './notes.component.html',
-    styleUrl: './notes.component.scss'
+  selector: 'aa-notes',
+  imports: [
+    MatIcon,
+    DatePipe,
+    ButtonComponent,
+    SpinnerComponent,
+    ActionMenuComponent,
+  ],
+  templateUrl: './notes.component.html',
+  styleUrl: './notes.component.scss',
 })
 export class NotesComponent {
   private readonly notesService = inject(NotesService);

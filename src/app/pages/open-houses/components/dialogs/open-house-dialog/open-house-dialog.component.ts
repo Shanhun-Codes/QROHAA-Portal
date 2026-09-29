@@ -18,7 +18,7 @@ import { ButtonComponent } from '../../../../../shared/components/button/button.
 import { FeedbackQuestionsService } from '../../../../../shared/services/feedback-questions.service';
 import { PropertiesService } from '../../../../properties/properties.service';
 
-import { PropertyFormValue } from '../../../../properties/models/property.model';
+import { PropertyFormValue } from '../../../../properties/property.model';
 import { AgentFeedbackQuestionRequest } from '../../../../profile/models/question.model';
 
 import { OPEN_HOUSE_FORM_CONFIG } from '../../../config/open-house-form.config';

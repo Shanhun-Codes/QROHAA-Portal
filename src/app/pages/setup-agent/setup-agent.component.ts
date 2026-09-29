@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DynamicFormComponent } from '../../shared/components/dynamic-form/dynamic-form.component';
-import { DynamicFormConfig } from '../../shared/components/models/dynamic-form.model';
+import { DynamicFormConfig } from '../../shared/components/dynamic-form/dynamic-form.model';
 import { OnboardingService } from './setup-agent.service';
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 import { finalize } from 'rxjs';
@@ -60,7 +60,7 @@ export class SetupAgentComponent implements OnInit {
   onSubmit(values: unknown): void {
     this.onboardingService.createAgent(values).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/settings']);
       },
       error: (error) => {
         console.error('AGENT SETUP ERROR:', error);

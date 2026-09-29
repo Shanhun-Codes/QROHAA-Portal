@@ -2,7 +2,7 @@ import {
   FeedbackQuestionCategory,
   FeedbackQuestionOption,
   FeedbackQuestionType,
-} from '../../shared/components/models/feedback-question-selector.model';
+} from '../../shared/components/feedback-question-selector/feedback-question-selector.model';
 
 export interface ProfilePreviewConfig {
   agent: {

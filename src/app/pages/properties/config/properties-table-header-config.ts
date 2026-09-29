@@ -1,5 +1,5 @@
-import { ITableHeaderConfig } from '../../../shared/components/models/table.model';
-import { Property, PropertyTableRow } from '../models/property.model';
+import { ITableHeaderConfig } from '../../../shared/components/table/table.model';
+import { Property, PropertyTableRow } from '../property.model';
 
 export const PROPERTY_TABLE_HEADER_CONFIG: ITableHeaderConfig<PropertyTableRow>[] =
   [

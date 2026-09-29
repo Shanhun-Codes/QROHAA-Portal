@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DialogRef } from '../dialog/dialog-ref';
-import { DynamicFormConfig } from '../models/dynamic-form.model';
+import { DynamicFormConfig } from './dynamic-form.model';
 
 @Component({
   selector: 'aa-dynamic-form',

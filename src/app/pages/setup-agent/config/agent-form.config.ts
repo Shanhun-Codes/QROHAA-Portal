@@ -1,6 +1,6 @@
 import { AgentProfile } from '../../../auth/auth.model';
 import { ButtonConfig } from '../../../shared/components/button/button.config';
-import { DynamicFormConfig } from '../../../shared/components/models/dynamic-form.model';
+import { DynamicFormConfig } from '../../../shared/components/dynamic-form/dynamic-form.model';
 
 export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
   layout: {

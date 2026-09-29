@@ -3,7 +3,7 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { AgentProfile } from '../../auth/auth.model';
 import { AuthService } from '../../auth/auth.service';
 
-import { FeedbackQuestionSelection } from '../../shared/components/models/feedback-question-selector.model';
+import { FeedbackQuestionSelection } from '../../shared/components/feedback-question-selector/feedback-question-selector.model';
 import { FeedbackQuestionsService } from '../../shared/services/feedback-questions.service';
 
 import { ProfilePreviewConfig } from './preview-public.model';
@@ -86,9 +86,6 @@ export class PublicPreviewService {
     if (!config || !frame?.contentWindow) {
       return;
     }
-
-    console.log('Sending preview config:', config);
-
     frame.contentWindow.postMessage(
       {
         type: 'OPEN_HOUSE_PREVIEW_CONFIG',
@@ -106,9 +103,6 @@ export class PublicPreviewService {
     if (event.data?.type !== 'OPEN_HOUSE_PREVIEW_READY') {
       return;
     }
-
-    console.log('Preview ready');
-
     this.sendPreviewConfig();
   };
 

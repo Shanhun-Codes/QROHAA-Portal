@@ -172,8 +172,6 @@ export class LeadsComponent implements OnInit {
 
   onSelectionChange(ids: string[]): void {
     this.selectedLeadIds.set(ids);
-
-    console.log('SELECTED LEAD IDS:', ids);
   }
 
   onStatusChange(status: LeadStatusType): void {

@@ -9,19 +9,19 @@ import { formatPhoneNumber } from '../../../../shared/utils/format-phone-number.
 import { NotesComponent } from './notes/notes.component';
 import { NotesService } from './notes/notes.service';
 import { ActionMenuComponent } from '../../../../shared/components/action-menu/action-menu.component';
-import { ActionMenuItem } from '../../../../shared/components/models/action-menu.model';
+import { ActionMenuItem } from '../../../../shared/components/action-menu/action-menu.model';
 
 @Component({
-    selector: 'aa-lead-expanded-row',
-    imports: [
-        MatIcon,
-        StatusPillComponent,
-        DatePipe,
-        NotesComponent,
-        ActionMenuComponent,
-    ],
-    templateUrl: './lead-expanded-row.component.html',
-    styleUrl: './lead-expanded-row.component.scss'
+  selector: 'aa-lead-expanded-row',
+  imports: [
+    MatIcon,
+    StatusPillComponent,
+    DatePipe,
+    NotesComponent,
+    ActionMenuComponent,
+  ],
+  templateUrl: './lead-expanded-row.component.html',
+  styleUrl: './lead-expanded-row.component.scss',
 })
 export class LeadExpandedRowComponent implements OnInit {
   private readonly expandedRowService = inject(LeadExpandedRowService);
@@ -76,8 +76,6 @@ export class LeadExpandedRowComponent implements OnInit {
           likedLeast: this.formatAnswer(answers['liked_least']),
           additionalComments: answers['additional_comments'] ?? '—',
         });
-
-        console.log('LEAD DETAIL:', response);
       },
     });
 

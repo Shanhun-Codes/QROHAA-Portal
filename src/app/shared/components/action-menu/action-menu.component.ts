@@ -5,7 +5,7 @@ import {
   ConnectedPosition,
 } from '@angular/cdk/overlay';
 import { MatIcon } from '@angular/material/icon';
-import { ActionMenuItem } from '../models/action-menu.model';
+import { ActionMenuItem } from './action-menu.model';
 
 @Component({
   selector: 'aa-action-menu',

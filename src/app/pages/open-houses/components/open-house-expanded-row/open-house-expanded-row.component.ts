@@ -24,7 +24,7 @@ import {
 } from '../../config/button.config';
 import { OpenHousesService } from '../../open-houses.service';
 import { ActionMenuComponent } from '../../../../shared/components/action-menu/action-menu.component';
-import { ActionMenuItem } from '../../../../shared/components/models/action-menu.model';
+import { ActionMenuItem } from '../../../../shared/components/action-menu/action-menu.model';
 import { firstValueFrom } from 'rxjs';
 import { formatPhoneNumber } from '../../../../shared/utils/format-phone-number.util';
 
@@ -137,7 +137,16 @@ export class OpenHouseExpandedRowComponent {
   }
 
   private downloadFlyer(): void {
-    void this.openHouseService.downloadFlyer(this.openHouseId());
+    const openHouse = this.openHouse();
+
+    if (!openHouse) {
+      return;
+    }
+
+    void this.openHouseService.downloadFlyer(
+      this.openHouseId(),
+      openHouse.property,
+    );
   }
 
   private downloadPrintableForm(): void {
@@ -147,7 +156,10 @@ export class OpenHouseExpandedRowComponent {
       return;
     }
 
-    this.openHouseService.downloadFeedbackForm(this.openHouseId());
+    this.openHouseService.downloadFeedbackForm(
+      this.openHouseId(),
+      openHouse.property,
+    );
   }
 
   getOpenHouseActions(openHouse: OpenHouseDetail): ActionMenuItem[] {

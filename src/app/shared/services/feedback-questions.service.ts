@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { FeedbackQuestionSelection } from '../components/models/feedback-question-selector.model';
+import { FeedbackQuestionSelection } from '../components/feedback-question-selector/feedback-question-selector.model';
 import { firstValueFrom } from 'rxjs';
 import { AgentFeedbackQuestionRequest } from '../../pages/profile/models/question.model';
 import { PublicPreviewService } from '../../pages/profile/preview-public.service';
