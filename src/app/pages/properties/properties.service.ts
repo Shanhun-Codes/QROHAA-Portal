@@ -7,11 +7,7 @@ import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
 import { DialogType } from '../leads/models/note.model';
 import { PropertyDialogComponent } from './components/property-dialog/property-dialog.component';
-import {
-  Property,
-  PropertyFormValue,
-  PropertyStatus,
-} from './models/property.model';
+import { Property, PropertyFormValue, PropertyStatus } from './property.model';
 
 @Injectable({
   providedIn: 'root',

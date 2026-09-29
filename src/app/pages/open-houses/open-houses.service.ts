@@ -15,6 +15,7 @@ import {
   OpenHouseDetail,
 } from './models/open-house.model';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
+import { Property } from '../properties/property.model';
 
 @Injectable({
   providedIn: 'root',
@@ -156,7 +157,10 @@ export class OpenHousesService {
     }
   }
 
-  async downloadFeedbackForm(openHouseId: string): Promise<void> {
+  async downloadFeedbackForm(
+    openHouseId: string,
+    property: Property,
+  ): Promise<void> {
     try {
       const pdf = await firstValueFrom(
         this.http.get(
@@ -171,7 +175,7 @@ export class OpenHousesService {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'open-house-feedback-form.pdf';
+      link.download = `open-house-feedback-form__${property.street}.pdf`;
 
       document.body.appendChild(link);
       link.click();
@@ -185,7 +189,10 @@ export class OpenHousesService {
     }
   }
 
-  async downloadFlyer(openHouseId: string): Promise<void> {
+  async downloadFlyer(
+    openHouseId: string,
+    openHouseProperty: Property,
+  ): Promise<void> {
     try {
       const pdf = await firstValueFrom(
         this.http.get(
@@ -200,7 +207,7 @@ export class OpenHousesService {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'open-house-flyer.pdf';
+      link.download = `open-house-flyer__${openHouseProperty.street}.pdf`;
 
       document.body.appendChild(link);
       link.click();

@@ -1,18 +1,14 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { switchMap, take } from 'rxjs';
+import { catchError, switchMap, take, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(OidcSecurityService);
-
-  console.log('INTERCEPTOR URL:', req.url);
-  console.log(
-    'STARTS WITH API BASE:',
-    req.url.startsWith(environment.apiBaseUrl),
-  );
+  const router = inject(Router);
 
   if (!req.url.startsWith(environment.apiBaseUrl)) {
     return next(req);
@@ -21,19 +17,25 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return auth.getAccessToken().pipe(
     take(1),
     switchMap((accessToken) => {
-      console.log('HAS ACCESS TOKEN:', !!accessToken);
+      const authenticatedRequest = accessToken
+        ? req.clone({
+            setHeaders: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+        : req;
 
-      if (!accessToken) {
-        return next(req);
-      }
+      return next(authenticatedRequest).pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            auth.logoffLocal();
 
-      const authenticatedRequest = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+            void router.navigate(['/auth']);
+          }
 
-      return next(authenticatedRequest);
+          return throwError(() => error);
+        }),
+      );
     }),
   );
 };

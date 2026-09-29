@@ -1,4 +1,4 @@
-import { DynamicFormConfig } from '../../../shared/components/models/dynamic-form.model';
+import { DynamicFormConfig } from '../../../shared/components/dynamic-form/dynamic-form.model';
 import { Note } from '../models/note.model';
 
 export const NOTE_FORM_CONFIG: DynamicFormConfig<NoteFormValue> = {

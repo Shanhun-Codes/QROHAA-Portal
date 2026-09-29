@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TopBarService } from './top-bar.service';
 import { AgentProfile, AgentResponse } from '../../../auth/auth.model';
 import { AuthService } from '../../../auth/auth.service';
-import { ActionMenuItem } from '../../../shared/components/models/action-menu.model';
+import { ActionMenuItem } from '../../../shared/components/action-menu/action-menu.model';
 import { ActionMenuComponent } from '../../../shared/components/action-menu/action-menu.component';
 
 @Component({

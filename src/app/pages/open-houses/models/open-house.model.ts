@@ -1,10 +1,10 @@
-import { StatusPillConfig } from '../../../shared/components/models/status-pill.model';
+import { StatusPillConfig } from '../../../shared/components/status-pill/status-pill.model';
 
 import { AgentFeedbackQuestionRequest } from '../../profile/models/question.model';
 
 import { Lead } from '../../leads/models/lead.model';
 
-import { Property } from '../../properties/models/property.model';
+import { Property } from '../../properties/property.model';
 
 export interface OpenHouse {
   id: string;

@@ -1,4 +1,4 @@
-import { DynamicFormConfig } from '../../../shared/components/models/dynamic-form.model';
+import { DynamicFormConfig } from '../../../shared/components/dynamic-form/dynamic-form.model';
 
 export const LEAD_FORM_CONFIG: DynamicFormConfig = {
   layout: {

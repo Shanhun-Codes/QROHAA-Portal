@@ -1,6 +1,6 @@
 import { Component, computed, input, signal } from '@angular/core';
 
-import { FeedbackQuestionSelection } from '../models/feedback-question-selector.model';
+import { FeedbackQuestionSelection } from './feedback-question-selector.model';
 
 @Component({
   selector: 'aa-feedback-question-selector',

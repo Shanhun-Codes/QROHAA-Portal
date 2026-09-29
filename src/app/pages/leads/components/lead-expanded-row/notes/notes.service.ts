@@ -22,7 +22,6 @@ export class NotesService {
 
   async getNotes() {
     if (!this.leadId()) {
-      console.log('AgentId LeadId error');
       return;
     }
 
@@ -38,9 +37,6 @@ export class NotesService {
       );
 
       this.notes.set(response);
-      console.log('Notes sucessfully received');
-
-      console.log(this.notes());
       this.isNotesLoading.set(false);
       return true;
     } catch {
@@ -72,8 +68,6 @@ export class NotesService {
 
       this.snackbarService.success('Note successfully created');
       this.notes.set(response);
-      console.log('NOTES AFTER UPDATE: ', this.notes());
-
       this.isNotesLoading.set(false);
       return true;
     } catch {
@@ -105,8 +99,6 @@ export class NotesService {
 
       this.snackbarService.success('Note successfully updated');
       this.notes.set(response);
-      console.log('NOTES AFTER UPDATE: ', this.notes());
-
       this.isNotesLoading.set(false);
       return true;
     } catch {

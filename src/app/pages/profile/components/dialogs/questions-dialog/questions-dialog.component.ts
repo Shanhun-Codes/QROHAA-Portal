@@ -67,16 +67,8 @@ export class QuestionsDialogComponent implements OnInit {
         sortOrder: question.sortOrder,
         printable: question.printable ?? false,
       }));
-
-    console.log('1. SUBMIT START', values);
-
     const success = await this.data().onSubmit(values);
-
-    console.log('2. SUBMIT FINISHED', success);
-
     if (success) {
-      console.log('3. CLOSING DIALOG');
-
       this.dialogRef().close();
     }
   }

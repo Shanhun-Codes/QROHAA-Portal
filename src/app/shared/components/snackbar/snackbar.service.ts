@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { SnackbarMessage, SnackbarType } from '../models/snackbar.model';
+import { SnackbarMessage, SnackbarType } from './snackbar.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,6 @@ export class SnackbarService {
 
   show(message: string, type: SnackbarType = 'info', duration = 4000): void {
     const id = crypto.randomUUID();
-    console.log('SNACKBAR SHOW:', message, type);
     const snackbar: SnackbarMessage = {
       id,
       message,

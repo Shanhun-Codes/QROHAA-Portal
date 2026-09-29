@@ -6,7 +6,7 @@ import {
   signal,
   TemplateRef,
 } from '@angular/core';
-import { ITableHeaderConfig } from '../models/table.model';
+import { ITableHeaderConfig } from './table.model';
 import { MatIcon } from '@angular/material/icon';
 import { StatusPillComponent } from '../status-pill/status-pill.component';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
@@ -92,8 +92,6 @@ export class TableComponent<T extends { id: string }> {
     });
 
     this.selectionChange.emit(this.selectedIds());
-
-    console.log('SELECTED IDS:', this.selectedIds());
   }
 
   clearSelection(): void {

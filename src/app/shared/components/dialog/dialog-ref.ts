@@ -26,8 +26,6 @@ export class DialogRef<TResult = unknown> {
     if (this._closed()) {
       return;
     }
-    console.log('DIALOG REF CLOSE:', result);
-
     this._result.set(result);
     this._closed.set(true);
 

@@ -23,7 +23,7 @@ import {
   RESTORE_PROPERTY_BUTTON_CONFIG,
 } from './config/button.config';
 import { PropertiesService } from './properties.service';
-import { PropertyTableRow } from './models/property.model';
+import { PropertyTableRow } from './property.model';
 import { formatListingPrice } from '../../shared/utils/format-listing-price.util';
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 

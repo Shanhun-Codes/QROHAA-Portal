@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
 import { PropertiesService } from '../../../../properties/properties.service';
-import { PropertyFormValue } from '../../../../properties/models/property.model';
+import { PropertyFormValue } from '../../../../properties/property.model';
 
 import { FeedbackQuestionsService } from '../../../../../shared/services/feedback-questions.service';
 
