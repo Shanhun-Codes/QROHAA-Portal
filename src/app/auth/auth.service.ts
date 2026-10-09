@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { AgentProfile, AgentResponse } from './auth.model';
+import { AgentProfile, AgentResponse, AgentUpdateRequest } from './auth.model';
 import { SnackbarService } from '../shared/components/snackbar/snackbar.service';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class AuthService {
   readonly agent = signal<AgentProfile | null>(null);
   private currentAgentRequest: Promise<void> | null = null;
 
-  async updateCurrentAgent(agent: AgentProfile): Promise<boolean> {
+  async updateCurrentAgent(agent: AgentUpdateRequest): Promise<boolean> {
     if (!agent) {
       this.snackbarService.error('An error occurred, please try again');
       return false;
@@ -68,7 +68,7 @@ export class AuthService {
         this.http.get<AgentResponse>(`${this.baseUrl}/onboarding/me`),
       );
 
-      this.agent.set(response.agent);
+      this.agent.set(response.hasAgent ? response.agent : null);
     } catch {
       this.agent.set(null);
     } finally {

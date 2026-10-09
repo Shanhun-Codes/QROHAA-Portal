@@ -10,6 +10,7 @@ import { FeedbackQuestionsService } from '../../shared/services/feedback-questio
 import { formatPhoneNumber } from '../../shared/utils/format-phone-number.util';
 import {
   EDIT_BRANDING_BUTTON_CONFIG,
+  EDIT_BROKERAGE_BUTTON_CONFIG,
   EDIT_PROFILE_BUTTON_CONFIG,
   EDIT_QUESTIONS_BUTTON_CONFIG,
   PREVIEW_BUTTON_CONFIG,
@@ -69,6 +70,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     ...EDIT_BRANDING_BUTTON_CONFIG,
     click: () => this.onEditBranding(),
   };
+  readonly editBrokerageButtonConfig = computed<ButtonConfig>(() => ({
+    ...EDIT_BROKERAGE_BUTTON_CONFIG,
+    disabled: this.agent()?.brandingLocked === true,
+    click: () => this.onEditBrokerage(),
+  }));
   readonly editDefaultQuestionsButtonConfig: ButtonConfig = {
     ...EDIT_QUESTIONS_BUTTON_CONFIG,
     click: () => this.onEditDefaultQuestions(),
@@ -90,6 +96,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       ...agent,
       phone: formatPhoneNumber(agent.phone),
     };
+  });
+  readonly brokerageAddress = computed(() => {
+    const brokerage = this.authService.agent()?.brokerage;
+
+    if (!brokerage) return '';
+
+    const street = [brokerage.street, brokerage.street2]
+      .filter(Boolean)
+      .join(', ');
+    const stateAndZip = [brokerage.state, brokerage.zip]
+      .filter(Boolean)
+      .join(' ');
+    const locality = [brokerage.city, stateAndZip].filter(Boolean).join(', ');
+
+    return [street, locality].filter(Boolean).join(', ');
   });
   readonly defaultQuestions = computed<DefaultQuestionDisplay[]>(() =>
     this.feedbackQuestionsService.agentDefaultQuestions().map((selection) => {
@@ -130,6 +151,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private onEditBranding(): void {
     this.profileService.openAgentDialog('BRANDING');
+  }
+
+  private onEditBrokerage(): void {
+    this.profileService.openAgentDialog('BROKERAGE');
   }
 
   private onEditDefaultQuestions(): void {
@@ -178,6 +203,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const file = input.files?.[0];
 
     if (!file) {
+      input.value = '';
       return;
     }
 

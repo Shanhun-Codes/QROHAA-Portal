@@ -31,7 +31,16 @@ export interface OpenHouseDetailAgent {
   lastName: string;
   email: string;
   phone: string;
-  brokerageName?: string | null;
+  realEstateLicenseNumber: string | null;
+  brokerage?: {
+    name: string;
+    licenseNumber: string | null;
+    street: string | null;
+    street2: string | null;
+    city: string | null;
+    state: string | null;
+    zip: string | null;
+  } | null;
   headline?: string | null;
   headshotUrl?: string | null;
   logoUrl?: string | null;

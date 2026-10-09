@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 
 import { DialogService } from '../../shared/components/dialog/dialog.service';
 import { SnackbarService } from '../../shared/components/snackbar/snackbar.service';
-import { AgentProfile } from '../../auth/auth.model';
+import { AgentProfile, AgentUpdateRequest } from '../../auth/auth.model';
 import { AgentDialogComponent } from './components/dialogs/agent-dialog/agent-dialog.component';
 import { AuthService } from '../../auth/auth.service';
 import { PublicPreviewService } from './preview-public.service';
@@ -32,7 +32,7 @@ export class ProfileService {
 
   private readonly agent = computed(() => this.authService.agent());
 
-  async updateAgent(values: AgentProfile) {
+  async updateAgent(values: AgentUpdateRequest) {
     try {
       await this.authService.updateCurrentAgent(values);
       this.previewService.refreshPreview();
@@ -96,14 +96,21 @@ export class ProfileService {
     }
   }
 
-  async openAgentDialog(mode: 'BRANDING' | 'PROFILE'): Promise<void> {
+  async openAgentDialog(
+    mode: 'BRANDING' | 'BROKERAGE' | 'PROFILE',
+  ): Promise<void> {
     this.dialogService.open({
-      title: mode === 'BRANDING' ? 'Branding Details' : 'Agent Details',
+      title:
+        mode === 'BRANDING'
+          ? 'Branding Details'
+          : mode === 'BROKERAGE'
+            ? 'Brokerage Details'
+            : 'Agent Details',
       contentComponent: AgentDialogComponent,
       data: {
         formMode: mode,
         agent: this.agent(),
-        onSubmit: (values: AgentProfile) => this.updateAgent(values),
+        onSubmit: (values: AgentUpdateRequest) => this.updateAgent(values),
       },
       actions: [
         {
@@ -111,7 +118,12 @@ export class ProfileService {
           type: 'secondary',
         },
         {
-          label: mode === 'BRANDING' ? 'Update Branding' : 'Update Profile',
+          label:
+            mode === 'BRANDING'
+              ? 'Update Branding'
+              : mode === 'BROKERAGE'
+                ? 'Update Brokerage'
+                : 'Update Profile',
           type: 'primary',
           submit: true,
         },
