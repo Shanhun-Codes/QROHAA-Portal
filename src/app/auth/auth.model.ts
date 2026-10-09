@@ -37,9 +37,13 @@ export interface Brokerage {
   updatedAt: string;
 }
 
-export type AgentResponse =
-  | { hasAgent: false }
-  | { hasAgent: true; agent: AgentProfile };
+export interface AgentResponse {
+  hasAgent: boolean;
+  accessGranted?: boolean;
+  accessStatus?: string;
+  invitationRequired?: boolean;
+  agent?: AgentProfile | null;
+}
 
 export interface AgentUpdateRequest {
   firstName?: string;

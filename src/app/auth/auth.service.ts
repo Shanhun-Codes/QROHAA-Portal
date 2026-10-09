@@ -68,7 +68,11 @@ export class AuthService {
         this.http.get<AgentResponse>(`${this.baseUrl}/onboarding/me`),
       );
 
-      this.agent.set(response.hasAgent ? response.agent : null);
+      this.agent.set(
+        response.hasAgent && response.accessGranted !== false
+          ? (response.agent ?? null)
+          : null,
+      );
     } catch {
       this.agent.set(null);
     } finally {

@@ -21,9 +21,9 @@ export interface AgentSetupFormValues {
 }
 
 export interface AgentSetupRequest {
+  invitationToken: string;
   firstName: string;
   lastName: string;
-  email: string;
   phone: string;
   realEstateLicenseNumber: string;
   brokerage: {
@@ -48,11 +48,12 @@ export interface AgentSetupRequest {
 
 export function toAgentSetupRequest(
   values: AgentSetupFormValues,
+  invitationToken: string,
 ): AgentSetupRequest {
   const request: AgentSetupRequest = {
+    invitationToken,
     firstName: values.firstName.trim(),
     lastName: values.lastName.trim(),
-    email: values.email.trim(),
     phone: values.phone.trim(),
     realEstateLicenseNumber: values.realEstateLicenseNumber.trim(),
     brokerage: {

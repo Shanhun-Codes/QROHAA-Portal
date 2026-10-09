@@ -23,6 +23,10 @@
 
     <aa-dynamic-form [config]="formConfig" (formSubmit)="onSubmit($event)" />
 
+    @if (invitationError) {
+      <p class="setup-agent-error" role="alert">{{ invitationError }}</p>
+    }
+
     <div class="setup-agent-note">
       <span class="material-symbols-outlined">info</span>
 
