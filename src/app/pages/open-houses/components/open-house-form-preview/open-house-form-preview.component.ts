@@ -25,6 +25,26 @@ export class OpenHouseFormPreviewComponent {
       `${this.openHouse().agent.firstName} ${this.openHouse().agent.lastName}`,
   );
 
+  readonly brokerageDisplayName = computed(
+    () => this.openHouse().agent.brokerage?.name ?? '',
+  );
+
+  readonly brokerageAddress = computed(() => {
+    const brokerage = this.openHouse().agent.brokerage;
+
+    if (!brokerage) return '';
+
+    const street = [brokerage.street, brokerage.street2]
+      .filter(Boolean)
+      .join(', ');
+    const stateAndZip = [brokerage.state, brokerage.zip]
+      .filter(Boolean)
+      .join(' ');
+    const locality = [brokerage.city, stateAndZip].filter(Boolean).join(', ');
+
+    return [street, locality].filter(Boolean).join(', ');
+  });
+
   readonly questions = computed(() =>
     this.openHouse()
       .openHouseFeedbackQuestions.filter((selection) => selection.printable)
@@ -123,28 +143,24 @@ export class OpenHouseFormPreviewComponent {
 
     switch (question.type) {
       case 'RATING':
-        return 1;
+        return 1.05;
 
       case 'TEXT':
-        return 1.25;
+        return 1.1;
 
       case 'TEXTAREA':
-        return 1.75;
+      case 'LONG_TEXT':
+        return 1.9;
 
       case 'SINGLE_SELECT':
-        if (question.options.length <= 3) {
-          return 1;
-        }
+      case 'MULTI_SELECT':
+      case 'CHECKBOX':
+      case 'CHECKBOXES':
+        return 1 + Math.max(1, Math.ceil(question.options.length / 3)) * 0.35;
 
-        if (question.options.length <= 5) {
-          return 1.25;
-        }
-
-        if (question.options.length <= 7) {
-          return 1.5;
-        }
-
-        return 1.75;
+      case 'BOOLEAN':
+      case 'YES_NO':
+        return 1.1;
 
       default:
         return 1.25;

@@ -1,5 +1,6 @@
 <div
   class="feedback-form"
+  [class.feedback-form--dense]="questions().length > 9"
   [style.--brand-primary]="openHouse().agent.primaryColor"
   [style.--brand-secondary]="openHouse().agent.secondaryColor"
 >
@@ -19,17 +20,21 @@
     </div>
 
     <div class="branding">
-      @if (openHouse().agent.logoUrl) {
-        <img
-          class="brokerage-logo"
-          [src]="openHouse().agent.logoUrl"
-          [alt]="openHouse().agent.brokerageName || 'Brokerage logo'"
-        />
-      } @else if (openHouse().agent.brokerageName) {
-        <strong>
-          {{ openHouse().agent.brokerageName }}
-        </strong>
-      }
+      <div class="brokerage-details">
+        @if (brokerageDisplayName()) {
+          <strong>{{ brokerageDisplayName() }}</strong>
+        }
+
+        @if (openHouse().agent.brokerage?.licenseNumber) {
+          <span>
+            Broker License #: {{ openHouse().agent.brokerage?.licenseNumber }}
+          </span>
+        }
+
+        @if (brokerageAddress()) {
+          <span>{{ brokerageAddress() }}</span>
+        }
+      </div>
     </div>
   </header>
 
@@ -252,11 +257,23 @@
         {{ agentName() }}
       </strong>
 
-      @if (openHouse().agent.brokerageName) {
+      @if (openHouse().agent.realEstateLicenseNumber) {
         <span>
-          {{ openHouse().agent.brokerageName }}
+          Agent License #:
+          {{ openHouse().agent.realEstateLicenseNumber }}
         </span>
       }
+
+      <span>{{ openHouse().agent.phone }}</span>
+      <span>{{ openHouse().agent.email }}</span>
     </div>
+
+    @if (openHouse().agent.logoUrl) {
+      <img
+        class="footer-brokerage-logo"
+        [src]="openHouse().agent.logoUrl"
+        [alt]="brokerageDisplayName() || 'Brokerage logo'"
+      />
+    }
   </footer>
 </div>

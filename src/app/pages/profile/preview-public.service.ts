@@ -117,7 +117,18 @@ export class PublicPreviewService {
         lastName: agent.lastName,
         email: agent.email,
         phone: agent.phone ?? '',
-        brokerageName: agent.brokerageName ?? '',
+        realEstateLicenseNumber: agent.realEstateLicenseNumber,
+        brokerage: agent.brokerage
+          ? {
+              name: agent.brokerage.name,
+              licenseNumber: agent.brokerage.licenseNumber,
+              street: agent.brokerage.street,
+              street2: agent.brokerage.street2,
+              city: agent.brokerage.city,
+              state: agent.brokerage.state,
+              zip: agent.brokerage.zip,
+            }
+          : null,
         headline: agent.headline ?? '',
         logoUrl: agent.logoUrl ?? null,
         headshotUrl: agent.headshotUrl ?? null,

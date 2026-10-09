@@ -22,4 +22,24 @@ export class OpenHouseFlyerPreviewComponent {
     () =>
       `${this.openHouse().agent.firstName} ${this.openHouse().agent.lastName}`,
   );
+
+  readonly brokerageDisplayName = computed(
+    () => this.openHouse().agent.brokerage?.name ?? '',
+  );
+
+  readonly brokerageAddress = computed(() => {
+    const brokerage = this.openHouse().agent.brokerage;
+
+    if (!brokerage) return '';
+
+    const street = [brokerage.street, brokerage.street2]
+      .filter(Boolean)
+      .join(', ');
+    const stateAndZip = [brokerage.state, brokerage.zip]
+      .filter(Boolean)
+      .join(' ');
+    const locality = [brokerage.city, stateAndZip].filter(Boolean).join(', ');
+
+    return [street, locality].filter(Boolean).join(', ');
+  });
 }

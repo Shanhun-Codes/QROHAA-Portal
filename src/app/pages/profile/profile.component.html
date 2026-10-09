@@ -38,10 +38,11 @@
           <span class="profile-field-label">Phone</span>
           <span class="profile-field-value">{{ agent()?.phone }}</span>
         </div>
-
-        <div class="profile-field profile-field-full">
-          <span class="profile-field-label">Brokerage</span>
-          <span class="profile-field-value">{{ agent()?.brokerageName }}</span>
+        <div class="profile-field">
+          <span class="profile-field-label">Real Estate License #</span>
+          <span class="profile-field-value">{{
+            agent()?.realEstateLicenseNumber
+          }}</span>
         </div>
 
         <div class="profile-field profile-field-full">
@@ -52,6 +53,71 @@
           </span>
         </div>
       </div>
+    </section>
+
+    <section class="profile-section component">
+      <div class="section-header">
+        <div>
+          <h2>Brokerage</h2>
+          <p>Brokerage details associated with your agent profile.</p>
+        </div>
+        <aa-button [config]="editBrokerageButtonConfig()" />
+      </div>
+
+      @if (agent()?.brokerage; as brokerage) {
+        <div class="profile-grid">
+          <div class="profile-field">
+            <span class="profile-field-label">Name</span>
+            <span class="profile-field-value">{{ brokerage.name }}</span>
+          </div>
+
+          @if (brokerage.licenseNumber) {
+            <div class="profile-field">
+              <span class="profile-field-label">Broker License #</span>
+              <span class="profile-field-value">{{
+                brokerage.licenseNumber
+              }}</span>
+            </div>
+          }
+
+          @if (brokerageAddress()) {
+            <div class="profile-field profile-field-full">
+              <span class="profile-field-label">Address</span>
+              <span class="profile-field-value">{{ brokerageAddress() }}</span>
+            </div>
+          }
+
+          @if (brokerage.phone) {
+            <div class="profile-field">
+              <span class="profile-field-label">Phone</span>
+              <span class="profile-field-value">{{ brokerage.phone }}</span>
+            </div>
+          }
+
+          @if (brokerage.email) {
+            <div class="profile-field">
+              <span class="profile-field-label">Email</span>
+              <span class="profile-field-value">{{ brokerage.email }}</span>
+            </div>
+          }
+
+          @if (brokerage.websiteUrl) {
+            <div class="profile-field profile-field-full">
+              <span class="profile-field-label">Website</span>
+              <a
+                class="profile-field-value"
+                [href]="brokerage.websiteUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ brokerage.websiteUrl }}
+              </a>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="profile-empty-state">No brokerage information available.</p>
+      }
     </section>
 
     <!-- ======================================================
@@ -69,7 +135,7 @@
           </p>
         </div>
 
-        <aa-button [config]="editBrandingButtonConfig()" />
+        <aa-button [config]="editBrandingButtonConfig" />
       </div>
 
       <div class="branding-content">
@@ -85,7 +151,6 @@
               <button
                 type="button"
                 class="headshot-preview branding-image-upload"
-                [disabled]="agent()?.brandingLocked"
                 (click)="headshotInput.click()"
               >
                 @if (agent()?.headshotUrl) {
@@ -109,7 +174,6 @@
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 hidden
-                [disabled]="agent()?.brandingLocked"
                 (change)="onAssetSelected($event, 'headshot')"
               />
             </div>
@@ -120,14 +184,13 @@
               <button
                 type="button"
                 class="logo-preview branding-image-upload"
-                [disabled]="agent()?.brandingLocked"
                 (click)="logoInput.click()"
               >
                 @if (agent()?.logoUrl) {
                   <img
                     class="logo-image"
                     [src]="agent()?.logoUrl"
-                    [alt]="agent()?.brokerageName || 'Brokerage logo'"
+                    [alt]="agent()?.brokerage?.name || 'Brokerage logo'"
                   />
                 } @else {
                   <span>Brokerage / Agent Logo</span>
@@ -141,7 +204,6 @@
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 hidden
-                [disabled]="agent()?.brandingLocked"
                 (change)="onAssetSelected($event, 'logo')"
               />
             </div>

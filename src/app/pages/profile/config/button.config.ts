@@ -10,6 +10,11 @@ export const EDIT_BRANDING_BUTTON_CONFIG: ButtonConfig = {
   variant: 'primary',
 };
 
+export const EDIT_BROKERAGE_BUTTON_CONFIG: ButtonConfig = {
+  label: 'Update Brokerage',
+  variant: 'primary',
+};
+
 export const EDIT_QUESTIONS_BUTTON_CONFIG: ButtonConfig = {
   label: 'Change Selection',
   variant: 'primary',
