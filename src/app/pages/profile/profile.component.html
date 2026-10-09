@@ -69,7 +69,7 @@
           </p>
         </div>
 
-        <aa-button [config]="editBrandingButtonConfig" />
+        <aa-button [config]="editBrandingButtonConfig()" />
       </div>
 
       <div class="branding-content">
@@ -85,6 +85,7 @@
               <button
                 type="button"
                 class="headshot-preview branding-image-upload"
+                [disabled]="agent()?.brandingLocked"
                 (click)="headshotInput.click()"
               >
                 @if (agent()?.headshotUrl) {
@@ -108,6 +109,7 @@
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 hidden
+                [disabled]="agent()?.brandingLocked"
                 (change)="onAssetSelected($event, 'headshot')"
               />
             </div>
@@ -118,6 +120,7 @@
               <button
                 type="button"
                 class="logo-preview branding-image-upload"
+                [disabled]="agent()?.brandingLocked"
                 (click)="logoInput.click()"
               >
                 @if (agent()?.logoUrl) {
@@ -138,6 +141,7 @@
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 hidden
+                [disabled]="agent()?.brandingLocked"
                 (change)="onAssetSelected($event, 'logo')"
               />
             </div>

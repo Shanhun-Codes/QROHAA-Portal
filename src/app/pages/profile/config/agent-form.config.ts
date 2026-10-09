@@ -39,6 +39,14 @@ export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
       placeholder: '4175551234',
     },
     {
+      key: 'realEstateLicenseNumber',
+      label: 'license #',
+      type: 'text',
+      required: true,
+      layout: 'half',
+      placeholder: 'Enter your real estate license number',
+    },
+    {
       key: 'brokerageName',
       label: 'Brokerage',
       type: 'text',

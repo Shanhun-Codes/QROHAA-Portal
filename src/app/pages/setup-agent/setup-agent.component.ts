@@ -7,12 +7,13 @@ import { AppLoaderService } from '../../shared/components/app-loader/app-loader.
 import { finalize } from 'rxjs';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { ButtonConfig } from '../../shared/components/button/button.config';
+import { AuthService } from '../../auth/auth.service';
 import {
   AGENT_FORM_CONFIG,
   RESET_BUTTON_CONFIG,
   SAVE_BUTTON_CONFIG,
 } from './config/agent-form.config';
-import { AgentProfile } from '../../auth/auth.model';
+import { AgentSetupFormValues, toAgentSetupRequest } from './setup-agent.model';
 
 @Component({
   selector: 'app-setup-agent',
@@ -23,10 +24,12 @@ import { AgentProfile } from '../../auth/auth.model';
 })
 export class SetupAgentComponent implements OnInit {
   private readonly onboardingService = inject(OnboardingService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly appLoaderService = inject(AppLoaderService);
   readonly dynamicForm = viewChild(DynamicFormComponent);
-  readonly formConfig: DynamicFormConfig<any> = AGENT_FORM_CONFIG;
+  readonly formConfig: DynamicFormConfig<AgentSetupFormValues> =
+    AGENT_FORM_CONFIG;
   readonly saveButtonConfig: ButtonConfig = {
     ...SAVE_BUTTON_CONFIG,
     click: () => this.dynamicForm()?.submit(),
@@ -45,7 +48,7 @@ export class SetupAgentComponent implements OnInit {
         }),
       )
       .subscribe({
-        next: (response: any) => {
+        next: (response) => {
           if (response.hasAgent) {
             this.router.navigate(['/home']);
           }
@@ -58,14 +61,17 @@ export class SetupAgentComponent implements OnInit {
   }
 
   onSubmit(values: unknown): void {
-    this.onboardingService.createAgent(values).subscribe({
-      next: () => {
-        this.router.navigate(['/settings']);
-      },
-      error: (error) => {
-        console.error('AGENT SETUP ERROR:', error);
-      },
-    });
+    this.onboardingService
+      .createAgent(toAgentSetupRequest(values as AgentSetupFormValues))
+      .subscribe({
+        next: (agent) => {
+          this.authService.agent.set(agent);
+          this.router.navigate(['/settings']);
+        },
+        error: (error) => {
+          console.error('AGENT SETUP ERROR:', error);
+        },
+      });
   }
   onResetClick(): void {
     this.dynamicForm()?.reset();

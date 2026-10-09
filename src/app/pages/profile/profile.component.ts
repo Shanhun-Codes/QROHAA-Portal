@@ -65,10 +65,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     ...EDIT_PROFILE_BUTTON_CONFIG,
     click: () => this.onEditProfile(),
   };
-  readonly editBrandingButtonConfig: ButtonConfig = {
+  readonly editBrandingButtonConfig = computed<ButtonConfig>(() => ({
     ...EDIT_BRANDING_BUTTON_CONFIG,
+    disabled: this.agent()?.brandingLocked === true,
     click: () => this.onEditBranding(),
-  };
+  }));
   readonly editDefaultQuestionsButtonConfig: ButtonConfig = {
     ...EDIT_QUESTIONS_BUTTON_CONFIG,
     click: () => this.onEditDefaultQuestions(),
@@ -177,7 +178,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
-    if (!file) {
+    if (!file || this.agent()?.brandingLocked) {
+      input.value = '';
       return;
     }
 

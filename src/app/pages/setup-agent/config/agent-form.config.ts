@@ -1,8 +1,15 @@
-import { AgentProfile } from '../../../auth/auth.model';
 import { ButtonConfig } from '../../../shared/components/button/button.config';
 import { DynamicFormConfig } from '../../../shared/components/dynamic-form/dynamic-form.model';
+import { AgentSetupFormValues } from '../setup-agent.model';
 
-export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
+const usPhonePattern =
+  '^(?:\\+?1[ .-]?)?\\(?[2-9][0-9]{2}\\)?[ .-]?[2-9][0-9]{2}[ .-]?[0-9]{4}$';
+const hexColorPattern =
+  '^#?(?:[0-9A-Fa-f]{3,4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$';
+const websiteUrlPattern =
+  '^https?:\\/\\/(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?$';
+
+export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentSetupFormValues> = {
   layout: {
     gap: 'md',
     labelPosition: 'top',
@@ -43,13 +50,102 @@ export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
       required: true,
       layout: 'half',
       placeholder: '4175551234',
+      validation: {
+        pattern: usPhonePattern,
+      },
+      validationMessages: {
+        pattern: 'Enter a valid US phone number.',
+      },
+    },
+    {
+      key: 'realEstateLicenseNumber',
+      label: 'Real Estate License Number',
+      type: 'text',
+      required: true,
+      layout: 'full',
     },
     {
       key: 'brokerageName',
-      label: 'Brokerage',
+      label: 'Brokerage Name',
+      type: 'text',
+      required: true,
+      layout: 'half',
+    },
+    {
+      key: 'brokerageLicenseNumber',
+      label: 'Brokerage License Number',
+      type: 'text',
+      required: true,
+      layout: 'half',
+    },
+    {
+      key: 'brokerageStreet',
+      label: 'Brokerage Street Address',
+      type: 'text',
+      required: true,
+      layout: 'half',
+    },
+    {
+      key: 'brokerageStreet2',
+      label: 'Address Line 2',
+      type: 'text',
+      layout: 'half',
+    },
+    {
+      key: 'brokerageCity',
+      label: 'City',
+      type: 'text',
+      required: true,
+      layout: 'half',
+    },
+    {
+      key: 'brokerageState',
+      label: 'State',
+      type: 'text',
+      required: true,
+      layout: 'quarter',
+      placeholder: 'MO',
+    },
+    {
+      key: 'brokerageZip',
+      label: 'ZIP Code',
+      type: 'text',
+      required: true,
+      layout: 'quarter',
+      placeholder: '65801',
+    },
+    {
+      key: 'brokeragePhone',
+      label: 'Brokerage Phone',
+      type: 'tel',
+      layout: 'half',
+    },
+    {
+      key: 'brokerageEmail',
+      label: 'Brokerage Email',
+      type: 'email',
+      layout: 'half',
+      validation: {
+        email: true,
+      },
+      validationMessages: {
+        email: 'Enter a valid email address.',
+      },
+    },
+    {
+      key: 'brokerageWebsiteUrl',
+      label: 'Brokerage Website',
       type: 'text',
       layout: 'full',
+      placeholder: 'https://example.com',
+      validation: {
+        pattern: websiteUrlPattern,
+      },
+      validationMessages: {
+        pattern: 'Enter a valid website URL, including https://.',
+      },
     },
+
     {
       key: 'headline',
       label: 'Headline',
@@ -63,6 +159,8 @@ export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
       type: 'text',
       layout: 'third',
       placeholder: '#111820',
+      validation: { pattern: hexColorPattern },
+      validationMessages: { pattern: 'Enter a valid HEX color.' },
       tooltip:
         'HEX codes represent colors using values like #B10F0F. If you do not know your brand colors, upload your logo or branding image to an AI assistant and ask it for your primary, secondary, and accent HEX color codes.',
     },
@@ -72,6 +170,8 @@ export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
       type: 'text',
       layout: 'third',
       placeholder: '#7F1D1D',
+      validation: { pattern: hexColorPattern },
+      validationMessages: { pattern: 'Enter a valid HEX color.' },
     },
     {
       key: 'accentColor',
@@ -79,6 +179,8 @@ export const AGENT_FORM_CONFIG: DynamicFormConfig<AgentProfile> = {
       type: 'text',
       layout: 'third',
       placeholder: '#DC2626',
+      validation: { pattern: hexColorPattern },
+      validationMessages: { pattern: 'Enter a valid HEX color.' },
     },
   ],
 };
