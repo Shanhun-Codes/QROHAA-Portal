@@ -19,6 +19,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'access-pending',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/access-pending/access-pending.component').then(
+        (m) => m.AccessPendingComponent,
+      ),
+  },
+  {
     path: '',
     component: PageWrapperComponent,
     canActivate: [authGuard, onboardingGuard],

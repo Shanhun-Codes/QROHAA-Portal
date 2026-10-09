@@ -17,13 +17,18 @@ export const onboardingGuard: CanActivateFn = () => {
         return [router.createUrlTree(['/auth'])];
       }
 
-      return onboardingService
-        .getMe()
-        .pipe(
-          map((response: any) =>
-            response.hasAgent ? true : router.createUrlTree(['/setup-agent']),
-          ),
-        );
+      return onboardingService.getMe().pipe(
+        map((response) => {
+          if (response.hasAgent && response.accessGranted !== false) {
+            return true;
+          }
+          return router.createUrlTree([
+            response.accessStatus || !response.invitationRequired
+              ? '/access-pending'
+              : '/setup-agent',
+          ]);
+        }),
+      );
     }),
   );
 };
