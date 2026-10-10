@@ -42,6 +42,8 @@ export interface AgentResponse {
   accessGranted?: boolean;
   accessStatus?: string;
   invitationRequired?: boolean;
+  role?: string;
+  status?: string;
   agent?: AgentProfile | null;
 }
 
