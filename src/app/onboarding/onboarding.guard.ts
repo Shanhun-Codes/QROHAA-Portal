@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { switchMap, map, take } from 'rxjs';
-
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { map, switchMap, take } from 'rxjs';
+
 import { OnboardingService } from '../pages/setup-agent/setup-agent.service';
 
 export const onboardingGuard: CanActivateFn = () => {
@@ -19,9 +19,18 @@ export const onboardingGuard: CanActivateFn = () => {
 
       return onboardingService.getMe().pipe(
         map((response) => {
-          if (response.hasAgent && response.accessGranted !== false) {
+          const isActivePlatformAdmin =
+            response.role === 'PLATFORM_ADMIN' &&
+            response.status === 'ACTIVE' &&
+            response.accessGranted === true;
+
+          const isAuthorizedAgent =
+            response.hasAgent && response.accessGranted === true;
+
+          if (isActivePlatformAdmin || isAuthorizedAgent) {
             return true;
           }
+
           return router.createUrlTree([
             response.accessStatus || !response.invitationRequired
               ? '/access-pending'
