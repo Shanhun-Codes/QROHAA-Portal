@@ -1,0 +1,135 @@
+<aa-page-template
+  [title]="'Agency Settings'"
+  subtitle="Manage the branding and brokerage information inherited by your agents."
+>
+  <div class="agency-settings">
+    @if (agencies().length > 1) {
+      <aa-select
+        aria-label="Select agency"
+        [options]="agencyOptions()"
+        [value]="selectedAgency()"
+        (valueChange)="selectAgency($event)"
+      />
+    }
+    @if (loading()) {
+      <p role="status">Loading agency settings…</p>
+    }
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (!loading() && !agencies().length && !error()) {
+      <p>
+        No agency is available. A platform administrator must provision one
+        first.
+      </p>
+    }
+    @if (settings(); as agency) {
+      <section class="component inheritance">
+        <h2>Managed by {{ agency.name }}</h2>
+        <p>
+          Your agency’s logo, colors, and brokerage details are inherited by all
+          agency-owned agents and locked in their profiles. Agents keep their
+          own headshot and personal contact details.
+        </p>
+        <p>
+          Saved changes appear when agent profiles and public pages are
+          reloaded. Download new printed materials after updating branding.
+        </p>
+      </section>
+      <section class="component">
+        <div class="section-header">
+          <div>
+            <h2>Agency branding</h2>
+            <p>Shared identity for your agency and its agents.</p>
+          </div>
+          <aa-button [config]="editBrandingButtonConfig()" />
+        </div>
+        <div class="branding-grid">
+          <div class="logo-area">
+            @if (agency.logoUrl) {
+              <img
+                class="agency-logo"
+                [src]="agency.logoUrl"
+                [alt]="agency.name + ' logo'"
+              />
+            } @else {
+              <div class="logo-placeholder">No agency logo yet</div>
+            }
+            <input
+              #logoInput
+              type="file"
+              hidden
+              accept="image/jpeg,image/png,image/webp"
+              (change)="uploadLogo($event)"
+            />
+            <aa-button [config]="uploadLogoButtonConfig()" />
+            <p>JPEG, PNG, or WebP · Up to 5 MB</p>
+          </div>
+          <div class="branding-details">
+            <h3>{{ agency.name }}</h3>
+            <p>{{ agency.headline || "No agency headline set." }}</p>
+            <div class="swatches">
+              @for (color of colorSwatches(); track color.label) {
+                <div class="color">
+                  <span
+                    class="swatch"
+                    [style.backgroundColor]="color.value || 'transparent'"
+                  ></span>
+                  <div>
+                    <strong>{{ color.label }}</strong>
+                    <p>{{ color.value || "Default" }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="component">
+        <div class="section-header">
+          <div>
+            <h2>Agency brokerage</h2>
+            <p>One brokerage record shared by all agency-owned agents.</p>
+          </div>
+          <aa-button [config]="editBrokerageButtonConfig()" />
+        </div>
+        @if (agency.brokerage; as brokerage) {
+          <dl>
+            <div>
+              <dt>Name</dt>
+              <dd>{{ brokerage.name }}</dd>
+            </div>
+            <div>
+              <dt>Broker license number</dt>
+              <dd>{{ brokerage.licenseNumber || "Not provided" }}</dd>
+            </div>
+            <div>
+              <dt>Address</dt>
+              <dd>{{ brokerageAddress() || "Not provided" }}</dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd>{{ brokerage.phone || "Not provided" }}</dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd>{{ brokerage.email || "Not provided" }}</dd>
+            </div>
+            <div>
+              <dt>Website</dt>
+              <dd>{{ brokerage.websiteUrl || "Not provided" }}</dd>
+            </div>
+          </dl>
+        } @else {
+          <p>
+            Add your agency’s brokerage details before inviting agents to share
+            their public pages.
+          </p>
+        }
+      </section>
+      @if (busy()) {
+        <p role="status">Saving agency settings…</p>
+      }
+    }
+  </div>
+</aa-page-template>

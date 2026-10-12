@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
@@ -19,6 +19,14 @@ export class AuthService {
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly agentAppBaseUrl = environment.agentAppApiUrl;
   readonly agent = signal<AgentProfile | null>(null);
+  readonly agencyId = signal<string | null>(null);
+  readonly role = signal<string | null>(null);
+  readonly isPlatformAdmin = computed(() => this.role() === 'PLATFORM_ADMIN');
+  readonly canAccessAgency = computed(
+    () =>
+      this.isPlatformAdmin() ||
+      (this.role() === 'AGENCY_ADMIN' && Boolean(this.agencyId())),
+  );
   private currentAgentRequest: Promise<void> | null = null;
 
   async updateCurrentAgent(agent: AgentUpdateRequest): Promise<boolean> {
@@ -68,12 +76,16 @@ export class AuthService {
         this.http.get<AgentResponse>(`${this.baseUrl}/onboarding/me`),
       );
 
+      this.role.set(response.role ?? null);
+      this.agencyId.set(response.agencyId ?? null);
       this.agent.set(
         response.hasAgent && response.accessGranted !== false
           ? (response.agent ?? null)
           : null,
       );
     } catch {
+      this.role.set(null);
+      this.agencyId.set(null);
       this.agent.set(null);
     } finally {
       this.currentAgentRequest = null;
@@ -81,6 +93,8 @@ export class AuthService {
   }
 
   logout(): void {
+    this.role.set(null);
+    this.agencyId.set(null);
     this.agent.set(null);
 
     this.oidcSecurityService.logoffLocal();

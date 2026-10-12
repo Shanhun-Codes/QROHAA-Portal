@@ -3,7 +3,7 @@
     <img class="aa-logo" src="open-house-domain-transparent.png" alt="logo" />
     <div class="aa-headings">
       <h1>{{ title }}</h1>
-      <h2>{{ subtitle }}</h2>
+      <h2>{{ subtitle() }}</h2>
     </div>
   </div>
 
@@ -21,14 +21,16 @@
   </div>
 
   <div class="user-info-settings-container">
-    <button
-      [routerLink]="'/settings'"
-      class="settings-button"
-      type="button"
-      aria-label="Settings"
-    >
-      <mat-icon>settings</mat-icon>
-    </button>
+    @if (hasAgent() || isAgencyView()) {
+      <button
+        [routerLink]="isAgencyView() ? '/agency/settings' : '/settings'"
+        class="settings-button"
+        type="button"
+        [attr.aria-label]="isAgencyView() ? 'Agency settings' : 'Settings'"
+      >
+        <mat-icon>settings</mat-icon>
+      </button>
+    }
 
     <img
       class="user-avatar"
@@ -45,7 +47,7 @@
     <aa-action-menu
       ariaLabel="User menu"
       triggerIcon="keyboard_arrow_down"
-      [actions]="userActions"
+      [actions]="userActions()"
     />
   </div>
 </div>

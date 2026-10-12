@@ -1,0 +1,62 @@
+@use "styles/theme" as *;
+
+:host {
+  display: block;
+  max-width: 48rem;
+  margin: 3rem auto;
+  padding: 0 1.5rem 3rem;
+}
+.join-card {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+.join-header, .join-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.join-header {
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid $border;
+}
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 1.9rem; letter-spacing: -0.025em; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.05rem; }
+p { line-height: 1.65; color: $text-secondary; }
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-muted;
+}
+.join-section + .join-section {
+  padding-top: 1.75rem;
+  border-top: 1px solid $border;
+}
+.error-message {
+  padding: 1rem 1.25rem;
+  border: 1px solid $border;
+  border-left: 3px solid $primary;
+  border-radius: 0.5rem;
+  line-height: 1.65;
+  background: $surface-elevated;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.form-actions {
+  padding-top: 1.5rem;
+  border-top: 1px solid $border;
+}
+@media (max-width: 600px) {
+  :host { margin: 1.5rem auto; padding: 0 1rem 2rem; }
+  .join-card { padding: 1.5rem; }
+  .actions { align-items: stretch; flex-direction: column; }
+}

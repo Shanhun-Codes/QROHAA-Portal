@@ -1,0 +1,39 @@
+<ng-template #headerActions>
+  <div class="properties-header-actions">
+    <aa-view-toggle
+      [options]="viewOptions"
+      [value]="selectedView()"
+      (valueChange)="onViewChange($event)"
+    />
+
+    <aa-button [config]="addPropertyButtonConfig" />
+  </div>
+</ng-template>
+
+<aa-page-template
+  [title]="title"
+  [subtitle]="subtitle"
+  [headerActions]="headerActions"
+>
+  <div class="table-container">
+    @if (selectedPropertyIds().length > 0) {
+      <aa-bulk-actions-bar
+        itemName="property"
+        [selectedCount]="selectedPropertyIds().length"
+        (clearSelection)="clearSelection()"
+      >
+        <aa-button [config]="bulkStatusButtonConfig()" />
+      </aa-bulk-actions-bar>
+    }
+
+    <ng-template #expandedRow let-property
+      ><aa-property-expanded-row [row]="property"
+    /></ng-template>
+    <aa-table
+      [expandedRowTemplate]="expandedRow"
+      [tableDataConfig]="tableData()"
+      [tableHeaderConfig]="tableHeaderConfig"
+      (selectionChange)="onSelectionChange($event)"
+    />
+  </div>
+</aa-page-template>

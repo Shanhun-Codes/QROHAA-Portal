@@ -1,0 +1,480 @@
+<aa-page-template
+  [title]="'Help & Feedback'"
+  subtitle="A guide to setting up your profile, hosting open houses, and following up with visitors."
+>
+  <div class="help-content">
+    <section class="component intro">
+      <h2>Start here</h2>
+      <p>
+        Your workspace connects properties, open houses, visitor submissions,
+        and leads. A property can have several open houses; each event has its
+        own visitor page, QR code, question set, and feedback.
+      </p>
+      <ol>
+        <li>
+          Review <a routerLink="/settings">My Profile</a> and complete your
+          editable contact details and default questions. Agency-owned agents
+          use agency-managed branding and brokerage information; ask your agency
+          administrator to update those locked details.
+        </li>
+        <li>
+          Add a listing in <a routerLink="/properties">Properties</a>, or create
+          the property while setting up an event.
+        </li>
+        <li>
+          Create an <a routerLink="/open-houses">Open House</a>, choose
+          questions, and mark the ones needed on paper as printable.
+        </li>
+        <li>
+          Review the event preview, test the visitor link and QR code, and
+          download your printed materials.
+        </li>
+        <li>
+          After visitors submit, review their answers and follow up from
+          <a routerLink="/home">Leads</a>.
+        </li>
+      </ol>
+      <p>
+        This page is a read-only reference. Opening links takes you to the
+        relevant workspace; reading this guide does not change your records.
+      </p>
+    </section>
+
+    <nav class="component contents" aria-label="Help topics">
+      <h2>Find help</h2>
+      <div class="topic-links">
+        <a href="#profile">Profile & branding</a
+        ><a href="#properties">Properties</a>
+        <a href="#events">Creating open houses</a
+        ><a href="#questions">Choosing questions</a>
+        <a href="#sharing">Visitor links & QR codes</a
+        ><a href="#printing">Printed materials</a>
+        <a href="#submissions">Viewing submissions</a
+        ><a href="#leads">Leads & notes</a>
+        <a href="#troubleshooting">Troubleshooting</a
+        ><a href="#agency">Agency invitations & seats</a>
+        <a href="#feedback">Feedback — coming soon</a>
+      </div>
+    </nav>
+
+    <section id="profile" class="component">
+      <h2>Profile & branding</h2>
+      <p>
+        Open <a routerLink="/settings">My Profile</a> to review your name,
+        email, phone, real estate license number, and headline. Use the
+        section’s edit button to update details. Check the information visitors
+        will use to contact you before sharing an event.
+      </p>
+      <p>
+        The Brokerage section shows your brokerage information. For
+        independently managed accounts with editing access, use the section’s
+        edit button to update it. Where branding editing is available, you can
+        upload a headshot and logo and choose primary, secondary, and accent
+        colors. Image uploads accept JPEG, PNG, and WebP. Choose clear images
+        and colors with readable contrast.
+      </p>
+      <p>
+        Use <strong>Preview Public Branding</strong> to check the visitor-facing
+        appearance. Review the actual event visitor page too before printing or
+        distributing its QR code.
+      </p>
+      <h3>Agency-owned agents: locked branding & brokerage</h3>
+      <p>
+        Your agency manages your branding and brokerage information. These
+        sections are read-only for agency-owned agents, so editing controls may
+        be disabled or unavailable. This is expected and is not a loading or
+        sign-in problem. Contact your agency administrator to request
+        corrections to the agency-managed branding or brokerage details.
+      </p>
+      <p>
+        You can still review the displayed information and preview your public
+        branding. Use the editing controls available for your own profile and
+        default questions. Check the public event page after your agency updates
+        its details, and download fresh printed materials when needed.
+      </p>
+      <h3>Default feedback questions</h3>
+      <p>
+        Your saved defaults provide a starting question set for new events.
+        Review both Required and Printable settings. An event can use your
+        defaults or its own selection. Saving a custom selection as defaults
+        makes that selection available for future events; check existing events
+        separately when you need to change their questions.
+      </p>
+    </section>
+
+    <section id="properties" class="component">
+      <h2>Properties</h2>
+      <p>
+        Use <strong>Add Property</strong> to enter the listing address and
+        price. Include the unit or second address line when needed. Expand a
+        property row to review its address, listing price, status, open-house
+        history, and event feedback. Use the property actions menu to edit
+        details or archive or restore the listing.
+      </p>
+      <p>
+        Use the Active and Archived views to find listings. Archiving moves a
+        property out of the active view; it is not a delete action. Select
+        multiple property checkboxes to use the bulk archive or restore action.
+        Clear the selection when you are finished.
+      </p>
+      <p>
+        For a repeat event at the same address, select the existing property
+        instead of creating another copy. Each open house remains a separate
+        event, so you can review feedback by date.
+      </p>
+      <p>
+        In the expanded row, <strong>View event feedback</strong> reveals the
+        selected event’s submissions. Click
+        <strong>Hide event feedback</strong> to collapse them, or select another
+        event’s feedback button to switch events.
+      </p>
+    </section>
+
+    <section id="events" class="component">
+      <h2>Creating & editing open houses</h2>
+      <ol>
+        <li>Open Open Houses and choose the create action.</li>
+        <li>
+          Select an existing property, or choose Create Property and complete
+          its details.
+        </li>
+        <li>
+          Set the start date, start time, event duration, and end time. Check
+          the schedule carefully, especially for a two-day event.
+        </li>
+        <li>
+          Use your default feedback questions, or turn that option off to
+          customize the selection.
+        </li>
+        <li>
+          Select questions and mark at least one selected question as Printable.
+        </li>
+        <li>Click Preview and review the event details and materials.</li>
+      </ol>
+      <p>
+        <strong>Preview saves the event before opening its preview.</strong> If
+        you need to change a saved event, expand its row and choose Edit Open
+        House from the actions menu. Preview Changes saves your updates and
+        reopens the preview.
+      </p>
+      <p>
+        If no questions are printable, a dialog stops the save and asks you to
+        go back and select questions. Choose
+        <strong>Go back and select questions</strong> to reveal the custom
+        question selector. Your entered details stay in the form.
+      </p>
+      <p>
+        Expand a saved event to review its property, public code, schedule,
+        question counts, visitor link, QR code, and print previews.
+        <strong>View questions</strong> and
+        <strong>View feedback</strong> reveal their lists; use the corresponding
+        Hide button to collapse them.
+      </p>
+    </section>
+
+    <section id="questions" class="component">
+      <h2>Choosing questions for digital & paper forms</h2>
+      <dl>
+        <dt>Selected</dt>
+        <dd>Includes the question in the event’s feedback question set.</dd>
+        <dt>Required</dt>
+        <dd>
+          Marks a selected question as required for the digital feedback form.
+        </dd>
+        <dt>Printable</dt>
+        <dd>Includes the selected question on the paper feedback form.</dd>
+        <dt>Digital Only</dt>
+        <dd>
+          The selected question is available digitally but is left off the paper
+          form.
+        </dd>
+      </dl>
+      <p>
+        Select a question before marking it Required or Printable. Deselecting a
+        question also clears its Required and Printable settings. Question types
+        include single choice, ratings, short text, and long text.
+      </p>
+      <p>
+        The paper form has a limited layout capacity. Longer answers and
+        questions with more choices use more space, so the capacity is not a
+        simple question count. If another question cannot be marked printable,
+        remove another printable question or use a shorter question.
+      </p>
+      <p>
+        If you enable <strong>Save these as my default questions</strong>, the
+        custom selection is saved as your profile defaults when the workflow
+        succeeds. Leave it off when the selection is only for this event.
+      </p>
+    </section>
+
+    <section id="sharing" class="component">
+      <h2>Visitor links & QR codes</h2>
+      <p>
+        Expand an open house and find <strong>Visitor Page</strong>. The public
+        URL opens the visitor-facing page for that event. Share that event’s
+        link with visitors; the agent portal address is for your own workspace.
+      </p>
+      <p>
+        The QR code opens the event’s public page. Scan it with a phone before
+        putting materials on display. Verify the property, agent contact
+        information, and questions. Each event has its own public code, so check
+        that a repeat event uses the intended event’s materials.
+      </p>
+      <p>
+        If you change event details, reopen the visitor page to verify the
+        result. Download updated printed materials after changes to the
+        schedule, branding, or printable questions.
+      </p>
+    </section>
+
+    <section id="printing" class="component">
+      <h2>Printed materials</h2>
+      <p>
+        In an expanded open house, open <strong>Open House QR Sign</strong> or
+        <strong>Printable Feedback Form</strong> under Printable Materials. Each
+        preview can be expanded or collapsed independently. Use its download
+        button to obtain the material.
+      </p>
+      <p>
+        The previews target US Letter paper (8.5 × 11 inches). Review your
+        printer’s paper size, scaling, and margins. Check that the QR code and
+        all answers remain readable, and test a printed QR code before visitors
+        arrive.
+      </p>
+      <p>
+        The QR sign directs visitors to the digital page. The paper form
+        contains only questions marked Printable. Writing on a paper form does
+        not automatically create a digital submission or lead. You can use Add
+        Lead to record contact details and notes manually; this does not
+        recreate the full feedback submission.
+      </p>
+    </section>
+
+    <section id="submissions" class="component">
+      <h2>Viewing visitor submissions</h2>
+      <p>Visitor feedback is available from three places:</p>
+      <ul>
+        <li>
+          <strong>Open Houses:</strong> expand the event and choose View
+          feedback to see submissions for that event.
+        </li>
+        <li>
+          <strong>Properties:</strong> expand the listing and choose View event
+          feedback beside the relevant date.
+        </li>
+        <li>
+          <strong>Leads:</strong> expand a lead to see the submissions
+          associated with that person.
+        </li>
+      </ul>
+      <p>
+        Submission lists show the visitor, submission date, and event context
+        when available, with the newest submissions first. Choose
+        <strong>View feedback</strong> beside a submission to open the answer
+        dialog. Review the visitor contact details, linked property and event,
+        and recorded answers. Close the dialog to return to the list.
+      </p>
+      <p>
+        Multiple visits can produce multiple submissions. Use the event and date
+        to distinguish them. An anonymous label or missing contact field means
+        that information is unavailable on that record; it does not mean the
+        feedback itself is missing. Optional questions may have no answer.
+      </p>
+      <p>
+        A “No feedback submissions” message means there are no submissions in
+        that context. On a property, check another event if the visitor attended
+        a different date.
+      </p>
+    </section>
+
+    <section id="leads" class="component">
+      <h2>Leads, follow-up & notes</h2>
+      <p>
+        Open Leads to review your contacts. Expand a row to see contact details,
+        buyer profile information when available, submissions, and notes. Email
+        and phone links open the corresponding application on your device.
+      </p>
+      <p>
+        Use <strong>Add Lead</strong> for a contact collected outside the
+        digital visitor form. The expanded row’s actions menu lets you edit
+        contact details or mark a lead lost. Editing contact information does
+        not rewrite the visitor’s original feedback answers.
+      </p>
+      <p>
+        To update several leads, select their checkboxes, choose a status in the
+        bulk actions bar, and click <strong>Update Status</strong>. Choosing the
+        status alone does not apply it. Check the selected count first, then
+        clear the selection when finished.
+      </p>
+      <p>
+        Use the Active and Closed lead views to find contacts. The Closed view
+        shows leads with Closed status. If a lead seems to disappear after a
+        status change, check the other view. Add notes to record conversations,
+        preferences, and the next follow-up step. A manually added lead may have
+        no buyer-profile answers or submissions yet.
+      </p>
+    </section>
+
+    <section id="troubleshooting" class="component">
+      <h2>When something does not work</h2>
+      <h3>Preview does not advance</h3>
+      <p>
+        Check required fields and validation messages in both the property and
+        event sections. Confirm that a property is selected, the schedule is
+        complete, and at least one selected question is printable. If you are
+        using defaults with zero printable questions, follow the dialog back to
+        the selector and enable Printable on a selected question.
+      </p>
+      <h3>A question is missing from the paper form</h3>
+      <p>
+        Check that it is both selected and Printable. Required alone does not
+        add a question to paper. If Printable cannot be enabled, the form may be
+        at capacity. Save changes and download a fresh copy.
+      </p>
+      <h3>Feedback is not visible</h3>
+      <p>
+        Click the event or property feedback button to reveal submissions.
+        Verify the event date and property, especially when an address has
+        multiple open houses. Confirm the visitor completed the digital
+        submission; opening the page or filling out paper does not create a
+        digital record. Refresh the page after a new submission if needed.
+      </p>
+      <h3>A row says it could not load details</h3>
+      <p>
+        Close and reopen the expanded row to retry. Check your connection. If
+        the problem continues, refresh the page and sign in again if prompted.
+        Save or copy unsaved form entries before refreshing.
+      </p>
+      <h3>A property or lead is missing</h3>
+      <p>
+        Check the Active or Archived property views, or the Active or Closed
+        lead views, as appropriate. Confirm you signed in to the intended
+        account. Reopen or refresh the list after a change if the displayed data
+        appears stale.
+      </p>
+      <h3>The QR code or visitor link does not open</h3>
+      <p>
+        Open the public URL directly to distinguish a link problem from a
+        scanning problem. Check your connection, the full URL, and that the code
+        belongs to the intended event. Use a clear, unobstructed print with
+        enough contrast and space around the QR code.
+      </p>
+      <h3>A download or contact link does nothing</h3>
+      <p>
+        Check your browser’s download panel and any blocked-download notice.
+        Email and telephone links require a configured application on your
+        device. You can copy the displayed contact information instead.
+      </p>
+      <h3>I cannot edit branding or brokerage information</h3>
+      <p>
+        Branding and brokerage information are locked for agency-owned agents.
+        Ask your agency administrator to make the change. Refreshing the page or
+        signing in again will not unlock agency-managed settings.
+      </p>
+      <h3>Branding looks outdated</h3>
+      <p>
+        Review the displayed branding, reload the public branding preview, and
+        open the actual event page again. If you have editing access, verify
+        your saved changes. If your account is agency-owned, ask your agency
+        administrator to verify the agency-managed details. Previously
+        downloaded documents do not update themselves; download a new copy after
+        changes are saved.
+      </p>
+      <h3>Access is pending or sign-in fails</h3>
+      <p>
+        Use the account associated with your agent profile. If the app displays
+        pending access, wait for the account owner or platform administrator to
+        confirm activation. Refreshing cannot grant access. For sign-in issues,
+        use the options shown on the sign-in page and check that the correct
+        email was entered.
+      </p>
+      <h3>The problem continues</h3>
+      <p>
+        Record the page, action, event date or property, exact error text, and
+        approximate time. A screenshot can help explain the problem when you
+        contact your existing support contact. Avoid including passwords or
+        unnecessary visitor contact information.
+      </p>
+    </section>
+
+    <section id="agency" class="component">
+      <h2>Agency invitations & seats</h2>
+      <h3>Agency Settings</h3>
+      <p>
+        Open Agency Settings to upload the shared agency logo, edit your agency
+        name and colors, and manage brokerage information. JPEG, PNG, and WebP
+        logos up to 5 MB are supported. Brokerage name and license number are
+        required.
+      </p>
+      <p>
+        Agency-owned agents inherit the agency logo, colors, and brokerage
+        details; those controls stay locked in their profiles. Agents can still
+        change their personal headshot and contact details. Reload agent
+        profiles or public pages to see saved changes, and download fresh
+        printed materials after branding updates.
+      </p>
+
+      <p>
+        Agency administrators manage their agency from the Agency workspace.
+        Platform administrators can use the top-right user menu to switch views
+        and select an agency. Open Agents to review members, invitations,
+        occupied seats, and reserved seats.
+      </p>
+      <p>
+        Choose Invite Agent, enter their email, and select Agent or Agency
+        Administrator access. Each invitation reserves one agent seat for 72
+        hours. Both access levels create an agent profile when accepted. If
+        email delivery is configured, the screen reports when the invitation
+        email is sent. Otherwise, copy and share the provided invitation link.
+      </p>
+      <p>
+        The invited person opens the link, signs in or creates a Cognito account
+        using the invited email, verifies that email, reviews the agency and
+        assigned role, and accepts. They complete their personal details; the
+        agency’s branding and brokerage are inherited and locked. Their own
+        headshot can be updated after joining.
+      </p>
+      <p>
+        An existing Cognito login can accept if it has not already been
+        provisioned as an application account. Existing application accounts
+        require a separate ownership review and are not automatically
+        transferred.
+      </p>
+      <p>
+        Expand a member row to deactivate or reactivate an ordinary agent.
+        Deactivation blocks app access but preserves the agent’s records and
+        occupied seat. Administrator access changes require platform review.
+      </p>
+      <p>
+        Use an invitation’s actions menu to Resend or Revoke it. Resending
+        replaces the old link without extending the expiry. Revoking invalidates
+        the link and releases the reserved seat. Expired invitations also
+        release reservations; create a new invitation if needed. Refresh the
+        roster to see recent acceptances and updated capacity.
+      </p>
+      <p>
+        If all seats are occupied or reserved, revoke an unused invitation or
+        ask your platform administrator about increasing the limit. Agency Help
+        stays within the Agency workspace.
+      </p>
+    </section>
+
+    <section id="feedback" class="component">
+      <div class="feedback-heading">
+        <h2>Feedback</h2>
+        <aa-status-pill
+          [config]="{ label: 'Coming soon', variant: 'neutral' }"
+        />
+      </div>
+      <p>
+        A way to send product suggestions and report issues from this page is
+        coming soon. There is no feedback form to submit here yet.
+      </p>
+      <p>
+        Visitor feedback collected through your open houses is already available
+        in Leads, Properties, and Open Houses. This coming-soon feature refers
+        to feedback about the app.
+      </p>
+    </section>
+  </div>
+</aa-page-template>
