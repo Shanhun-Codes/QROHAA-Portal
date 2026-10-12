@@ -25,4 +25,10 @@ export const LEFT_HAND_NAV_CONFIG = [
     route: '/subscription',
     icon: 'credit_card',
   },
+  {
+    separatorBefore: true,
+    label: 'Help | Feedback',
+    route: '/help',
+    icon: 'help',
+  },
 ];

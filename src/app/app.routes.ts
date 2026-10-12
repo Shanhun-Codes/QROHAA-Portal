@@ -1,4 +1,6 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthService } from './auth/auth.service';
+import { Router, Routes } from '@angular/router';
 
 import { PageWrapperComponent } from './page-wrapper/page-wrapper.component';
 import { authGuard } from './auth/auth.guard';
@@ -54,6 +56,26 @@ export const routes: Routes = [
           import('./pages/open-houses/open-houses.component').then(
             (m) => m.OpenHousesComponent,
           ),
+      },
+      {
+        path: 'agency',
+        canActivate: [
+          async () => {
+            const auth = inject(AuthService);
+            const router = inject(Router);
+            await auth.getCurrentAgent();
+            return auth.isPlatformAdmin() || router.createUrlTree(['/home']);
+          },
+        ],
+        loadComponent: () =>
+          import('./pages/agency/agency.component').then(
+            (m) => m.AgencyComponent,
+          ),
+      },
+      {
+        path: 'help',
+        loadComponent: () =>
+          import('./pages/help/help.component').then((m) => m.HelpComponent),
       },
       {
         path: 'settings',

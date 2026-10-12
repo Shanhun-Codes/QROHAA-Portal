@@ -5,7 +5,10 @@
 >
   @if (isSideNavExpanded()) {
     <ul class="nav-list">
-      @for (item of navConfig; track item.label) {
+      @for (item of navConfig(); track item.label) {
+        @if (item.separatorBefore) {
+          <li class="line" role="separator"></li>
+        }
         <li
           class="list-item"
           [routerLink]="item.route"
@@ -15,15 +18,13 @@
           {{ item.label }}
         </li>
       }
-      <div class="line"></div>
-      <li class="list-item">
-        <mat-icon>help</mat-icon>
-        Help | Feedback
-      </li>
     </ul>
   } @else {
     <ul class="nav-list">
-      @for (item of navConfig; track item.label) {
+      @for (item of navConfig(); track item.label) {
+        @if (item.separatorBefore) {
+          <li class="line" role="separator"></li>
+        }
         <li
           class="list-item"
           [title]="item.label"
@@ -33,10 +34,6 @@
           <mat-icon>{{ item.icon }}</mat-icon>
         </li>
       }
-      <div class="line"></div>
-      <li class="list-item" [title]="'Help | Feedback'">
-        <mat-icon>help</mat-icon>
-      </li>
     </ul>
   }
   <div class="collapse-container">

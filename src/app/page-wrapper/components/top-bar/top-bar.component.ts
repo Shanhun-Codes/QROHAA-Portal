@@ -2,7 +2,6 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { TopBarService } from './top-bar.service';
-import { AgentProfile, AgentResponse } from '../../../auth/auth.model';
 import { AuthService } from '../../../auth/auth.service';
 import { ActionMenuItem } from '../../../shared/components/action-menu/action-menu.model';
 import { ActionMenuComponent } from '../../../shared/components/action-menu/action-menu.component';
@@ -34,7 +33,22 @@ export class TopBarComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
 
-  readonly userActions: ActionMenuItem[] = [
+  readonly userActions = computed<ActionMenuItem[]>(() => [
+    ...(this.authService.isPlatformAdmin()
+      ? [
+          {
+            label: this.topBarService.isAgencyView()
+              ? 'View as Agent'
+              : 'View as Agency',
+            icon: this.topBarService.isAgencyView() ? 'person' : 'business',
+            action: () => {
+              void this.router.navigateByUrl(
+                this.topBarService.isAgencyView() ? '/home' : '/agency',
+              );
+            },
+          },
+        ]
+      : []),
     {
       label: 'My Profile',
       icon: 'person',
@@ -50,7 +64,7 @@ export class TopBarComponent implements OnInit {
         this.authService.logout();
       },
     },
-  ];
+  ]);
 
   ngOnInit(): void {
     this.topBarService.getAgent();
