@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { LeadsService } from '../../leads.service';
+import { LeadStatusType } from '../../models/lead.model';
 import { environment } from '../../../../../environments/environment';
 
 @Injectable({
@@ -19,7 +21,12 @@ export class LeadExpandedRowService {
     return this.http.get<any>(`${this.agentAppBaseUrl}/leads/${leadId}`);
   }
 
-  editLead(leadId: string, leadData: any) {}
+  private readonly leads = inject(LeadsService);
+  editLead(leadId: string) {
+    return this.leads.openLeadDialog('EDIT', leadId);
+  }
 
-  markLeadAsLost(leadId: string) {}
+  markLeadAsLost(leadId: string) {
+    return this.leads.updateMultipleLeadsStatus([leadId], LeadStatusType.LOST);
+  }
 }

@@ -57,11 +57,21 @@ export class LeadsService {
   }
 
   async openLeadDialog(mode: DialogType, leadId?: string): Promise<void> {
-    this.dialogService.open({
+    const lead =
+      mode === 'EDIT' && leadId
+        ? await firstValueFrom(
+            this.http.get<Lead>(`${this.agentAppBaseUrl}/leads/${leadId}`),
+          )
+        : undefined;
+    const ref = this.dialogService.open({
       title: 'Lead Details',
       contentComponent: LeadDialogComponent,
       data: {
-        onSubmit: (values: AddLeadFormValue) => this.createLead(values),
+        lead,
+        onSubmit: (values: AddLeadFormValue) =>
+          mode === 'EDIT' && leadId
+            ? this.updateLead(leadId, values)
+            : this.createLead(values),
       },
       actions: [
         {
@@ -75,6 +85,32 @@ export class LeadsService {
         },
       ],
     });
+    await ref.afterClosed();
+  }
+
+  async updateLead(id: string, values: AddLeadFormValue): Promise<boolean> {
+    try {
+      await firstValueFrom(
+        this.http.patch(`${this.agentAppBaseUrl}/leads/${id}`, {
+          ...values,
+          email: values.email?.trim() || null,
+          phone: values.phone?.trim() || null,
+        }),
+      );
+      const leads = await firstValueFrom(this.getLeads());
+      this.leads.set(
+        leads.map((lead) => ({
+          ...lead,
+          name: `${lead.firstName ?? ''} ${lead.lastName ?? ''}`.trim(),
+          phone: formatPhoneNumber(lead.phone),
+        })),
+      );
+      this.snackbarService.success('Lead successfully updated');
+      return true;
+    } catch {
+      this.snackbarService.error('Unable to update lead. Please try again.');
+      return false;
+    }
   }
 
   async updateMultipleLeadsStatus(leadIds: string[], status: LeadStatusType) {

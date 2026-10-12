@@ -78,17 +78,8 @@ export interface FeedbackQuestionOption {
   questionId: string;
 }
 
-export interface OpenHouseFeedbackSubmission {
-  id: string;
-  openHouseId: string;
-  createdAt: string;
-  leadId?: string | null;
-  lead?: Lead | null;
-
-  // We'll type this properly once we look
-  // at your FeedbackAnswer model.
-  feedbackAnswers: unknown[];
-}
+export type OpenHouseFeedbackSubmission =
+  import('../../../shared/components/feedback/feedback.model').FeedbackSubmission;
 
 export interface OpenHouseTableRow extends Omit<OpenHouse, 'property'> {
   property: string;

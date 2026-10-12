@@ -6,6 +6,7 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { FeedbackListComponent } from '../../../../shared/components/feedback/feedback-list.component';
 import { DatePipe } from '@angular/common';
 
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
@@ -32,6 +33,7 @@ import { formatPhoneNumber } from '../../../../shared/utils/format-phone-number.
   selector: 'aa-open-house-expanded-row',
   imports: [
     DatePipe,
+    FeedbackListComponent,
     ButtonComponent,
     QrGeneratorComponent,
     OpenHouseFlyerPreviewComponent,
@@ -46,6 +48,21 @@ export class OpenHouseExpandedRowComponent {
     OpenHouseExpandedRowService,
   );
   private readonly openHouseService = inject(OpenHousesService);
+
+  readonly showQuestions = signal(false);
+  readonly viewQuestionsConfig = computed(() => ({
+    label: `${this.showQuestions() ? 'Hide' : 'View'} questions (${this.openHouse()?.openHouseFeedbackQuestions.length ?? 0})`,
+    variant: 'secondary' as const,
+    click: () => this.showQuestions.update((visible) => !visible),
+  }));
+  readonly showFeedback = signal(false);
+  readonly loading = signal(true);
+  readonly error = signal('');
+  readonly viewFeedbackConfig = computed(() => ({
+    label: `${this.showFeedback() ? 'Hide' : 'View'} feedback (${this.feedbackResponseCount()})`,
+    variant: 'secondary' as const,
+    click: () => this.showFeedback.update((visible) => !visible),
+  }));
 
   readonly showSignPreview = signal(false);
   readonly showFormPreview = signal(false);
@@ -118,10 +135,28 @@ export class OpenHouseExpandedRowComponent {
   }
 
   private loadOpenHouse(openHouseId: string): void {
+    this.loading.set(true);
+    this.error.set('');
     this.openHouseExpandedRowService.getOpenHouseDetail(openHouseId).subscribe({
       next: (openHouse) => {
+        this.loading.set(false);
+        if (!openHouse) {
+          this.error.set('Open house not found.');
+          this.openHouse.set(null);
+          return;
+        }
         this.openHouse.set({
           ...openHouse,
+          openHouseFeedbackSubmissions:
+            openHouse.openHouseFeedbackSubmissions.map((item) => ({
+              ...item,
+              openHouse: {
+                id: openHouse.id,
+                startsAt: openHouse.startsAt,
+                endsAt: openHouse.endsAt,
+                property: openHouse.property,
+              },
+            })),
           agent: {
             ...openHouse.agent,
             phone: formatPhoneNumber(openHouse.agent.phone),
@@ -131,6 +166,10 @@ export class OpenHouseExpandedRowComponent {
 
       error: (error) => {
         console.error('Failed to load open house details:', error);
+        this.loading.set(false);
+        this.error.set(
+          'Unable to load open house details. Reopen this row to retry.',
+        );
         this.openHouse.set(null);
       },
     });

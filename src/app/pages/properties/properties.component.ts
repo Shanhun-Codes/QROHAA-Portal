@@ -7,6 +7,7 @@ import {
   viewChild,
 } from '@angular/core';
 
+import { PropertyExpandedRowComponent } from './components/property-expanded-row/property-expanded-row.component';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { PageTemplateComponent } from '../../page-wrapper/page-template/page-template.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
@@ -33,6 +34,7 @@ type PropertyView = 'ACTIVE' | 'ARCHIVED';
   selector: 'aa-properties',
   imports: [
     TableComponent,
+    PropertyExpandedRowComponent,
     PageTemplateComponent,
     ButtonComponent,
     ViewToggleComponent,

@@ -119,7 +119,7 @@ export class PropertiesService {
     mode: DialogType,
     property?: Property,
   ): Promise<void> {
-    this.dialogService.open({
+    const ref = this.dialogService.open({
       title: mode === 'CREATE' ? 'Create Property' : 'Property Details',
       contentComponent: PropertyDialogComponent,
       data: {
@@ -144,14 +144,17 @@ export class PropertiesService {
         },
       ],
     });
+    await ref.afterClosed();
   }
 
   private buildPropertyPayload(data: PropertyFormValue) {
+    const { listingPrice, ...address } = data;
     return {
-      ...data,
-      listingPriceCents: data.listingPrice
-        ? Math.round(Number(data.listingPrice) * 100)
-        : null,
+      ...address,
+      listingPriceCents:
+        listingPrice !== '' && listingPrice != null
+          ? Math.round(Number(listingPrice) * 100)
+          : null,
     };
   }
 

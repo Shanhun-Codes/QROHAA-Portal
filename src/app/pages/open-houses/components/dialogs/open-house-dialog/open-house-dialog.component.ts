@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { forkJoin, of } from 'rxjs';
 
+import { DialogService } from '../../../../../shared/components/dialog/dialog.service';
 import { DialogRef } from '../../../../../shared/components/dialog/dialog-ref';
 import { FeedbackQuestionSelectorComponent } from '../../../../../shared/components/feedback-question-selector/feedback-question-selector.component';
 import { DynamicFormComponent } from '../../../../../shared/components/dynamic-form/dynamic-form.component';
@@ -60,6 +61,7 @@ interface OpenHouseDialogData {
 })
 export class OpenHouseDialogComponent implements OnInit {
   private readonly propertyService = inject(PropertiesService);
+  private readonly dialogs = inject(DialogService);
 
   private readonly feedbackQuestionsService = inject(FeedbackQuestionsService);
 
@@ -269,6 +271,29 @@ export class OpenHouseDialogComponent implements OnInit {
     }
 
     const questions = this.buildSelectedQuestions();
+
+    const printableQuestions = this.useDefaultQuestions()
+      ? this.feedbackQuestionsService.agentDefaultQuestions()
+      : (questions ?? []);
+
+    if (!printableQuestions.some((question) => question.printable)) {
+      const result = await this.dialogs
+        .open<boolean>({
+          title: 'Select printable questions',
+          message:
+            'Your feedback form has no printable questions. Go back, select the questions you want on the form, and mark them as printable before previewing your open house.',
+          actions: [
+            {
+              label: 'Go back and select questions',
+              type: 'primary',
+              value: true,
+            },
+          ],
+        })
+        .afterClosed();
+      if (result) this.useDefaultQuestions.set(false);
+      return;
+    }
 
     if (!this.useDefaultQuestions() && !questions?.length) {
       return;

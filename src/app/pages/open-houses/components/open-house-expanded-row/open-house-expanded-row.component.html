@@ -1,3 +1,8 @@
+@if (loading()) {
+  <p role="status">Loading open house details…</p>
+} @else if (error()) {
+  <p role="alert">{{ error() }}</p>
+}
 @if (openHouse(); as openHouse) {
   <div class="open-house-expanded-row">
     <!-- ==================================================
@@ -86,6 +91,7 @@
         </strong>
 
         <span> Questions </span>
+        <aa-button [config]="viewQuestionsConfig()" />
       </div>
 
       <div class="stat">
@@ -102,6 +108,7 @@
         </strong>
 
         <span> Feedback Responses </span>
+        <aa-button [config]="viewFeedbackConfig()" />
       </div>
     </section>
 
@@ -109,50 +116,60 @@
          FEEDBACK QUESTIONS
     =================================================== -->
 
-    <section class="questions-section">
-      <div class="section-header">
-        <div>
-          <span class="section-label">Feedback Form</span>
+    @if (showFeedback()) {
+      <section>
+        <aa-feedback-list
+          [submissions]="openHouse.openHouseFeedbackSubmissions"
+        />
+      </section>
+    }
 
-          <h4>Questions</h4>
-        </div>
-      </div>
+    @if (showQuestions()) {
+      <section class="questions-section">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Feedback Form</span>
 
-      <div class="questions-list">
-        @for (
-          selection of openHouse.openHouseFeedbackQuestions;
-          track selection.questionId
-        ) {
-          <div class="question-row">
-            <div class="question-content">
-              <span class="question-label">
-                {{ selection.question.label }}
-              </span>
-
-              <span class="question-type">
-                {{ selection.question.type.replace("_", " ") }}
-              </span>
-            </div>
-
-            <div class="question-meta">
-              <span
-                class="question-requirement"
-                [class.required]="selection.required"
-              >
-                {{ selection.required ? "Required" : "Optional" }}
-              </span>
-
-              <span
-                class="question-printable"
-                [class.printable]="selection.printable"
-              >
-                {{ selection.printable ? "Printable" : "Digital Only" }}
-              </span>
-            </div>
+            <h4>Questions</h4>
           </div>
-        }
-      </div>
-    </section>
+        </div>
+
+        <div class="questions-list">
+          @for (
+            selection of openHouse.openHouseFeedbackQuestions;
+            track selection.questionId
+          ) {
+            <div class="question-row">
+              <div class="question-content">
+                <span class="question-label">
+                  {{ selection.question.label }}
+                </span>
+
+                <span class="question-type">
+                  {{ selection.question.type.replace("_", " ") }}
+                </span>
+              </div>
+
+              <div class="question-meta">
+                <span
+                  class="question-requirement"
+                  [class.required]="selection.required"
+                >
+                  {{ selection.required ? "Required" : "Optional" }}
+                </span>
+
+                <span
+                  class="question-printable"
+                  [class.printable]="selection.printable"
+                >
+                  {{ selection.printable ? "Printable" : "Digital Only" }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
 
     <!-- ==================================================
      PUBLIC OPEN HOUSE

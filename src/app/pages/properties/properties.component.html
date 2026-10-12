@@ -26,7 +26,11 @@
       </aa-bulk-actions-bar>
     }
 
+    <ng-template #expandedRow let-property
+      ><aa-property-expanded-row [row]="property"
+    /></ng-template>
     <aa-table
+      [expandedRowTemplate]="expandedRow"
       [tableDataConfig]="tableData()"
       [tableHeaderConfig]="tableHeaderConfig"
       (selectionChange)="onSelectionChange($event)"

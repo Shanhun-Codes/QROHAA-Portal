@@ -1,4 +1,7 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { answerLabel } from '../../../../shared/components/feedback/feedback.model';
+import { mapLeadStatusToPill } from '../../utils/lead-status.mapper';
+import { FeedbackListComponent } from '../../../../shared/components/feedback/feedback-list.component';
 import { MatIcon } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 
@@ -15,6 +18,7 @@ import { ActionMenuItem } from '../../../../shared/components/action-menu/action
   selector: 'aa-lead-expanded-row',
   imports: [
     MatIcon,
+    FeedbackListComponent,
     StatusPillComponent,
     DatePipe,
     NotesComponent,
@@ -29,9 +33,15 @@ export class LeadExpandedRowComponent implements OnInit {
 
   readonly row = input.required<Lead>();
 
-  readonly leadDetails = this.expandedRowService.leadDetails;
+  readonly leadDetails = signal<any>({});
+
+  readonly loading = signal(true);
+  readonly error = signal('');
+  readonly statusPill = mapLeadStatusToPill;
 
   ngOnInit(): void {
+    this.loading.set(true);
+    this.error.set('');
     this.notesService.leadId.set(this.row().id);
 
     const request = this.expandedRowService.getLead(this.row().id);
@@ -42,24 +52,33 @@ export class LeadExpandedRowComponent implements OnInit {
 
     request.subscribe({
       next: (response) => {
+        this.loading.set(false);
+        if (!response) {
+          this.error.set('Lead not found.');
+          return;
+        }
         const submission = response.submissions?.[0];
 
         const answers = Object.fromEntries(
           submission?.feedbackAnswers?.map((answer: any) => [
             answer.question.key,
-            answer.value,
+            answerLabel(answer),
           ]) ?? [],
         );
 
-        this.expandedRowService.leadDetails.set({
+        this.leadDetails.set({
           ...response,
+          submissions: response.submissions.map((item: any) => ({
+            ...item,
+            lead: response,
+          })),
 
           name: `${response.firstName} ${response.lastName}`,
           phone: formatPhoneNumber(response.phone),
 
-          budgetRange: this.formatAnswer(answers['budget_range']),
-          purchaseTimeline: this.formatAnswer(answers['purchase_timeline']),
-          preQualified: this.formatAnswer(answers['pre_qualified']),
+          budgetRange: answers['budget_range'] ?? '—',
+          purchaseTimeline: answers['purchase_timeline'] ?? '—',
+          preQualified: answers['pre_qualified'] ?? '—',
           neighborhoods: answers['neighborhoods'] ?? '—',
 
           visitedAt: submission?.createdAt ?? '—',
@@ -76,6 +95,12 @@ export class LeadExpandedRowComponent implements OnInit {
           likedLeast: this.formatAnswer(answers['liked_least']),
           additionalComments: answers['additional_comments'] ?? '—',
         });
+      },
+      error: () => {
+        this.loading.set(false);
+        this.error.set(
+          'Unable to load lead details. Reopen this row to retry.',
+        );
       },
     });
 
@@ -118,10 +143,13 @@ export class LeadExpandedRowComponent implements OnInit {
   }
 
   onEditClick(leadId: string): void {
-    this.expandedRowService.editLead(leadId, this.leadDetails());
+    void this.expandedRowService.editLead(leadId).then(() => this.ngOnInit());
   }
 
   onMarkAsLostClick(leadId: string): void {
-    this.expandedRowService.markLeadAsLost(leadId);
+    void this.expandedRowService.markLeadAsLost(leadId).then((success) => {
+      if (success)
+        this.leadDetails.update((lead) => ({ ...lead, status: 'LOST' }));
+    });
   }
 }
