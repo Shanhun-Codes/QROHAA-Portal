@@ -1,0 +1,83 @@
+<section class="component join-card">
+  <header class="join-header">
+    <p class="eyebrow">Agency invitation</p>
+    <h1>Join your agency</h1>
+    <p>Confirm your account and add your personal details to get started.</p>
+  </header>
+  @if (loading()) {
+    <p role="status">Checking your invitation…</p>
+  }
+  @if (error()) {
+    <div class="error-message" role="alert">{{ error() }}</div>
+    @if (!loading()) {
+      <div class="actions recovery-actions">
+      <aa-button [config]="retryButtonConfig" />
+      @if (signedIn()) { <aa-button [config]="differentAccountButtonConfig" /> }
+      <aa-button [config]="leaveButtonConfig" />
+      </div>
+    }
+  }
+  @if (!loading() && !signedIn() && !error()) {
+    <p>
+      You have been invited to join an agency. Sign in or create an account
+      using the email address that received the invitation. New accounts must
+      verify their email before accepting.
+    </p>
+    <p>Your invitation will be kept while you sign in and verify your email.</p>
+    <aa-button [config]="loginButtonConfig" />
+  }
+  @if (preview(); as invite) {
+    <section class="join-section">
+    <h2>You’re invited to {{ invite.agency.name }}</h2>
+    <p>
+      Invited email: <strong>{{ invite.email }}</strong
+      ><br />Signed in as: {{ invite.signedInEmail }}
+    </p>
+    </section>
+    @if (!invite.emailMatches) {
+      <p role="alert">
+        This invitation is for another email address. Sign in with
+        {{ invite.email }} to continue.
+      </p>
+      <aa-button [config]="differentAccountButtonConfig" />
+    } @else if (invite.existingAccount) {
+      <p role="alert">
+        You already have an application account. Joining an agency can affect
+        ownership, branding, and access to existing records. Contact your
+        platform administrator to review the transfer; this invitation will not
+        change your existing account.
+      </p>
+      <aa-button [config]="returnWorkspaceButtonConfig" />
+    } @else {
+      <p>
+        Access level:
+        <strong>{{
+          invite.role === "AGENCY_ADMIN" ? "Agency Administrator" : "Agent"
+        }}</strong>
+      </p>
+      <p>
+        Your agency manages your logo, shared branding, colors, and brokerage
+        information. Those settings will be read-only. You can manage your
+        personal contact details and headshot from My Profile after joining.
+      </p>
+      <section class="join-section">
+      <h3>Brokerage supplied by your agency</h3>
+      <p>Your agency manages these details. You do not need to enter them.</p>
+      <aa-dynamic-form [config]="brokerageConfig()" />
+      </section>
+      <section class="join-section">
+      <h3>Your personal details</h3>
+      <aa-dynamic-form
+        #personalForm
+        [config]="formConfig"
+        (formSubmit)="accept($event)"
+      />
+      </section>
+      <div class="actions form-actions">
+        <aa-button [config]="acceptButtonConfig()" /><aa-button
+          [config]="cancelButtonConfig()"
+        />
+      </div>
+    }
+  }
+</section>

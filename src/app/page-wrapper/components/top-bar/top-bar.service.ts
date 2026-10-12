@@ -15,9 +15,10 @@ export class TopBarService {
     ),
     { initialValue: this.router.url },
   );
-  readonly isAgencyView = computed(
-    () => this.currentUrl().split(/[?#]/)[0] === '/agency',
-  );
+  readonly isAgencyView = computed(() => {
+    const path = this.currentUrl().split(/[?#]/)[0];
+    return path === '/agency' || path.startsWith('/agency/');
+  });
   readonly activePortal = computed(() =>
     this.isAgencyView() ? 'Agency App' : 'Agent App',
   );

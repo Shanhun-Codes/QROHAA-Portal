@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OnboardingService } from '../setup-agent/setup-agent.service';
+import { OnboardingService } from '../../agent/pages/setup-agent/setup-agent.service';
 import { AuthService } from '../../auth/auth.service';
 import { AppLoaderService } from '../../shared/components/app-loader/app-loader.service';
 import { CHECK_ACCESS_BUTTON_CONFIG } from './config/button-config';

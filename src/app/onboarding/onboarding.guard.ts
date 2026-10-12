@@ -3,9 +3,9 @@ import { CanActivateFn, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { map, switchMap, take } from 'rxjs';
 
-import { OnboardingService } from '../pages/setup-agent/setup-agent.service';
+import { OnboardingService } from '../agent/pages/setup-agent/setup-agent.service';
 
-export const onboardingGuard: CanActivateFn = () => {
+export const onboardingGuard: CanActivateFn = (_route, state) => {
   const auth = inject(OidcSecurityService);
   const onboardingService = inject(OnboardingService);
   const router = inject(Router);
@@ -17,8 +17,21 @@ export const onboardingGuard: CanActivateFn = () => {
         return [router.createUrlTree(['/auth'])];
       }
 
+      if (sessionStorage.getItem('agency-invitation'))
+        return [router.createUrlTree(['/join-agency'])];
       return onboardingService.getMe().pipe(
         map((response) => {
+          if (
+            response.role === 'AGENCY_ADMIN' &&
+            response.accessGranted &&
+            response.agencyId
+          ) {
+            return response.hasAgent ||
+              state.url === '/agency' ||
+              state.url.startsWith('/agency/')
+              ? true
+              : router.createUrlTree(['/agency']);
+          }
           const isActivePlatformAdmin =
             response.role === 'PLATFORM_ADMIN' &&
             response.status === 'ACTIVE' &&

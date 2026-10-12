@@ -13,6 +13,7 @@
           class="list-item"
           [routerLink]="item.route"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
         >
           <mat-icon>{{ item.icon }}</mat-icon>
           {{ item.label }}
@@ -30,6 +31,7 @@
           [title]="item.label"
           [routerLink]="item.route"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
         >
           <mat-icon>{{ item.icon }}</mat-icon>
         </li>

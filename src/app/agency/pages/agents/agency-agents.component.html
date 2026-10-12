@@ -1,0 +1,136 @@
+<aa-page-template
+  [title]="'Agency agents'"
+  subtitle="Invite agents, manage access, and track your available seats."
+>
+  <div class="agency-content">
+    @if (agencies().length > 1) {
+      <aa-select
+        aria-label="Select agency"
+        [options]="agencyOptions()"
+        [value]="selectedAgency()"
+        (valueChange)="selectAgency($event)"
+      />
+    }
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (loading()) {
+      <p role="status">Loading agency…</p>
+    }
+    @if (!loading() && !agencies().length && !error()) {
+      <section class="component">
+        <h2>No agencies yet</h2>
+        <p>
+          A platform administrator must provision an agency before agents can be
+          invited.
+        </p>
+      </section>
+    }
+    @if (detail(); as data) {
+      <section class="component">
+        <div class="section-header">
+          <div>
+            <h2>{{ data.agency.name }}</h2>
+            <p>
+              {{ data.usedSeats }} occupied · {{ data.reservedSeats }} reserved
+              ·
+              {{
+                data.agency.seatLimit === null
+                  ? "Unlimited"
+                  : data.agency.seatLimit
+              }}
+              agent seats
+            </p>
+          </div>
+          <div class="actions">
+            <aa-button [config]="refreshButtonConfig()" /><aa-button
+              [config]="inviteButtonConfig()"
+            />
+          </div>
+        </div>
+        <p>
+          Pending invitations reserve a seat for 72 hours. Expired or revoked
+          invitations release their reservation. Deactivating an agent blocks
+          access and retains their records and occupied seat.
+        </p>
+        @if (atCapacity()) {
+          <p role="status">
+            All seats are occupied or reserved. Revoke an unused invitation or
+            ask your platform administrator to increase the limit.
+          </p>
+        }
+      </section>
+      @if (invitationResult(); as result) {
+        <section class="component" aria-live="polite">
+          <h2>Invitation for {{ result.email }}</h2>
+          <p>
+            {{
+              result.delivery === "SENT"
+                ? "Invitation email sent."
+                : result.delivery === "FAILED"
+                  ? "Email delivery failed. The invitation is ready; copy and share the link below."
+                  : "Invitation created. Automatic email delivery is not configured; copy and share the link below."
+            }}
+          </p>
+          <p>
+            Expires {{ result.expiresAt | date: "medium" }}. Resending replaces
+            the previous link; the original expiry stays the same.
+          </p>
+          <p class="invitation-link">{{ invitationLink() }}</p>
+          <aa-button [config]="copyInvitationButtonConfig" />
+        </section>
+      }
+      <section class="component">
+        <h2>Agents & administrators ({{ data.members.length }})</h2>
+        @if (selectedMemberIds().length) {
+          <aa-bulk-actions-bar itemName="member" [selectedCount]="selectedMemberIds().length"
+            (clearSelection)="selectedMemberIds.set([])">
+            <aa-button [config]="deactivateSelectedButton()" />
+            <aa-button [config]="reactivateSelectedButton()" />
+          </aa-bulk-actions-bar>
+          <p>Access changes apply to agent accounts only. Agency and platform administrators are managed separately.</p>
+        }
+        <aa-table
+          [selectedIdsInput]="selectedMemberIds()"
+          (selectionChange)="selectedMemberIds.set($event)"
+          [tableHeaderConfig]="memberHeaders"
+          [tableDataConfig]="memberRows()"
+          [expandedRowTemplate]="memberDetail"
+        />
+        <ng-template #memberDetail let-member
+          ><div class="member-detail">
+            <p>{{ member.email }} · {{ member.access }}</p>
+            <aa-action-menu
+              ariaLabel="Member actions"
+              [actions]="memberActions(member)"
+            /></div
+        ></ng-template>
+      </section>
+      <section class="component">
+        <h2>Invitations</h2>
+        @for (invite of data.invitations; track invite.id) {
+          <div class="invitation">
+            <div>
+              <strong>{{ invite.email }}</strong>
+              <p>
+                {{ invitationStatus(invite) }} ·
+                {{
+                  invite.role === "AGENCY_ADMIN"
+                    ? "Agency Administrator"
+                    : "Agent"
+                }}
+                · Expires {{ invite.expiresAt | date: "medium" }}
+              </p>
+            </div>
+            <aa-action-menu
+              ariaLabel="Invitation actions"
+              [actions]="invitationActions(invite)"
+            />
+          </div>
+        } @empty {
+          <p>No invitations yet. Choose Invite Agent to get started.</p>
+        }
+      </section>
+    }
+  </div>
+</aa-page-template>

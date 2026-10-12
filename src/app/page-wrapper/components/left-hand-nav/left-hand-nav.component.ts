@@ -1,6 +1,9 @@
 import { Component, computed, inject } from '@angular/core';
 import { TopBarService } from '../top-bar/top-bar.service';
-import { LEFT_HAND_NAV_CONFIG } from './left-hand-nav.config';
+import {
+  AGENCY_NAV_CONFIG,
+  LEFT_HAND_NAV_CONFIG,
+} from './left-hand-nav.config';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { PageWrapperService } from '../../page-wrapper.service';
@@ -16,22 +19,7 @@ export class LeftHandNavComponent {
 
   private readonly topBar = inject(TopBarService);
   readonly navConfig = computed(() =>
-    this.topBar.isAgencyView()
-      ? [
-          {
-            label: 'Agency',
-            route: '/agency',
-            icon: 'business',
-            separatorBefore: false,
-          },
-          {
-            label: 'Help | Feedback',
-            route: '/help',
-            icon: 'help',
-            separatorBefore: true,
-          },
-        ]
-      : LEFT_HAND_NAV_CONFIG,
+    this.topBar.isAgencyView() ? AGENCY_NAV_CONFIG : LEFT_HAND_NAV_CONFIG,
   );
   readonly isSideNavExpanded = this.pageWrapperService.isSideNavExpanded;
 

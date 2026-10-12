@@ -8,15 +8,25 @@ import { onboardingGuard } from './onboarding/onboarding.guard';
 
 export const routes: Routes = [
   {
+    path: 'join-agency',
+    loadComponent: () =>
+      import('./agency/pages/join-agency/join-agency.component').then(
+        (m) => m.JoinAgencyComponent,
+      ),
+  },
+  {
     path: 'auth',
     loadComponent: () =>
       import('./auth/auth.component').then((m) => m.AuthComponent),
   },
   {
     path: 'setup-agent',
-    canActivate: [authGuard],
+    canActivate: [authGuard, () => {
+      const router = inject(Router);
+      return !sessionStorage.getItem('agency-invitation') || router.createUrlTree(['/join-agency']);
+    }],
     loadComponent: () =>
-      import('./pages/setup-agent/setup-agent.component').then(
+      import('./agent/pages/setup-agent/setup-agent.component').then(
         (m) => m.SetupAgentComponent,
       ),
   },
@@ -41,19 +51,19 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () =>
-          import('./pages/leads/leads.component').then((m) => m.LeadsComponent),
+          import('./agent/pages/leads/leads.component').then((m) => m.LeadsComponent),
       },
       {
         path: 'properties',
         loadComponent: () =>
-          import('./pages/properties/properties.component').then(
+          import('./agent/pages/properties/properties.component').then(
             (m) => m.PropertiesComponent,
           ),
       },
       {
         path: 'open-houses',
         loadComponent: () =>
-          import('./pages/open-houses/open-houses.component').then(
+          import('./agent/pages/open-houses/open-houses.component').then(
             (m) => m.OpenHousesComponent,
           ),
       },
@@ -64,13 +74,32 @@ export const routes: Routes = [
             const auth = inject(AuthService);
             const router = inject(Router);
             await auth.getCurrentAgent();
-            return auth.isPlatformAdmin() || router.createUrlTree(['/home']);
+            return auth.canAccessAgency() || router.createUrlTree(['/home']);
           },
         ],
-        loadComponent: () =>
-          import('./pages/agency/agency.component').then(
-            (m) => m.AgencyComponent,
-          ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./agency/pages/agents/agency-agents.component').then(
+                (m) => m.AgencyAgentsComponent,
+              ),
+          },
+          {
+            path: 'settings',
+            loadComponent: () =>
+              import('./agency/pages/settings/agency-settings.component').then(
+                (m) => m.AgencySettingsComponent,
+              ),
+          },
+          {
+            path: 'help',
+            loadComponent: () =>
+              import('./pages/help/help.component').then(
+                (m) => m.HelpComponent,
+              ),
+          },
+        ],
       },
       {
         path: 'help',
@@ -80,7 +109,7 @@ export const routes: Routes = [
       {
         path: 'settings',
         loadComponent: () =>
-          import('./pages/profile/profile.component').then(
+          import('./agent/pages/profile/profile.component').then(
             (m) => m.ProfileComponent,
           ),
       },

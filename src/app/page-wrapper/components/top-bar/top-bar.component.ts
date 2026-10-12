@@ -17,13 +17,16 @@ export class TopBarComponent implements OnInit {
   public title = this.topBarService.title;
   public activePortal = this.topBarService.activePortal;
   public subtitle = this.activePortal;
+  readonly isAgencyView = this.topBarService.isAgencyView;
   readonly userName = computed(() => {
     const agent = this.topBarService.agent();
-    return agent ? `${agent.firstName} ${agent.lastName}` : '';
+    return agent
+      ? `${agent.firstName} ${agent.lastName}`
+      : 'Agency administrator';
   });
   readonly userEmail = computed(() => {
     const agent = this.topBarService.agent();
-    return agent ? agent.email : '';
+    return agent ? agent.email : 'Agency administrator';
   });
   readonly userAvatarUrl = computed(() => {
     const agent = this.topBarService.agent();
@@ -33,8 +36,10 @@ export class TopBarComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
 
+  readonly hasAgent = computed(() => Boolean(this.authService.agent()));
   readonly userActions = computed<ActionMenuItem[]>(() => [
-    ...(this.authService.isPlatformAdmin()
+    ...(this.authService.canAccessAgency() &&
+    (this.authService.isPlatformAdmin() || this.hasAgent())
       ? [
           {
             label: this.topBarService.isAgencyView()
@@ -52,6 +57,7 @@ export class TopBarComponent implements OnInit {
     {
       label: 'My Profile',
       icon: 'person',
+      disabled: !this.hasAgent(),
       action: async () => {
         const result = await this.router.navigateByUrl('/settings');
       },

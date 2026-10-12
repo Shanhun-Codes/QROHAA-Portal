@@ -1,5 +1,5 @@
 <aa-page-template
-  title="Help & Feedback"
+  [title]="'Help & Feedback'"
   subtitle="A guide to setting up your profile, hosting open houses, and following up with visitors."
 >
   <div class="help-content">
@@ -52,7 +52,8 @@
         <a href="#submissions">Viewing submissions</a
         ><a href="#leads">Leads & notes</a>
         <a href="#troubleshooting">Troubleshooting</a
-        ><a href="#feedback">Feedback — coming soon</a>
+        ><a href="#agency">Agency invitations & seats</a>
+        <a href="#feedback">Feedback — coming soon</a>
       </div>
     </nav>
 
@@ -393,6 +394,68 @@
         approximate time. A screenshot can help explain the problem when you
         contact your existing support contact. Avoid including passwords or
         unnecessary visitor contact information.
+      </p>
+    </section>
+
+    <section id="agency" class="component">
+      <h2>Agency invitations & seats</h2>
+      <h3>Agency Settings</h3>
+      <p>
+        Open Agency Settings to upload the shared agency logo, edit your agency
+        name and colors, and manage brokerage information. JPEG, PNG, and WebP
+        logos up to 5 MB are supported. Brokerage name and license number are
+        required.
+      </p>
+      <p>
+        Agency-owned agents inherit the agency logo, colors, and brokerage
+        details; those controls stay locked in their profiles. Agents can still
+        change their personal headshot and contact details. Reload agent
+        profiles or public pages to see saved changes, and download fresh
+        printed materials after branding updates.
+      </p>
+
+      <p>
+        Agency administrators manage their agency from the Agency workspace.
+        Platform administrators can use the top-right user menu to switch views
+        and select an agency. Open Agents to review members, invitations,
+        occupied seats, and reserved seats.
+      </p>
+      <p>
+        Choose Invite Agent, enter their email, and select Agent or Agency
+        Administrator access. Each invitation reserves one agent seat for 72
+        hours. Both access levels create an agent profile when accepted. If
+        email delivery is configured, the screen reports when the invitation
+        email is sent. Otherwise, copy and share the provided invitation link.
+      </p>
+      <p>
+        The invited person opens the link, signs in or creates a Cognito account
+        using the invited email, verifies that email, reviews the agency and
+        assigned role, and accepts. They complete their personal details; the
+        agency’s branding and brokerage are inherited and locked. Their own
+        headshot can be updated after joining.
+      </p>
+      <p>
+        An existing Cognito login can accept if it has not already been
+        provisioned as an application account. Existing application accounts
+        require a separate ownership review and are not automatically
+        transferred.
+      </p>
+      <p>
+        Expand a member row to deactivate or reactivate an ordinary agent.
+        Deactivation blocks app access but preserves the agent’s records and
+        occupied seat. Administrator access changes require platform review.
+      </p>
+      <p>
+        Use an invitation’s actions menu to Resend or Revoke it. Resending
+        replaces the old link without extending the expiry. Revoking invalidates
+        the link and releases the reserved seat. Expired invitations also
+        release reservations; create a new invitation if needed. Refresh the
+        roster to see recent acceptances and updated capacity.
+      </p>
+      <p>
+        If all seats are occupied or reserved, revoke an unused invitation or
+        ask your platform administrator about increasing the limit. Agency Help
+        stays within the Agency workspace.
       </p>
     </section>
 

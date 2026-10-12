@@ -1,0 +1,12 @@
+<p>
+  These settings are inherited by all agents owned by this agency. Agents cannot
+  edit them; their headshots stay personal.
+</p>
+<aa-dynamic-form
+  [config]="config()"
+  [dialogRef]="dialogRef()"
+  (formSubmit)="save($event)"
+/>
+@if (saving()) {
+  <p role="status">Saving agency settings…</p>
+}

@@ -21,14 +21,16 @@
   </div>
 
   <div class="user-info-settings-container">
-    <button
-      [routerLink]="'/settings'"
-      class="settings-button"
-      type="button"
-      aria-label="Settings"
-    >
-      <mat-icon>settings</mat-icon>
-    </button>
+    @if (hasAgent() || isAgencyView()) {
+      <button
+        [routerLink]="isAgencyView() ? '/agency/settings' : '/settings'"
+        class="settings-button"
+        type="button"
+        [attr.aria-label]="isAgencyView() ? 'Agency settings' : 'Settings'"
+      >
+        <mat-icon>settings</mat-icon>
+      </button>
+    }
 
     <img
       class="user-avatar"

@@ -1,0 +1,13 @@
+<p>
+  This agent will use your agency’s branding and brokerage information. They can
+  manage their own headshot and contact details. Each invitation reserves one
+  agent seat for 72 hours.
+</p>
+<aa-dynamic-form
+  [config]="config"
+  [dialogRef]="dialogRef()"
+  (formSubmit)="submit($event)"
+/>
+
+@if (saving()) { <p role="status">Creating invitation…</p> }
+@if (error()) { <p role="alert">{{ error() }}</p> }

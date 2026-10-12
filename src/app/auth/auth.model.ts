@@ -38,6 +38,7 @@ export interface Brokerage {
 }
 
 export interface AgentResponse {
+  agencyId?: string | null;
   hasAgent: boolean;
   accessGranted?: boolean;
   accessStatus?: string;
