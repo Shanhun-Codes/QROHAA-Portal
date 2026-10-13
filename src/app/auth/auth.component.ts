@@ -5,7 +5,8 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { AppLoaderService } from '../shared/components/app-loader/app-loader.service';
 import { DynamicFormConfig } from '../shared/components/dynamic-form/dynamic-form.model';
-import { LOGIN_BUTTON_CONFIG } from './auth.config';
+import { LOGIN_BUTTON_CONFIG, SIGN_OUT_BUTTON_CONFIG } from './auth.config';
+import { AuthService } from './auth.service';
 import { ButtonConfig } from '../shared/components/button/button.config';
 
 @Component({
@@ -16,6 +17,13 @@ import { ButtonConfig } from '../shared/components/button/button.config';
 })
 export class AuthComponent implements OnInit {
   readonly auth = inject(OidcSecurityService);
+
+  private readonly authService = inject(AuthService);
+
+  readonly signOutButtonConfig: ButtonConfig = {
+    ...SIGN_OUT_BUTTON_CONFIG,
+    click: () => this.logout(),
+  };
 
   private readonly appLoaderService = inject(AppLoaderService);
 
@@ -50,6 +58,6 @@ export class AuthComponent implements OnInit {
   }
 
   logout(): void {
-    this.auth.logoff().subscribe();
+    this.authService.logout();
   }
 }

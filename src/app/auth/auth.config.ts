@@ -27,3 +27,9 @@ export const LOGIN_BUTTON_CONFIG: ButtonConfig = {
   variant: 'primary',
   label: 'Log In',
 };
+
+export const SIGN_OUT_BUTTON_CONFIG: ButtonConfig = {
+  variant: 'primary',
+  label: 'Sign out / change account',
+  icon: 'logout',
+};
