@@ -33,3 +33,9 @@ export const SIGN_OUT_BUTTON_CONFIG: ButtonConfig = {
   label: 'Sign out / change account',
   icon: 'logout',
 };
+
+export const CONTINUE_BUTTON_CONFIG: ButtonConfig = {
+  variant: 'primary',
+  label: 'Continue',
+  icon: 'arrow_forward',
+};
