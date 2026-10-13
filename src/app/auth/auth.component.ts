@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -5,7 +6,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { AppLoaderService } from '../shared/components/app-loader/app-loader.service';
 import { DynamicFormConfig } from '../shared/components/dynamic-form/dynamic-form.model';
-import { LOGIN_BUTTON_CONFIG, SIGN_OUT_BUTTON_CONFIG } from './auth.config';
+import { CONTINUE_BUTTON_CONFIG, LOGIN_BUTTON_CONFIG, SIGN_OUT_BUTTON_CONFIG } from './auth.config';
 import { AuthService } from './auth.service';
 import { ButtonConfig } from '../shared/components/button/button.config';
 
@@ -19,6 +20,12 @@ export class AuthComponent implements OnInit {
   readonly auth = inject(OidcSecurityService);
 
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  readonly continueButtonConfig: ButtonConfig = {
+    ...CONTINUE_BUTTON_CONFIG,
+    click: () => { void this.router.navigateByUrl('/'); },
+  };
 
   readonly signOutButtonConfig: ButtonConfig = {
     ...SIGN_OUT_BUTTON_CONFIG,
