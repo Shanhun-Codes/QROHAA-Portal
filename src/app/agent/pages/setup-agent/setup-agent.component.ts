@@ -29,8 +29,9 @@ export class SetupAgentComponent implements OnInit {
   private readonly appLoaderService = inject(AppLoaderService);
   readonly dynamicForm = viewChild(DynamicFormComponent);
   invitationError = '';
-  readonly formConfig: DynamicFormConfig<AgentSetupFormValues> =
-    AGENT_FORM_CONFIG;
+  invitationReady = false;
+  isAgency = false;
+  formConfig: DynamicFormConfig = AGENT_FORM_CONFIG;
   readonly saveButtonConfig: ButtonConfig = {
     ...SAVE_BUTTON_CONFIG,
     click: () => this.dynamicForm()?.submit(),
@@ -41,6 +42,32 @@ export class SetupAgentComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    const token = sessionStorage.getItem('onboarding-invitation');
+    if (token)
+      this.onboardingService.inspectInvitation(token).subscribe({
+        next: (invitation) => {
+          this.isAgency = invitation.accountType === 'AGENCY';
+          if (this.isAgency)
+            this.formConfig = {
+              fields: [
+                {
+                  key: 'name',
+                  label: 'Agency name',
+                  type: 'text',
+                  required: true,
+                },
+                { key: 'headline', label: 'Agency headline', type: 'text' },
+              ],
+            };
+          this.invitationReady = true;
+        },
+        error: (error) => {
+          this.invitationError =
+            error.error?.message ?? 'Unable to verify invitation.';
+        },
+      });
+    else
+      this.invitationError = 'A valid invitation link is required to continue.';
     this.onboardingService
       .getMe()
       .pipe(
@@ -63,12 +90,31 @@ export class SetupAgentComponent implements OnInit {
   }
 
   onSubmit(values: unknown): void {
+    if (!this.invitationReady) return;
     const invitationToken = sessionStorage.getItem('onboarding-invitation');
     if (!invitationToken) {
       this.invitationError = 'A valid invitation link is required to continue.';
       return;
     }
 
+    if (this.isAgency) {
+      const agency = values as { name: string; headline?: string };
+      if (!agency.name?.trim()) {
+        this.invitationError = 'Agency name is required.';
+        return;
+      }
+      this.onboardingService.createAgency(invitationToken, agency).subscribe({
+        next: () => {
+          sessionStorage.removeItem('onboarding-invitation');
+          this.router.navigate(['/access-pending']);
+        },
+        error: (error) => {
+          this.invitationError =
+            error.error?.message ?? 'Unable to create agency.';
+        },
+      });
+      return;
+    }
     this.onboardingService
       .createAgent(
         toAgentSetupRequest(values as AgentSetupFormValues, invitationToken),
@@ -80,7 +126,8 @@ export class SetupAgentComponent implements OnInit {
           this.router.navigate(['/access-pending']);
         },
         error: (error) => {
-          console.error('AGENT SETUP ERROR:', error);
+          this.invitationError =
+            error.error?.message ?? 'Unable to complete setup.';
         },
       });
   }
