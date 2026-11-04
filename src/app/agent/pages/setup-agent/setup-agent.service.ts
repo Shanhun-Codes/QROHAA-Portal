@@ -21,6 +21,35 @@ export class OnboardingService {
     );
   }
 
+  inspectInvitation(invitationToken: string) {
+    return this.oidcSecurityService.getIdToken().pipe(
+      take(1),
+      switchMap((idToken) =>
+        this.http.post<{ accountType: 'AGENT' | 'AGENCY' }>(
+          `${environment.apiBaseUrl}/onboarding/invitation`,
+          { invitationToken },
+          { headers: { 'X-Cognito-Id-Token': idToken } },
+        ),
+      ),
+    );
+  }
+
+  createAgency(
+    invitationToken: string,
+    agency: { name: string; headline?: string },
+  ) {
+    return this.oidcSecurityService.getIdToken().pipe(
+      take(1),
+      switchMap((idToken) =>
+        this.http.post(
+          `${environment.apiBaseUrl}/onboarding/agent`,
+          { invitationToken, agency },
+          { headers: { 'X-Cognito-Id-Token': idToken } },
+        ),
+      ),
+    );
+  }
+
   createAgent(body: AgentSetupRequest) {
     return this.oidcSecurityService.getIdToken().pipe(
       take(1),

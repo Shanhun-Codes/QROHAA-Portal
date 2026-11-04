@@ -33,6 +33,16 @@ export class AccessPendingComponent implements OnInit {
   checkAccess(): void {
     this.onboardingService.getMe().subscribe({
       next: (response) => {
+        this.authService.role.set(response.role ?? null);
+        this.authService.agencyId.set(response.agencyId ?? null);
+        if (
+          response.role === 'AGENCY_ADMIN' &&
+          response.accessGranted &&
+          response.agencyId
+        ) {
+          void this.router.navigate(['/agency/settings']);
+          return;
+        }
         if (response.hasAgent && response.accessGranted && response.agent) {
           this.authService.agent.set(response.agent);
           void this.router.navigate(['/home']);
