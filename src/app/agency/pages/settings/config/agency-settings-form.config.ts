@@ -26,7 +26,7 @@ export function buildAgencySettingsForm(
     fields: [
       {
         key: 'name',
-        label: 'Agency name',
+        label: 'Brokerage name',
         type: 'text',
         required: true,
         layout: 'full',
@@ -35,7 +35,7 @@ export function buildAgencySettingsForm(
       },
       {
         key: 'headline',
-        label: 'Agency headline',
+        label: 'Brokerage headline',
         type: 'textarea',
         layout: 'full',
         value: settings.headline ?? '',

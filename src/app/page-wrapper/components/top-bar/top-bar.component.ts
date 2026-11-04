@@ -22,11 +22,11 @@ export class TopBarComponent implements OnInit {
     const agent = this.topBarService.agent();
     return agent
       ? `${agent.firstName} ${agent.lastName}`
-      : 'Agency administrator';
+      : 'Brokerage administrator';
   });
   readonly userEmail = computed(() => {
     const agent = this.topBarService.agent();
-    return agent ? agent.email : 'Agency administrator';
+    return agent ? agent.email : 'Brokerage administrator';
   });
   readonly userAvatarUrl = computed(() => {
     const agent = this.topBarService.agent();
@@ -44,7 +44,7 @@ export class TopBarComponent implements OnInit {
           {
             label: this.topBarService.isAgencyView()
               ? 'View as Agent'
-              : 'View as Agency',
+              : 'View as Brokerage',
             icon: this.topBarService.isAgencyView() ? 'person' : 'business',
             action: () => {
               void this.router.navigateByUrl(

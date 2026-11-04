@@ -31,7 +31,7 @@ export function memberStatusDialog(
     title: active ? 'Deactivate agent?' : 'Reactivate agent?',
     message: active
       ? `This blocks ${email} from accessing the app. Their records and occupied seat are retained.`
-      : `Restore app access for ${email}, subject to agency access being active.`,
+      : `Restore app access for ${email}, subject to brokerage access being active.`,
     actions: [
       { label: 'Cancel', type: 'secondary' },
       {
@@ -46,7 +46,7 @@ export function memberStatusDialog(
 export function selectedMemberStatusDialog(count: number, active: boolean): DialogConfig {
   return {
     title: `${active ? 'Reactivate' : 'Deactivate'} ${count} agent${count === 1 ? '' : 's'}?`,
-    message: active ? 'Restore app access for the selected agents, subject to agency access being active.' : 'Block app access for the selected agents. Their records and occupied seats are retained.',
+    message: active ? 'Restore app access for the selected agents, subject to brokerage access being active.' : 'Block app access for the selected agents. Their records and occupied seats are retained.',
     actions: [
       { label: 'Cancel', type: 'secondary' },
       { label: active ? 'Reactivate agents' : 'Deactivate agents', type: active ? 'primary' : 'danger', value: true },

@@ -118,10 +118,10 @@ export class AgencyAgentsComponent implements OnInit {
         ...member,
         name: member.agent
           ? `${member.agent.firstName} ${member.agent.lastName}`
-          : 'Agency administrator',
+          : 'Brokerage administrator',
         access:
           member.role === 'AGENCY_ADMIN'
-            ? 'Agency Administrator'
+            ? 'Brokerage Administrator'
             : member.role === 'PLATFORM_ADMIN'
               ? 'Platform Administrator'
               : 'Agent',
@@ -311,6 +311,6 @@ export class AgencyAgentsComponent implements OnInit {
       ? m.join(' ')
       : typeof m === 'string'
         ? m
-        : 'Unable to load agency data. Please try again.';
+        : 'Unable to load brokerage data. Please try again.';
   }
 }

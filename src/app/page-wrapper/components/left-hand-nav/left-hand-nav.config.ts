@@ -41,7 +41,7 @@ export const AGENCY_NAV_CONFIG = [
     separatorBefore: false,
   },
   {
-    label: 'Agency Settings',
+    label: 'Brokerage Settings',
     route: '/agency/settings',
     icon: 'settings',
     separatorBefore: false,

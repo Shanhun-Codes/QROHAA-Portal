@@ -16,7 +16,7 @@ export const RETURN_WORKSPACE_BUTTON_CONFIG: ButtonConfig = {
   variant: 'primary',
 };
 export const ACCEPT_INVITATION_BUTTON_CONFIG: ButtonConfig = {
-  label: 'Accept invitation & join agency',
+  label: 'Accept invitation & join brokerage',
   variant: 'primary',
 };
 export const CANCEL_INVITATION_BUTTON_CONFIG: ButtonConfig = {

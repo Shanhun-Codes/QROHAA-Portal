@@ -8,6 +8,6 @@ export const EDIT_AGENCY_BROKERAGE_BUTTON_CONFIG: ButtonConfig = {
   variant: 'secondary',
 };
 export const UPLOAD_AGENCY_LOGO_BUTTON_CONFIG: ButtonConfig = {
-  label: 'Upload agency logo',
+  label: 'Upload brokerage logo',
   variant: 'secondary',
 };

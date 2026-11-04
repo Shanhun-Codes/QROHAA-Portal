@@ -1,25 +1,25 @@
 <aa-page-template
-  [title]="'Agency Settings'"
-  subtitle="Manage the branding and brokerage information inherited by your agents."
+  [title]="'Brokerage Settings'"
+  subtitle="Manage the branding and business information inherited by your agents."
 >
   <div class="agency-settings">
     @if (agencies().length > 1) {
       <aa-select
-        aria-label="Select agency"
+        aria-label="Select brokerage"
         [options]="agencyOptions()"
         [value]="selectedAgency()"
         (valueChange)="selectAgency($event)"
       />
     }
     @if (loading()) {
-      <p role="status">Loading agency settings…</p>
+      <p role="status">Loading brokerage settings…</p>
     }
     @if (error()) {
       <p role="alert">{{ error() }}</p>
     }
     @if (!loading() && !agencies().length && !error()) {
       <p>
-        No agency is available. A platform administrator must provision one
+        No brokerage is available. A platform administrator must provision one
         first.
       </p>
     }
@@ -27,8 +27,8 @@
       <section class="component inheritance">
         <h2>Managed by {{ agency.name }}</h2>
         <p>
-          Your agency’s logo, colors, and brokerage details are inherited by all
-          agency-owned agents and locked in their profiles. Agents keep their
+          Your brokerage’s logo, colors, and business details are inherited by all
+          agents managed by a brokerage and locked in their profiles. Agents keep their
           own headshot and personal contact details.
         </p>
         <p>
@@ -39,8 +39,8 @@
       <section class="component">
         <div class="section-header">
           <div>
-            <h2>Agency branding</h2>
-            <p>Shared identity for your agency and its agents.</p>
+            <h2>Brokerage branding</h2>
+            <p>Shared identity for your brokerage and its agents.</p>
           </div>
           <aa-button [config]="editBrandingButtonConfig()" />
         </div>
@@ -53,7 +53,7 @@
                 [alt]="agency.name + ' logo'"
               />
             } @else {
-              <div class="logo-placeholder">No agency logo yet</div>
+              <div class="logo-placeholder">No brokerage logo yet</div>
             }
             <input
               #logoInput
@@ -67,7 +67,7 @@
           </div>
           <div class="branding-details">
             <h3>{{ agency.name }}</h3>
-            <p>{{ agency.headline || "No agency headline set." }}</p>
+            <p>{{ agency.headline || "No brokerage headline set." }}</p>
             <div class="swatches">
               @for (color of colorSwatches(); track color.label) {
                 <div class="color">
@@ -88,8 +88,8 @@
       <section class="component">
         <div class="section-header">
           <div>
-            <h2>Agency brokerage</h2>
-            <p>One brokerage record shared by all agency-owned agents.</p>
+            <h2>Brokerage details</h2>
+            <p>One brokerage record shared by all agents managed by a brokerage.</p>
           </div>
           <aa-button [config]="editBrokerageButtonConfig()" />
         </div>
@@ -122,13 +122,13 @@
           </dl>
         } @else {
           <p>
-            Add your agency’s brokerage details before inviting agents to share
+            Add your brokerage’s details before inviting agents to share
             their public pages.
           </p>
         }
       </section>
       @if (busy()) {
-        <p role="status">Saving agency settings…</p>
+        <p role="status">Saving brokerage settings…</p>
       }
     }
   </div>

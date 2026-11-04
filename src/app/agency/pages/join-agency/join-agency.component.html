@@ -1,7 +1,7 @@
 <section class="component join-card">
   <header class="join-header">
-    <p class="eyebrow">Agency invitation</p>
-    <h1>Join your agency</h1>
+    <p class="eyebrow">Brokerage invitation</p>
+    <h1>Join your brokerage</h1>
     <p>Confirm your account and add your personal details to get started.</p>
   </header>
   @if (loading()) {
@@ -19,7 +19,7 @@
   }
   @if (!loading() && !signedIn() && !error()) {
     <p>
-      You have been invited to join an agency. Sign in or create an account
+      You have been invited to join a brokerage. Sign in or create an account
       using the email address that received the invitation. New accounts must
       verify their email before accepting.
     </p>
@@ -42,7 +42,7 @@
       <aa-button [config]="differentAccountButtonConfig" />
     } @else if (invite.existingAccount) {
       <p role="alert">
-        You already have an application account. Joining an agency can affect
+        You already have an application account. Joining a brokerage can affect
         ownership, branding, and access to existing records. Contact your
         platform administrator to review the transfer; this invitation will not
         change your existing account.
@@ -52,17 +52,17 @@
       <p>
         Access level:
         <strong>{{
-          invite.role === "AGENCY_ADMIN" ? "Agency Administrator" : "Agent"
+          invite.role === "AGENCY_ADMIN" ? "Brokerage Administrator" : "Agent"
         }}</strong>
       </p>
       <p>
-        Your agency manages your logo, shared branding, colors, and brokerage
+        Your brokerage manages your logo, shared branding, colors, and business
         information. Those settings will be read-only. You can manage your
         personal contact details and headshot from My Profile after joining.
       </p>
       <section class="join-section">
-      <h3>Brokerage supplied by your agency</h3>
-      <p>Your agency manages these details. You do not need to enter them.</p>
+      <h3>Brokerage contact details</h3>
+      <p>Your brokerage manages these details. You do not need to enter them.</p>
       <aa-dynamic-form [config]="brokerageConfig()" />
       </section>
       <section class="join-section">

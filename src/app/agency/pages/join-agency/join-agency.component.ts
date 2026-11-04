@@ -77,7 +77,7 @@ export class JoinAgencyComponent implements OnInit {
   };
   readonly acceptButtonConfig = computed(() => ({
     ...ACCEPT_INVITATION_BUTTON_CONFIG,
-    label: this.saving() ? 'Joining…' : 'Accept invitation & join agency',
+    label: this.saving() ? 'Joining…' : 'Accept invitation & join brokerage',
     disabled: this.saving(),
     click: () => this.form()?.submit(),
   }));
@@ -108,7 +108,7 @@ export class JoinAgencyComponent implements OnInit {
     try {
       if (!this.token) {
         this.error.set(
-          'An agency invitation link is required. Ask your agency administrator for an invitation.',
+          'A brokerage invitation link is required. Ask your brokerage administrator for an invitation.',
         );
         return;
       }
@@ -169,7 +169,7 @@ export class JoinAgencyComponent implements OnInit {
     if (message === 'Invalid invitation identity')
       return 'We could not confirm your verified email. Finish email verification, then sign in again using the invited email. Your invitation has been kept.';
     if (message === 'Unable to verify Cognito identity')
-      return 'We could not check your account with the sign-in service. Your invitation has been kept. Try checking it again; if this continues, contact your agency administrator.';
+      return 'We could not check your account with the sign-in service. Your invitation has been kept. Try checking it again; if this continues, contact your brokerage administrator.';
     return typeof message === 'string' 
       ? message
       : Array.isArray(message)
