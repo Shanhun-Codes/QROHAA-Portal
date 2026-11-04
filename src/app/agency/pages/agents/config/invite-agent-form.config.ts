@@ -18,7 +18,7 @@ export const INVITE_AGENT_FORM_CONFIG: DynamicFormConfig = {
       layout: 'full',
       options: [
         { label: 'Agent', value: 'AGENT' },
-        { label: 'Agency Administrator', value: 'AGENCY_ADMIN' },
+        { label: 'Brokerage Administrator', value: 'AGENCY_ADMIN' },
       ],
     },
   ],

@@ -79,7 +79,7 @@ export class AgencySettingsComponent implements OnInit {
   }));
   readonly uploadLogoButtonConfig = computed(() => ({
     ...UPLOAD_AGENCY_LOGO_BUTTON_CONFIG,
-    label: this.busy() ? 'Saving…' : 'Upload agency logo',
+    label: this.busy() ? 'Saving…' : 'Upload brokerage logo',
     disabled: this.busy(),
     click: () => this.logoInput()?.nativeElement.click(),
   }));
@@ -146,7 +146,7 @@ export class AgencySettingsComponent implements OnInit {
       );
       await this.refreshOwnAgent();
       this.snackbar.success(
-        'Agency settings saved. Agents inherit these changes when their pages reload.',
+        'Brokerage settings saved. Agents inherit these changes when their pages reload.',
       );
       return true;
     } catch (error) {
@@ -176,7 +176,7 @@ export class AgencySettingsComponent implements OnInit {
       );
       await this.refreshOwnAgent();
       this.snackbar.success(
-        'Agency logo updated. Agency agents inherit it when their pages reload.',
+        'Brokerage logo updated. Brokerage agents inherit it when their pages reload.',
       );
     } catch (error) {
       this.snackbar.error(this.message(error));
@@ -197,6 +197,6 @@ export class AgencySettingsComponent implements OnInit {
       ? message
       : Array.isArray(message)
         ? message.join(' ')
-        : 'Unable to update agency settings. Please try again.';
+        : 'Unable to update brokerage settings. Please try again.';
   }
 }

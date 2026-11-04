@@ -111,7 +111,7 @@ export class AgentDialogComponent implements OnInit {
     }
 
     if (this.data().formMode === 'BROKERAGE' && this.agent()?.brandingLocked) {
-      this.snackbarService.error('Your agency manages brokerage details.');
+      this.snackbarService.error('Your brokerage manages brokerage details.');
       return;
     }
 

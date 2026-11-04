@@ -20,7 +20,7 @@ export class TopBarService {
     return path === '/agency' || path.startsWith('/agency/');
   });
   readonly activePortal = computed(() =>
-    this.isAgencyView() ? 'Agency App' : 'Agent App',
+    this.isAgencyView() ? 'Brokerage App' : 'Agent App',
   );
   readonly title = 'Open House Studio';
   readonly agent = this.authService.agent;

@@ -1,11 +1,11 @@
 <aa-page-template
-  [title]="'Agency agents'"
+  [title]="'Brokerage agents'"
   subtitle="Invite agents, manage access, and track your available seats."
 >
   <div class="agency-content">
     @if (agencies().length > 1) {
       <aa-select
-        aria-label="Select agency"
+        aria-label="Select brokerage"
         [options]="agencyOptions()"
         [value]="selectedAgency()"
         (valueChange)="selectAgency($event)"
@@ -15,13 +15,13 @@
       <p role="alert">{{ error() }}</p>
     }
     @if (loading()) {
-      <p role="status">Loading agency…</p>
+      <p role="status">Loading brokerage…</p>
     }
     @if (!loading() && !agencies().length && !error()) {
       <section class="component">
-        <h2>No agencies yet</h2>
+        <h2>No brokerages yet</h2>
         <p>
-          A platform administrator must provision an agency before agents can be
+          A platform administrator must provision a brokerage before agents can be
           invited.
         </p>
       </section>
@@ -88,7 +88,7 @@
             <aa-button [config]="deactivateSelectedButton()" />
             <aa-button [config]="reactivateSelectedButton()" />
           </aa-bulk-actions-bar>
-          <p>Access changes apply to agent accounts only. Agency and platform administrators are managed separately.</p>
+          <p>Access changes apply to agent accounts only. Brokerage and platform administrators are managed separately.</p>
         }
         <aa-table
           [selectedIdsInput]="selectedMemberIds()"
@@ -116,7 +116,7 @@
                 {{ invitationStatus(invite) }} ·
                 {{
                   invite.role === "AGENCY_ADMIN"
-                    ? "Agency Administrator"
+                    ? "Brokerage Administrator"
                     : "Agent"
                 }}
                 · Expires {{ invite.expiresAt | date: "medium" }}

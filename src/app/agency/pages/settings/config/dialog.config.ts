@@ -3,7 +3,7 @@ import { AgencySettingsDialogComponent } from '../components/dialogs/agency-sett
 import { SettingsDialogData } from '../components/dialogs/agency-settings-dialog/agency-settings-dialog.model';
 export function agencySettingsDialog(data: SettingsDialogData): DialogConfig {
   return {
-    title: data.mode === 'BRANDING' ? 'Agency branding' : 'Agency brokerage',
+    title: data.mode === 'BRANDING' ? 'Brokerage branding' : 'Brokerage details',
     contentComponent: AgencySettingsDialogComponent,
     data,
     actions: [

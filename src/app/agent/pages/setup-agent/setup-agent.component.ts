@@ -52,11 +52,11 @@ export class SetupAgentComponent implements OnInit {
               fields: [
                 {
                   key: 'name',
-                  label: 'Agency name',
+                  label: 'Brokerage name',
                   type: 'text',
                   required: true,
                 },
-                { key: 'headline', label: 'Agency headline', type: 'text' },
+                { key: 'headline', label: 'Brokerage headline', type: 'text' },
               ],
             };
           this.invitationReady = true;
@@ -100,7 +100,7 @@ export class SetupAgentComponent implements OnInit {
     if (this.isAgency) {
       const agency = values as { name: string; headline?: string };
       if (!agency.name?.trim()) {
-        this.invitationError = 'Agency name is required.';
+        this.invitationError = 'Brokerage name is required.';
         return;
       }
       this.onboardingService.createAgency(invitationToken, agency).subscribe({
@@ -110,7 +110,7 @@ export class SetupAgentComponent implements OnInit {
         },
         error: (error) => {
           this.invitationError =
-            error.error?.message ?? 'Unable to create agency.';
+            error.error?.message ?? 'Unable to create brokerage.';
         },
       });
       return;
