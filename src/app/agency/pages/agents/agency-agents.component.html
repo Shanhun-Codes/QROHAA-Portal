@@ -1,5 +1,5 @@
 <aa-page-template
-  [title]="'Brokerage agents'"
+  [title]="'Brokerage Agents'"
   subtitle="Invite agents, manage access, and track your available seats."
 >
   <div class="agency-content">
@@ -21,8 +21,8 @@
       <section class="component">
         <h2>No brokerages yet</h2>
         <p>
-          A platform administrator must provision a brokerage before agents can be
-          invited.
+          A platform administrator must provision a brokerage before agents can
+          be invited.
         </p>
       </section>
     }
@@ -83,12 +83,18 @@
       <section class="component">
         <h2>Agents & administrators ({{ data.members.length }})</h2>
         @if (selectedMemberIds().length) {
-          <aa-bulk-actions-bar itemName="member" [selectedCount]="selectedMemberIds().length"
-            (clearSelection)="selectedMemberIds.set([])">
+          <aa-bulk-actions-bar
+            itemName="member"
+            [selectedCount]="selectedMemberIds().length"
+            (clearSelection)="selectedMemberIds.set([])"
+          >
             <aa-button [config]="deactivateSelectedButton()" />
             <aa-button [config]="reactivateSelectedButton()" />
           </aa-bulk-actions-bar>
-          <p>Access changes apply to agent accounts only. Brokerage and platform administrators are managed separately.</p>
+          <p>
+            Access changes apply to agent accounts only. Brokerage and platform
+            administrators are managed separately.
+          </p>
         }
         <aa-table
           [selectedIdsInput]="selectedMemberIds()"
