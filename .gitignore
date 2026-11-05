@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Browser Maps key is supplied as deployment configuration, not committed.
+/public/address-autocomplete-config.json

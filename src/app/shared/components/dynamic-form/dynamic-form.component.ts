@@ -5,12 +5,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TimePickerComponent } from '../inputs/time-picker/time-picker.component';
+import { PropertyAddressSearchComponent } from '../inputs/property-address-search/property-address-search.component';
 import { DialogRef } from '../dialog/dialog-ref';
 import { DynamicFormConfig } from './dynamic-form.model';
 
 @Component({
   selector: 'aa-dynamic-form',
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    TimePickerComponent,
+    PropertyAddressSearchComponent,
+  ],
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.scss',
 })

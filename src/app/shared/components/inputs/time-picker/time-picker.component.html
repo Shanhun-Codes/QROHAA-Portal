@@ -1,0 +1,50 @@
+<select
+  [id]="inputId()"
+  [disabled]="disabled"
+  [value]="custom ? 'custom' : value"
+  (change)="selectTime($any($event.target).value)"
+  (blur)="onTouched()"
+>
+  <option value="" disabled>Select a time</option>
+  @for (time of times; track time.value) {
+    <option [value]="time.value">{{ time.label }}</option>
+  }
+  <option value="custom">Custom time…</option>
+</select>
+@if (custom) {
+  <div class="custom-time">
+    <select
+      [attr.aria-label]="label() + ' hour'"
+      [disabled]="disabled"
+      [value]="hour"
+      (change)="hour = +$any($event.target).value; updateCustom()"
+      (blur)="onTouched()"
+    >
+      @for (h of hours; track h) {
+        <option [value]="h">{{ h }}</option>
+      }
+    </select>
+    <span aria-hidden="true">:</span>
+    <select
+      [attr.aria-label]="label() + ' minute'"
+      [disabled]="disabled"
+      [value]="minute"
+      (change)="minute = +$any($event.target).value; updateCustom()"
+      (blur)="onTouched()"
+    >
+      @for (m of minutes; track m) {
+        <option [value]="m">{{ m.toString().padStart(2, "0") }}</option>
+      }
+    </select>
+    <select
+      [attr.aria-label]="label() + ' AM or PM'"
+      [disabled]="disabled"
+      [value]="period"
+      (change)="period = $any($event.target).value; updateCustom()"
+      (blur)="onTouched()"
+    >
+      <option value="AM">AM</option>
+      <option value="PM">PM</option>
+    </select>
+  </div>
+}

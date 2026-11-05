@@ -1,5 +1,6 @@
 export interface DynamicFormConfig<T extends object = any> {
   fields: DynamicFormField<T>[];
+  propertyAddressAutocomplete?: boolean;
 
   layout?: {
     gap?: 'sm' | 'md' | 'lg';

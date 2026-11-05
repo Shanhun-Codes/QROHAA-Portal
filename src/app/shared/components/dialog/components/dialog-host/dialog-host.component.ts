@@ -1,15 +1,21 @@
 import { NgComponentOutlet } from '@angular/common';
-import { Component, effect, HostListener, inject, DOCUMENT } from '@angular/core';
+import {
+  Component,
+  effect,
+  HostListener,
+  inject,
+  DOCUMENT,
+} from '@angular/core';
 
 import { DialogService } from '../../dialog.service';
 import { DialogAction } from '../../models/dialog.model';
 import { ButtonComponent } from '../../../button/button.component';
 
 @Component({
-    selector: 'aa-dialog-host',
-    imports: [ButtonComponent, NgComponentOutlet],
-    templateUrl: './dialog-host.component.html',
-    styleUrl: './dialog-host.component.scss'
+  selector: 'aa-dialog-host',
+  imports: [ButtonComponent, NgComponentOutlet],
+  templateUrl: './dialog-host.component.html',
+  styleUrl: './dialog-host.component.scss',
 })
 export class DialogHostComponent {
   readonly dialogService = inject(DialogService);
@@ -52,7 +58,11 @@ export class DialogHostComponent {
     }
   }
 
-  onBackdropClick(id: string): void {
+  onBackdropMouseDown(event: MouseEvent, id: string): void {
+    if (event.button !== 0 || event.target !== event.currentTarget) {
+      return;
+    }
+
     const top = this.dialogService.topDialog();
 
     if (!top || top.id !== id || top.config.disableBackdropClose) {

@@ -1,3 +1,5 @@
+<p>Times use your current timezone: {{ timeZone }}.</p>
+@if (timeError()) { <p role="alert">{{ timeError() }}</p> }
 <div class="open-house-dialog">
   <section class="dialog-section">
     <div class="dialog-section-header">
