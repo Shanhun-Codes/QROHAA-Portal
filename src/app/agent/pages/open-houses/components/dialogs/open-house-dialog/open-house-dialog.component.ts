@@ -60,6 +60,8 @@ interface OpenHouseDialogData {
   styleUrl: './open-house-dialog.component.scss',
 })
 export class OpenHouseDialogComponent implements OnInit {
+  readonly timeError = signal('');
+  readonly timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   private readonly propertyService = inject(PropertiesService);
   private readonly dialogs = inject(DialogService);
 
@@ -310,7 +312,13 @@ export class OpenHouseDialogComponent implements OnInit {
       openHouseValues.durationDays,
     );
 
+    this.timeError.set('');
     if (!startsAt || !endsAt) {
+      this.timeError.set('Enter a valid start date and time and end time.');
+      return;
+    }
+    if (Date.parse(endsAt) <= Date.parse(startsAt)) {
+      this.timeError.set('The end must be after the start. Choose a later end time or a two-day duration.');
       return;
     }
 

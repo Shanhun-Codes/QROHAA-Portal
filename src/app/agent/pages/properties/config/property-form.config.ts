@@ -1,6 +1,7 @@
 import { DynamicFormConfig } from '../../../../shared/components/dynamic-form/dynamic-form.model';
 
 export const PROPERTY_FORM_CONFIG: DynamicFormConfig = {
+  propertyAddressAutocomplete: true,
   layout: {
     gap: 'md',
     labelPosition: 'top',

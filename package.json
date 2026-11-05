@@ -7,7 +7,9 @@
     "build": "ng build",
     "build:qa": "ng build --configuration qa",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prebuild": "node scripts/configure-address-autocomplete.mjs",
+    "prebuild:qa": "node scripts/configure-address-autocomplete.mjs --required"
   },
   "private": true,
   "dependencies": {

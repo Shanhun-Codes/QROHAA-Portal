@@ -2,7 +2,7 @@
   <div
     class="dialog-backdrop"
     [style.z-index]="1000 + i * 2"
-    (click)="onBackdropClick(dialog.id)"
+    (mousedown)="onBackdropMouseDown($event, dialog.id)"
   >
     <section
       class="dialog component"

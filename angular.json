@@ -18,12 +18,16 @@
           "builder": "@angular/build:application",
           "options": {
             "stylePreprocessorOptions": {
-              "includePaths": ["src"]
+              "includePaths": [
+                "src"
+              ]
             },
             "outputPath": "dist/qrohaa-portal",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -32,7 +36,9 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles/styles.scss"],
+            "styles": [
+              "src/styles/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -47,7 +53,6 @@
               "extractLicenses": false,
               "sourceMap": true
             },
-
             "qa": {
               "fileReplacements": [
                 {
@@ -59,7 +64,6 @@
               "extractLicenses": true,
               "sourceMap": true
             },
-
             "production": {
               "fileReplacements": [
                 {
@@ -76,7 +80,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "options": { "port": 4202 },
+          "options": {
+            "port": 4202
+          },
           "configurations": {
             "production": {
               "buildTarget": "qrohaa-portal:build:production"
@@ -93,7 +99,10 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -102,8 +111,15 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "src/styles/styles.scss"
+            ],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            }
           }
         }
       }

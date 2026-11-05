@@ -107,6 +107,14 @@
           </div>
         }
 
+        @case ("time") {
+          <aa-time-picker
+            [inputId]="field.key"
+            [label]="field.label"
+            [formControlName]="field.key"
+          />
+        }
+
         @case ("date") {
           <input
             [id]="field.key"
@@ -117,13 +125,28 @@
         }
 
         @default {
-          <input
-            [id]="field.key"
-            [type]="field.type"
-            [formControlName]="field.key"
-            [placeholder]="field.placeholder ?? ''"
-            [readonly]="field.readonly ?? false"
-          />
+          @if (config().propertyAddressAutocomplete && field.key === "street") {
+            <aa-property-address-search [propertyForm]="form()" />
+            <input
+              [id]="field.key"
+              type="text"
+              [formControlName]="field.key"
+              [placeholder]="field.placeholder ?? ''"
+              autocomplete="off"
+            />
+            <span class="form-helper"
+              >Select an address suggestion to fill its details, or enter the
+              address manually. Review all details before saving.</span
+            >
+          } @else {
+            <input
+              [id]="field.key"
+              [type]="field.type"
+              [formControlName]="field.key"
+              [placeholder]="field.placeholder ?? ''"
+              [readonly]="field.readonly ?? false"
+            />
+          }
         }
       }
 

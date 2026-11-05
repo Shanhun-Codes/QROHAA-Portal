@@ -1,29 +1,23 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AppLoaderService } from './shared/components/app-loader/app-loader.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [AppComponent], providers: [provideRouter([])] }).compileComponents();
   });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'qrohaa-portal' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('qrohaa-portal');
-  });
-
-  it('should render title', () => {
+  it('renders the application shell and loading indicator', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, qrohaa-portal');
+    expect(fixture.nativeElement.querySelector('router-outlet')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('aa-app-loader')).toBeTruthy();
+  });
+  it('marks the shell ready after initial loading completes', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    TestBed.inject(AppLoaderService).stopLoading();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('aa-app-loader')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.app-shell--ready')).toBeTruthy();
   });
 });
