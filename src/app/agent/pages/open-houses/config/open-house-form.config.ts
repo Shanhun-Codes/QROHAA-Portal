@@ -20,6 +20,7 @@ export const OPEN_HOUSE_FORM_CONFIG: DynamicFormConfig = {
       type: 'time',
       layout: 'half',
       required: true,
+      tooltip: 'Time is set to your current timezone',
     },
     {
       key: 'durationDays',
